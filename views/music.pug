@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+    div.container
+        h1 Welcome to the Songs page!
+        p Please enjoy our selection of beats, from newest to oldest.
+        for thing in music
+            +song(thing)
+
+mixin song(s)
+    - var s2 = s.name.split('.')[0];
+    - s2.replace('%20', ' ');
+    h2= s2
+    audio(controls, src='/music/' + s2)

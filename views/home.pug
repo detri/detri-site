@@ -1,0 +1,12 @@
+extends layout.pug
+
+block content
+    .container
+        h1 Welcome to the Woofy World home page!
+        p Please enjoy our most recent song.
+        +song(music[0])
+
+mixin song(s)
+    - var s2 = s.name.split('.')[0];
+    h2= s2
+    audio(controls, src='/music/' + s2)
