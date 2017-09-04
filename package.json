@@ -1,0 +1,20 @@
+{
+  "name": "woofytest",
+  "version": "1.0.0",
+  "description": "Creates a web server that connects sockets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "very",
+    "good",
+    "boy"
+  ],
+  "author": "detri",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "pug": "^2.0.0-rc.3"
+  }
+}
