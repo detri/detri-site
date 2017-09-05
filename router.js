@@ -18,18 +18,6 @@ router.get('/music', (request, response) => {
     });
 });
 
-router.use('/music', (request, response, next) => {
-    let path = __dirname + '/songs' + request.path + '.mp3';
-    path = unescape(path);
-    fs.access(path, (err) => {
-        if (err) {
-            console.log(err);
-            next();
-        }
-        response.sendFile(path);
-    });
-});
-
 router.get('/about', (request, response) => {
     response.render('about');
 });
