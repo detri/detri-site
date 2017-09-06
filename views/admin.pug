@@ -1,0 +1,21 @@
+extends layout.pug
+
+block content
+    if !loggedIn
+        form(method='post', enctype='application/x-www-form-urlencoded', action='/admin')
+            .form-group
+                label(for='username') Username
+                input(type='text', class='form-control', name='username', placeholder='Username')
+            .form-group
+                label(for='password') Password
+                input(type='password', class='form-control', name='password', placeholder='Password')
+            button(type='submit', class='btn btn-dark') Submit
+    else
+        h1 Send a file!
+        form(method='post', enctype='multipart/form-data', action='/upload')
+            .form-group
+                label(for='song') Song file (MP3 PLZ)
+                input(type='file', class='form-control', name='song', placeholder='Song file')
+            button(type='submit', class='btn btn-dark') Submit
+        h5
+            a(href='/logout') Logout
