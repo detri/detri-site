@@ -31,11 +31,6 @@ const upload = multer({
     })
 });
 
-function matchUser(un, pw) {
-    let matched = false;
-    return matched;
-}
-
 admin.get('/admin', (request, response) => {
     if (request.session.loggedIn == undefined) {
         request.session.loggedIn = false;
