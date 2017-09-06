@@ -1,6 +1,9 @@
 const express = require('express');
+const session = require('express-session');
+const parser = require('body-parser');
 const fs = require('fs');
 const router = require('./router');
+const admin = require('./admin');
 
 const app = express();
 
@@ -13,13 +16,16 @@ app.use('/music/:song', (request, response, next) => {
     path = unescape(path);
     fs.access(path, (err) => {
         if (err) {
-            console.log(err);
             next();
         }
         response.sendFile(path);
     });
 });
 
+app.use(session({ secret: 'weenie', cookie: { maxAge: 60000 } }));
+app.use(parser.urlencoded({ extended: false }));
+
+app.use('/', admin);
 app.use('/', router);
 
 app.listen(8080);
