@@ -1,22 +1,21 @@
 extends layout.pug
 
 block content
-    if users
+    if user
+        h1 #{user.username}'s songs:
+        center
+            for thing in user.songs
+                +song(thing)
+    else if users
         center
             h1 Welcome to the music page!
-            p Here is a list of songs by user.
-        .row
+            p Please pick a user to view their songs.
             for user in users
-                .col-md-4
-                    +user(user)
+                p
+                    a(href='/users/'+user.username) #{user.username}
         
     else
         center <h1>You dun goofed.</h1>
-
-mixin user(u)
-    h2 #{u.username}
-    for song in u.songs
-        +song(song)
 
 mixin song(s)
     - var s2 = s.filename.split('.')[0];

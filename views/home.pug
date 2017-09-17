@@ -1,11 +1,17 @@
 extends layout.pug
 
 block content
-    h1 Welcome to the Woofy World home page!
-    p Please enjoy our most recent song.
-    +song(music[0])
+    if song
+        center
+            h1 Welcome to the Woofy World home page!
+            h3 Here is our most recently uploaded song:
+            +song(song, song.user.username)
+    else
+        center <h1>You dun goofed.</h1>
 
 mixin song(s)
-    - var s2 = s.name.split('.')[0];
-    h2= s2
+    - let s2 = s.filename.split('.')[0];
+    h4= s.user.username
+    b #{s.song_name}
+    p Release date: #{(s.release_date.toDateString())}
     audio(controls, src='/music/' + s2)

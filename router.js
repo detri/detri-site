@@ -1,44 +1,93 @@
-const express = require('express');
-const fs = require('fs');
+const express = require("express");
+const fs = require("fs");
+const db = require("./models");
 
 let router = express.Router();
 
-router.get('/music', (request, response) => {
-    let dir = 'songs/';
-    fs.readdir(dir, (err, files) => {
-        files = files.map((name) => {
-            return {
-                name: name,
-                lastModified: fs.statSync(dir + name).mtime
-            }
-        }).sort((a, b) => {
-            return b.lastModified - a.lastModified;
-        });
-        response.render('music', { music: files });
+router.get("/users/:username", (request, response) => {
+  db.User
+    .findOne({
+      where: { username: request.params.username },
+      include: [
+        {
+          model: db.Song,
+          as: "songs"
+        }
+      ],
+      order: [
+        [
+          {
+            model: db.Song,
+            as: "songs"
+          },
+          "release_date",
+          "DESC"
+        ]
+      ]
+    })
+    .then(user => {
+      response.render("users", { user: user });
     });
 });
 
-router.get('/about', (request, response) => {
-    response.render('about');
-});
-
-router.get('/', (request, response) => {
-    let dir = 'songs/';
-    fs.readdir(dir, (err, files) => {
-        files = files.map((name) => {
-            return {
-                name: name,
-                lastModified: fs.statSync(dir + name).mtime
-            }
-        }).sort((a, b) => {
-            return b.lastModified - a.lastModified;
-        });
-        response.render('home', { music: files });
+router.get("/users", (request, response) => {
+  db.User
+    .findAll({
+      order: [[db.sequelize.fn("upper", db.sequelize.col("username")), "ASC"]]
+    })
+    .then(users => {
+      response.render("users", { users: users });
     });
 });
 
-router.get('*', (request, response) => {
-    response.render('woofy');
+router.get("/music", (request, response) => {
+  db.User
+    .findAll({
+      include: [
+        {
+          model: db.Song,
+          as: "songs"
+        }
+      ],
+      order: [
+        [db.sequelize.fn("upper", db.sequelize.col("username"))],
+        [
+          {
+            model: db.Song,
+            as: "songs"
+          },
+          "release_date",
+          "DESC"
+        ]
+      ]
+    })
+    .then(users => {
+      response.render("music", { users: users });
+    });
+});
+
+router.get("/about", (request, response) => {
+  response.render("about");
+});
+
+router.get("/", (request, response) => {
+  db.Song
+    .findOne({
+      include: [
+        {
+          model: db.User,
+          as: "user"
+        }
+      ],
+      order: [["release_date", "DESC"]]
+    })
+    .then(song => {
+      response.render("home", { song: song });
+    });
+});
+
+router.get("*", (request, response) => {
+  response.render("woofy");
 });
 
 module.exports = router;
