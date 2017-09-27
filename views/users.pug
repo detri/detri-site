@@ -5,7 +5,7 @@ block content
         h1 #{user.username}'s songs:
         center
             for thing in user.songs
-                +song(thing)
+                +button(thing)
     else if users
         center
             h1 Welcome to the music page!
@@ -16,10 +16,3 @@ block content
         
     else
         center <h1>You dun goofed.</h1>
-
-mixin song(s)
-    - var s2 = s.filename.split('.')[0];
-    b #{s.song_name}
-    p Release date: #{(s.release_date.toDateString())}
-    center
-        audio(controls, src='/music/' + s2)

@@ -16,11 +16,4 @@ block content
 mixin user(u)
     h2 #{u.username}
     for song in u.songs
-        +song(song)
-
-mixin song(s)
-    - var s2 = s.filename.split('.')[0];
-    b #{s.song_name}
-    p Release date: #{(s.release_date.toDateString())}
-    center
-        audio(controls, src='/music/' + s2)
+        +button(song)
