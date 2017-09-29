@@ -1,3 +1,8 @@
+// weakaudio.js - Web Audio API wrapper
+// by Aaron Dosser
+// based on buffaudio by Ernie Park
+// updated Sept 29, 2017
+
 class WeakAudio {
     constructor(context, buffer) {
         this.context = context;
@@ -9,6 +14,7 @@ class WeakAudio {
         this.playing = false;
     }
 
+    // Stop any playback and load a new buffer
     newBuffer(buffer) {
         this.stop();
         this.buffer = buffer;
@@ -16,6 +22,8 @@ class WeakAudio {
         this.playbackTime = 0;
     }
 
+    // Initialize a new source - required for seeking
+    // AudioBufferSourceNodes cannot be started twice even if stopped
     newSource() {
         this.source = this.context.createBufferSource();
         //browser compatibility
@@ -32,6 +40,7 @@ class WeakAudio {
         }
     }
 
+    // Starts or resumes a buffer
     play() {
         if (this.context.state == "suspended") {
             this.context.resume();
@@ -44,12 +53,14 @@ class WeakAudio {
         }
     }
 
+    // Stops a buffer (forever)
     stop() {
         this.source.stop(0);
         this.playing = false;
         this.playbackTime = 0;
     }
 
+    // Pause the AudioContext
     pause() {
         if (this.context.state == "running") {
             this.context.suspend();
@@ -57,6 +68,7 @@ class WeakAudio {
         }
     }
 
+    // Seeking! Experimental.
     seek(playbackTime) {
         if (playbackTime > this.buffer.duration) {
             console.log("Error: Seek time is greater than audio buffer duration.");

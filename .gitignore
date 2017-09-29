@@ -57,5 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+/config
 /songs
-/models/detribase
+/models/detribase.sqlite
