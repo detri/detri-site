@@ -1,4 +1,6 @@
-let context = new AudioContext();
+let WeakAudio = require("./weakaudio.js");
+
+let context = new (window.webkitAudioContext || window.AudioContext)();
 // browser compatibility
 if (!context.createGain) context.createGain = context.createGainNode;
 

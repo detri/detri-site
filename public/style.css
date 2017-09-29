@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+@keyframes footeranim {
+    100% {
+        line-height: 100px;
+        font-size: 10px;
+        height: 10px;
+        background: transparent;
+    }
+}
+
 /* General page styling and nav */
 html {
     position: relative;
