@@ -1,5 +1,5 @@
 - let styles = ["https://goo.gl/oHxH6B","/public/style.css","https://goo.gl/5Fnxn6"];
-- let scripts = ["https://code.jquery.com/jquery-3.2.1.min.js","https://goo.gl/n4oPPL","/public/player.js"];
+- let scripts = ["https://goo.gl/TD36M4","/public/player.js"];
 
 mixin link(src, type)
     link(href=src, rel=type)
@@ -8,16 +8,22 @@ mixin script(src)
     script(type="text/javascript", src=src)
 
 mixin button(s)
-    .button(id=s.id, data-url=s.filename.split('.')[0])
-        i(class="material-icons") &#xE038;
+    .button(id=s.id, data-url="/music/" + s.filename.split('.')[0])
+        i.material-icons &#xE038;
         span(class="songtext") &nbsp; #{s.song_name}
 
 mixin player()
     .player
+        audio(preload="none")
         center
-            i(class="material-icons" id="playbutton") &#xE039;
+            i(class="material-icons", id="playbutton") &#xE039;
             span &nbsp;
-            input(type="range" id="seekbar" min="0" max="1" step="any")
+            input(id="seekbar", type="range", min="0", max="1", step="any")
+            span &nbsp;
+            span(class="timekeeper")
+                span(id="curtime") 00:00
+                span(id="timeseparator") &nbsp;/&nbsp;
+                span(id="timeleft") 00:00
 
 doctype html
 html
@@ -41,7 +47,7 @@ html
             .container
                 block content
         footer(class='footer text-light bg-dark')
-            div(class='container' id='footer')
+            div(class='container' id='footercontainer')
                 center
                     .text-muted
                         span Woofy World 2017 | 

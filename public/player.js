@@ -1,119 +1,94 @@
-let WeakAudio = require("./weakaudio.js");
+let buttons = document.querySelectorAll(".button");
+let player = document.querySelector(".player");
+let playerAudio = document.querySelector("audio");
+let seekbar = document.querySelector("#seekbar");
+let timekeeper = document.querySelector(".timekeeper");
 
-let context = new (window.webkitAudioContext || window.AudioContext)();
-// browser compatibility
-if (!context.createGain) context.createGain = context.createGainNode;
-
-let curSong = {};
-curSong.id = null;
-
-let thisId = null;
+let curSongId = null;
 let playing = false;
-let source = null;
-let gainNode = context.createGain();
+let firstTime = true;
+const icons = {
+  playCircleFilled: "&#xE038;",
+  playCircleOutline: "&#xE039;",
+  pauseCircleFilled: "&#xE035;",
+  pauseCircleOutline: "&#xE036;"
+};
 
-// handle individual buttons
-$(".button").click(function() {
-  if (gainNode.numberOfOutputs > 0) gainNode.disconnect();
-  thisId = $(this).attr("id");
-  thisUrl = $(this).attr("data-url");
-  // initial click
-  if (!curSong.id) {
-    //TODO: Animate the player in
-    $("#footer .text-muted").animate({
-      "line-height": "100px",
-      "font-size": "10px",
-      "height": "10px",
-      "background": "transparent"
-    }, function () {
-      $(".player").fadeIn();
-    });
+buttons.forEach(e => {
+  e.addEventListener("click", function(event) {
+    let el = event.target.closest("div");
+    let lastStopped = null;
 
-    // fetch the song
-    loadSong(thisUrl);
-  } else if (thisId == curSong.id) {
-    if (playing) {
-      context.suspend();
-      playing = false;
-      $(this)
-        .children("i")
-        .html("&#xE038;");
-      $("#playbutton").html("&#xE039");
+    if (curSongId != el.id && playerAudio.paused) {
+      console.log("[Starting] Song ID did not match.");
+      if (firstTime) {
+        firstTime = false;
+        anime.timeline()
+          .add({
+            targets: "#footercontainer",
+            opacity: 0
+          })
+          .add({
+            targets: ".player",
+            opacity: 1
+          });
+      }
+      curSongId = el.id;
+      playerAudio.src = el.attributes["data-url"].value;
+      playerAudio.onloadeddata = function() {
+        playerAudio.play();
+      };
+      playerAudio.load();
+
+      el.firstChild.innerHTML = icons.pauseCircleFilled;
+    } else if (curSongId == el.id && !playerAudio.paused) {
+      console.log("[Pausing] Song ID matched.");
+      playerAudio.pause();
+      el.firstChild.innerHTML = icons.playCircleFilled;
+    } else if (curSongId == el.id && playerAudio.paused) {
+      console.log("[Resuming] Song ID matched.");
+      playerAudio.play();
+      el.firstChild.innerHTML = icons.pauseCircleFilled;
     } else {
-      context.resume();
-      playing = true;
-      $(this)
-        .children("i")
-        .html("&#xE035;");
-      $("#playbutton").html("&#xE036");
+      console.log("[Switching] Song ID did not match.");
+      playerAudio.pause();
+      playerAudio.src = el.attributes["data-url"].value;
+      playerAudio.onloadeddata = function() {
+        playerAudio.play();
+        document.getElementById(curSongId).firstChild.innerHTML =
+          icons.playCircleFilled;
+        curSongId = el.id;
+        el.firstChild.innerHTML = icons.pauseCircleFilled;
+      };
+      playerAudio.load();
     }
-  } else {
-    loadSong(thisUrl);
-  }
-  gainNode.connect(context.destination);
+  });
 });
 
-$("#playbutton").click(function () {
-  if (playing) {
-    context.suspend();
-    playing = false;
-    $(".button #" + curSong.id).children("i").html("&#xE038;");
-    $("#playbutton").html("&#xE039");
-  } else {
-    context.resume();
-    playing = true;
-    $(".button #" + curSong.id).children("i").html("&#xE035;");
-    $("#playbutton").html("&#xE036");
+setInterval(() => {
+  if (playerAudio && playerAudio.currentTime && playerAudio.duration) {
+    seekbar.value = playerAudio.currentTime / playerAudio.duration;
+    timekeeper.firstChild.innerHTML = formatMinuteSecond(playerAudio.currentTime);
+    timekeeper.lastChild.innerHTML = formatMinuteSecond(playerAudio.duration);
   }
-});
+}, 60);
 
-function loadSong(url) {
-  if (source) {
-    source.stop(0);
-    source.disconnect();
-  }
-
-  if (playing) playing = false;
-  curSong.id = thisId;
-
-  source = context.createBufferSource();
-  //browser compatibility
-  if (!source.start) {
-    source.start = source.noteOn;
-    source.stop = source.noteOff;
-  }
-
-  let request = new XMLHttpRequest();
-  request.open("GET", "/music/" + url);
-  request.responseType = "arraybuffer";
-  request.onload = function() {
-    context.decodeAudioData(request.response, buffer => {
-      source.buffer = buffer;
-      source.loop = false;
-      source.connect(gainNode);
-      source.start(0);
-      $(".button")
-        .children("i")
-        .html("&#xE035;");
-      $("#playbutton").html("&#xE036");
-      $(".button")
-        .not("#" + thisId)
-        .children("i")
-        .html("&#xE038;");
-      if (context.state == "suspended") context.resume();
-      playing = true;
-    });
-  };
-  request.send();
+function toMinFromSec(value) {
+  return Math.floor(value / 60);
 }
 
-setInterval(function() {
-  if (source && source.buffer != null) {
-    console.log(context.getOutputTimestamp().contextTime / source.buffer.duration);
-    $("#seekbar").val(
-      context.getOutputTimestamp().contextTime / source.buffer.duration
-    );
+function getRemainingSec(value) {
+  return Math.floor(value % 60);
+}
+
+function formatSeconds(value) {
+  if (value > 9) {
+    return value
   } else {
-    $("#seekbar").val(0);
+    return "0" + value.toString();
   }
-}, 100);
+}
+
+function formatMinuteSecond(value) {
+  return formatSeconds(toMinFromSec(value)) + ":" + formatSeconds(getRemainingSec(value));
+}
