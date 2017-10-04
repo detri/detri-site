@@ -1,5 +1,6 @@
 let buttons = document.querySelectorAll(".button");
 let player = document.querySelector(".player");
+let playbutton = document.querySelector("#playbutton");
 let playerAudio = document.querySelector("audio");
 let seekbar = document.querySelector("#seekbar");
 let timekeeper = document.querySelector(".timekeeper");
@@ -7,6 +8,8 @@ let timekeeper = document.querySelector(".timekeeper");
 let curSongId = null;
 let playing = false;
 let firstTime = true;
+let footerAnim = anime.timeline();
+let playbuttonAnim = anime.timeline();
 const icons = {
   playCircleFilled: "&#xE038;",
   playCircleOutline: "&#xE039;",
@@ -19,19 +22,26 @@ buttons.forEach(e => {
     let el = event.target.closest("div");
     let lastStopped = null;
 
+    toggle();
+
     if (curSongId != el.id && playerAudio.paused) {
       console.log("[Starting] Song ID did not match.");
-      if (firstTime) {
+      if (firstTime === true) {
         firstTime = false;
-        anime.timeline()
-          .add({
-            targets: "#footercontainer",
-            opacity: 0
-          })
-          .add({
-            targets: ".player",
-            opacity: 1
-          });
+        footerAnim
+        .add({
+          targets: "#footercontainer",
+          easing: "easeOutQuint",
+          opacity: 0,
+          duration: 800
+        })
+        .add({
+          targets: ".player",
+          opacity: 1,
+          easing: "easeOutQuint",
+          duration: 800,
+          offset: "-=400"
+        });
       }
       curSongId = el.id;
       playerAudio.src = el.attributes["data-url"].value;
@@ -73,6 +83,25 @@ setInterval(() => {
   }
 }, 60);
 
+function animRotate(element, turns, duration = 500) {
+  return anime.timeline({autoplay: false}).add({
+    targets: element,
+    easing: "easeOutQuint",
+    rotate: turns + "turn",
+    duration: duration,
+    direction: "normal"
+  });
+}
+
+function toggle() {
+  playbutton.innerHTML = playerAudio.paused ? icons.pauseCircleOutline : icons.playCircleOutline;
+  playbuttonAnim.add({
+    targets: playbutton,
+    rotation: '1turn',
+    duration: 500
+  }).restart();
+}
+
 function toMinFromSec(value) {
   return Math.floor(value / 60);
 }
@@ -83,12 +112,16 @@ function getRemainingSec(value) {
 
 function formatSeconds(value) {
   if (value > 9) {
-    return value
+    return value;
   } else {
     return "0" + value.toString();
   }
 }
 
 function formatMinuteSecond(value) {
-  return formatSeconds(toMinFromSec(value)) + ":" + formatSeconds(getRemainingSec(value));
+  return (
+    formatSeconds(toMinFromSec(value)) +
+    ":" +
+    formatSeconds(getRemainingSec(value))
+  );
 }
