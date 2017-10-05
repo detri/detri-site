@@ -1,15 +1,17 @@
 let buttons = document.querySelectorAll(".button");
 let player = document.querySelector(".player");
-let playbutton = document.querySelector("#playbutton");
+let playbutton = document.getElementById("playbutton");
 let playerAudio = document.querySelector("audio");
 let seekbar = document.querySelector("#seekbar");
 let timekeeper = document.querySelector(".timekeeper");
+let songName = document.querySelector(".song-name");
+let songArtist = document.querySelector(".song-artist");
+let songRelease = document.querySelector(".song-release-date");
 
+footerAnim = anime.timeline();
 let curSongId = null;
-let playing = false;
 let firstTime = true;
-let footerAnim = anime.timeline();
-let playbuttonAnim = anime.timeline();
+
 const icons = {
   playCircleFilled: "&#xE038;",
   playCircleOutline: "&#xE039;",
@@ -44,9 +46,10 @@ buttons.forEach(e => {
         });
       }
       curSongId = el.id;
-      playerAudio.src = el.attributes["data-url"].value;
+      playerAudio.src = el.dataset.url;
       playerAudio.onloadeddata = function() {
         playerAudio.play();
+        setSongInfo(el);
       };
       playerAudio.load();
 
@@ -62,17 +65,42 @@ buttons.forEach(e => {
     } else {
       console.log("[Switching] Song ID did not match.");
       playerAudio.pause();
-      playerAudio.src = el.attributes["data-url"].value;
+      playerAudio.src = el.dataset.url;
       playerAudio.onloadeddata = function() {
         playerAudio.play();
         document.getElementById(curSongId).firstChild.innerHTML =
           icons.playCircleFilled;
         curSongId = el.id;
         el.firstChild.innerHTML = icons.pauseCircleFilled;
+        setSongInfo(el);
       };
       playerAudio.load();
+      toggle();
     }
   });
+});
+
+playbutton.addEventListener("click", (event) => {
+  if (playerAudio.paused) {
+    console.log("[Playing] Big button pressed");
+    event.target.closest("i").innerHTML = icons.pauseCircleOutline;
+    document.getElementById(curSongId).firstChild.innerHTML = icons.pauseCircleFilled;
+    playerAudio.play();
+  } else {
+    console.log("[Pausing] Big button pressed");
+    event.target.closest("i").innerHTML = icons.playCircleOutline;
+    document.getElementById(curSongId).firstChild.innerHTML = icons.playCircleFilled;
+    playerAudio.pause();
+  }
+});
+
+seekbar.addEventListener("input", (event) => {
+  if (!playerAudio.pause) playerAudio.pause();
+  if (playerAudio.duration) playerAudio.currentTime = playerAudio.duration * event.target.value;
+});
+
+seekbar.addEventListener("dragend", (event) => {
+  if (playerAudio.paused) playerAudio.play();
 });
 
 setInterval(() => {
@@ -95,11 +123,12 @@ function animRotate(element, turns, duration = 500) {
 
 function toggle() {
   playbutton.innerHTML = playerAudio.paused ? icons.pauseCircleOutline : icons.playCircleOutline;
-  playbuttonAnim.add({
-    targets: playbutton,
-    rotation: '1turn',
-    duration: 500
-  }).restart();
+}
+
+function setSongInfo(element) {
+  songArtist.innerHTML = element.dataset.artistName;
+  songName.innerHTML = element.dataset.title;
+  songRelease.innerHTML = element.dataset.releaseDate;
 }
 
 function toMinFromSec(value) {

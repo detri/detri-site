@@ -7,18 +7,24 @@ mixin link(src, type)
 mixin script(src)
     script(type="text/javascript", src=src)
 
-mixin button(s)
-    .button(id=s.id, data-url="/music/" + s.filename.split('.')[0])
+mixin button(song, artist)
+    .button(id=song.id, data-url="/music/" + song.filename.split('.')[0], data-title=song.song_name, data-artist-name=artist, data-release-date=song.release_date.toLocaleDateString())
         i.material-icons &#xE038;
-        span(class="songtext") &nbsp; #{s.song_name}
+        span(class="songtext") &nbsp; #{song.song_name}
 
 mixin player()
     .player
         audio(preload="none")
         center
+            .song-details
+                b
+                    .song-name Name
+                .song-artist Artist
+                .song-release-date Release date
             i(class="material-icons", id="playbutton") &#xE039;
             span &nbsp;
             input(id="seekbar", type="range", min="0", max="1", step="any")
+            span &nbsp;
             span &nbsp;
             span(class="timekeeper")
                 span(id="curtime") 00:00

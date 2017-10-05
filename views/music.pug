@@ -16,4 +16,4 @@ block content
 mixin user(u)
     h2 #{u.username}
     for song in u.songs
-        +button(song)
+        +button(song, u.username)

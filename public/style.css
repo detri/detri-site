@@ -28,9 +28,6 @@ span {
 }
 
 /* custom classes and whatnot */
-.player {
-  opacity: 0.001;
-}
 
 .footer,
 .player {
@@ -38,8 +35,12 @@ span {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: 62px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.player {
+  opacity: 0.001;
 }
 
 .footer a {
@@ -153,5 +154,14 @@ span {
 
 .timekeeper {
   vertical-align: bottom;
+  font-size: 10px;
+}
+/* song info */
+
+.song-details {
+  display: inline-block;
+  line-height: 10px;
+  vertical-align: middle;
+  text-align: right;
   font-size: 10px;
 }
