@@ -7,8 +7,9 @@ block content
             p Here is a list of songs by user.
         .row
             for user in users
-                .col-md-4
-                    +user(user)
+                if user.songs[0]
+                    .col-md-4
+                        +user(user)
         
     else
         center <h1>You dun goofed.</h1>
