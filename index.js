@@ -12,6 +12,39 @@ app.set('view engine', 'pug');
 // general file serving middleware
 app.use('/public', express.static('public'));
 
+// user song serving middleware
+app.get("/music/:username", (req, res, next) => {
+    db.User
+      .findOne({
+        where: { username: req.params.username },
+        include: [
+          {
+            model: db.Song,
+            as: "songs"
+          }
+        ],
+        order: [
+          [
+            {
+              model: db.Song,
+              as: "songs"
+            },
+            "release_date",
+            "DESC"
+          ]
+        ]
+      })
+      .then(user => {
+        let htmlString = "";
+        for (song of user.songs) {
+          htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${user.username}" data-release-date="${song.release_date.toLocaleDateString()}">
+          <i class="material-icons">&#xE038;</i>
+          <span class="songtext"> &nbsp; ${song.song_name}</span></div>`
+        }
+        res.send(htmlString);
+      }).catch(err => err ? next() : null);
+  });
+
 // song serving middleware
 app.use('/music/:song', (request, response, next) => {
     let path = __dirname + '/songs/' + request.params.song + '.mp3';

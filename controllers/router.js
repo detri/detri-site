@@ -82,7 +82,6 @@ router.get("/", (request, response) => {
       ]
     })
     .then(song => {
-      console.log(song);
       response.render("home", { song: song });
     });
 });

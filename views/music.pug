@@ -6,15 +6,15 @@ block content
             h1 Welcome to the music page!
             p Here is a list of songs by user.
         .row
-            for user in users
-                if user.songs[0]
-                    .col-md-4
+            center
+                select(onchange="loadSongButtons(this.value)")
+                    for user in users
                         +user(user)
+            center
+                .results
         
     else
         center <h1>You dun goofed.</h1>
 
 mixin user(u)
-    h2 #{u.username}
-    for song in u.songs
-        +button(song, u.username)
+    option(value=u.username) #{u.username}
