@@ -79,6 +79,8 @@ function loadSongButtons(urlParam) {
     });
 }
 
+loadSongButtons(document.querySelector("select").value);
+
 function buttonClicked(event) {
   console.log("Hooked");
   return function (event) {
