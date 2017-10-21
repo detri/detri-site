@@ -12,6 +12,11 @@ mixin button(song, artist)
         i.material-icons &#xE038;
         span(class="songtext") &nbsp; #{song.song_name}
 
+mixin altbutton(song)
+    .button(id=song.id, data-url="/music/" + song.filename.split('.')[0], data-title = song.song_name, data-release-date=song.release_date.toLocaleDateString())
+        i.material-icons &#xE038;
+        span(class="songtext") &nbsp; #{song.song_name}
+
 mixin player()
     .player
         audio(preload="none")

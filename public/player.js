@@ -9,7 +9,12 @@ let timekeeper = document.querySelector(".timekeeper");
 let songName = document.querySelector(".song-name");
 let songArtist = document.querySelector(".song-artist");
 let songRelease = document.querySelector(".song-release-date");
-let buttons = null;
+let buttons = document.querySelectorAll(".button");
+
+if (buttons) buttons.forEach(e => {
+  if (e.onclick) e.onlick = null;
+  e.onclick = buttonClicked(event);
+});
 
 let source = context.createMediaElementSource(playerAudio);
 if (!context.createGain) context.createGain = context.createGainNode();
@@ -68,68 +73,73 @@ function loadSongButtons(urlParam) {
         buttons = document.querySelectorAll(".button");
         buttons.forEach(e => {
           if (e.onlick) e.onclick = null;
-          e.onclick = function (event) {
-            let el = event.target.closest("div");
-            let btn = el.querySelector("i");
-
-            toggle();
-
-            if (curSongId != el.id && playerAudio.paused) {
-              console.log("[Starting] Song ID did not match.");
-              if (firstTime === true) {
-                firstTime = false;
-                footerAnim
-                  .add({
-                    targets: "#footercontainer",
-                    easing: "easeOutQuint",
-                    opacity: 0,
-                    duration: 800
-                  })
-                  .add({
-                    targets: ".player",
-                    opacity: 1,
-                    easing: "easeOutQuint",
-                    duration: 800,
-                    offset: "-=400"
-                  });
-              }
-              curSongId = el.id;
-              playerAudio.src = el.dataset.url;
-              playerAudio.onloadeddata = function () {
-                playerAudio.play();
-                setSongInfo(el);
-                console.log(analyzer.frequencyBinCount);
-              };
-              playerAudio.load();
-              btn.innerHTML = icons.pauseCircleFilled;
-            } else if (curSongId == el.id && !playerAudio.paused) {
-              console.log("[Pausing] Song ID matched.");
-              playerAudio.pause();
-              btn.innerHTML = icons.playCircleFilled;
-            } else if (curSongId == el.id && playerAudio.paused) {
-              console.log("[Resuming] Song ID matched.");
-              playerAudio.play();
-              btn.innerHTML = icons.pauseCircleFilled;
-            } else {
-              console.log("[Switching] Song ID did not match.");
-              playerAudio.pause();
-              playerAudio.src = el.dataset.url;
-              playerAudio.onloadeddata = function () {
-                playerAudio.play();
-                if (document.getElementById(curSongId))
-                  document.getElementById(curSongId).firstChild.innerHTML = icons.playCircleFilled;
-                curSongId = el.id;
-                btn.innerHTML = icons.pauseCircleFilled;
-                setSongInfo(el);
-                console.log(analyzer.frequencyBinCount);
-              };
-              playerAudio.load();
-              toggle();
-            }
-          };
+          e.onclick = buttonClicked(event);
         });
       });
     });
+}
+
+function buttonClicked(event) {
+  console.log("Hooked");
+  return function (event) {
+    let el = event.target.closest("div");
+    let btn = el.querySelector("i");
+
+    toggle();
+
+    if (curSongId != el.id && playerAudio.paused) {
+      console.log("[Starting] Song ID did not match.");
+      if (firstTime === true) {
+        firstTime = false;
+        footerAnim
+          .add({
+            targets: "#footercontainer",
+            easing: "easeOutQuint",
+            opacity: 0,
+            duration: 800
+          })
+          .add({
+            targets: ".player",
+            opacity: 1,
+            easing: "easeOutQuint",
+            duration: 800,
+            offset: "-=400"
+          });
+      }
+      curSongId = el.id;
+      playerAudio.src = el.dataset.url;
+      playerAudio.onloadeddata = function () {
+        playerAudio.play();
+        setSongInfo(el);
+        console.log(analyzer.frequencyBinCount);
+      };
+      playerAudio.load();
+      btn.innerHTML = icons.pauseCircleFilled;
+    } else if (curSongId == el.id && !playerAudio.paused) {
+      console.log("[Pausing] Song ID matched.");
+      playerAudio.pause();
+      btn.innerHTML = icons.playCircleFilled;
+    } else if (curSongId == el.id && playerAudio.paused) {
+      console.log("[Resuming] Song ID matched.");
+      playerAudio.play();
+      btn.innerHTML = icons.pauseCircleFilled;
+    } else {
+      console.log("[Switching] Song ID did not match.");
+      playerAudio.pause();
+      playerAudio.src = el.dataset.url;
+      playerAudio.onloadeddata = function () {
+        playerAudio.play();
+        if (document.getElementById(curSongId))
+          document.getElementById(curSongId).querySelector("i").innerHTML = icons.playCircleFilled;
+        curSongId = el.id;
+        btn.innerHTML = icons.pauseCircleFilled;
+        setSongInfo(el);
+        console.log(analyzer.frequencyBinCount);
+      };
+      playerAudio.load();
+      toggle();
+    }
+  }
 }
 
 function animRotate(element, turns, duration = 500) {

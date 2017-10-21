@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  var Song = sequelize.define(
+  let Song = sequelize.define(
     "Song",
     {
       id: { type: DataTypes.UUID, primaryKey: true },
