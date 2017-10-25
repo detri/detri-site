@@ -80,7 +80,7 @@ setInterval(() => {
     timekeeper.firstChild.innerHTML = formatMinuteSecond(playerAudio.currentTime);
     timekeeper.lastChild.innerHTML = formatMinuteSecond(playerAudio.duration);
   }
-}, 16 + (2/3)); // 60 fps boiz!!!!!!!!!!!!
+}, 16 + (2 / 3)); // 60 fps boiz!!!!!!!!!!!!
 
 // Fetch song buttons when the select button is inputted.
 // The selection input is a list of users, so (parent directory)/api/music/ + user
@@ -176,7 +176,9 @@ function buttonClicked(event) {
 }
 
 function animRotate(element, turns, duration = 500) {
-  return anime.timeline({ autoplay: false }).add({
+  return anime.timeline({
+    autoplay: false
+  }).add({
     targets: element,
     easing: "easeOutQuint",
     rotate: turns + "turn",

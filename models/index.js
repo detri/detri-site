@@ -31,8 +31,15 @@ fs
     db[model.name] = model;
   });
 
-db.User.hasMany(db.Song, {as: 'songs', foreignKeyConstraint: true});
-db.Song.belongsTo(db.User, {as: 'user', foreignKey: 'user_id', foreignKeyConstraint: true});
+db.User.hasMany(db.Song, {
+  as: 'songs',
+  foreignKeyConstraint: true
+});
+db.Song.belongsTo(db.User, {
+  as: 'user',
+  foreignKey: 'user_id',
+  foreignKeyConstraint: true
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

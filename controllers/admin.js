@@ -8,7 +8,7 @@ let admin = express.Router();
 const upload = multer({
   dest: "./songs",
   limits: {
-    fieldSize: 20 // MB
+    fieldSize: 100 // MB
   },
   fileFilter: (req, file, cb) => {
     file.mimetype == "audio/mp3" ? cb(null, true) : cb(null, false);
@@ -24,7 +24,9 @@ const upload = multer({
 });
 
 admin.get("/admin", (request, response) => {
-  response.render("admin", { session: request.session });
+  response.render("admin", {
+    session: request.session
+  });
 });
 
 admin.post("/admin", (request, response) => {
@@ -55,7 +57,8 @@ admin.post("/upload", upload.single("song"), (request, response) => {
         filename: request.file.originalname,
         play_count: 0,
         release_date: Date.now(),
-        user_id: request.session.userId
+        user_id: request.session.userId,
+        author: request.session.username
       })
       .then(song => {
         song.save().then(() => {

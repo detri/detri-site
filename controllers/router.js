@@ -7,16 +7,15 @@ let router = express.Router();
 router.get("/users/:username", (request, response) => {
   db.User
     .findOne({
-      where: { username: request.params.username },
-      include: [
-        {
-          model: db.Song,
-          as: "songs"
-        }
-      ],
+      where: {
+        username: request.params.username
+      },
+      include: [{
+        model: db.Song,
+        as: "songs"
+      }],
       order: [
-        [
-          {
+        [{
             model: db.Song,
             as: "songs"
           },
@@ -26,33 +25,36 @@ router.get("/users/:username", (request, response) => {
       ]
     })
     .then(user => {
-      response.render("users", { user: user });
+      response.render("users", {
+        user: user
+      });
     });
 });
 
 router.get("/users", (request, response) => {
   db.User
     .findAll({
-      order: [[db.sequelize.fn("upper", db.sequelize.col("username")), "ASC"]]
+      order: [
+        [db.sequelize.fn("upper", db.sequelize.col("username")), "ASC"]
+      ]
     })
     .then(users => {
-      response.render("users", { users: users });
+      response.render("users", {
+        users: users
+      });
     });
 });
 
 router.get("/music", (request, response) => {
   db.User
     .findAll({
-      include: [
-        {
-          model: db.Song,
-          as: "songs"
-        }
-      ],
+      include: [{
+        model: db.Song,
+        as: "songs"
+      }],
       order: [
         [db.sequelize.fn("upper", db.sequelize.col("username"))],
-        [
-          {
+        [{
             model: db.Song,
             as: "songs"
           },
@@ -62,7 +64,9 @@ router.get("/music", (request, response) => {
       ]
     })
     .then(users => {
-      response.render("music", { users: users });
+      response.render("music", {
+        users: users
+      });
     });
 });
 
@@ -73,16 +77,18 @@ router.get("/about", (request, response) => {
 router.get("/", (request, response) => {
   db.Song
     .findOne({
-      order: [["release_date", "DESC"]],
-      include: [
-        {
-          model: db.User,
-          as: "user"
-        }
-      ]
+      order: [
+        ["release_date", "DESC"]
+      ],
+      include: [{
+        model: db.User,
+        as: "user"
+      }]
     })
     .then(song => {
-      response.render("home", { song: song });
+      response.render("home", {
+        song: song
+      });
     });
 });
 

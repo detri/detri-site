@@ -26,12 +26,16 @@ app.use('/music/:song', (request, response, next) => {
 });
 
 // initialize the session
-app.use(session({ secret: 'weenie',
-                  cookie: {},
-                  resave: false,
-                  saveUninitialized: true }));
+app.use(session({
+    secret: 'weenie',
+    cookie: {},
+    resave: false,
+    saveUninitialized: true
+}));
 // parse the request
-app.use(parser.urlencoded({ extended: false }));
+app.use(parser.urlencoded({
+    extended: false
+}));
 
 // routes
 app.use('/', api);
