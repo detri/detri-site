@@ -46,26 +46,31 @@ admin.post("/admin", (request, response) => {
 });
 
 admin.post("/upload", upload.single("song"), (request, response) => {
-  db.Song
-    .create({
-      id: uuidv4(),
-      song_name: request.body["song-title"],
-      filename: request.file.originalname,
-      play_count: 0,
-      release_date: Date.now(),
-      user_id: request.session.userId
-    })
-    .then(song => {
-      song.save().then(() => {
-        response.send(
-          "Upload of " +
+  console.log(request.session.userId);
+  if (request.session.userId) {
+    db.Song
+      .create({
+        id: uuidv4(),
+        song_name: request.body["song-title"],
+        filename: request.file.originalname,
+        play_count: 0,
+        release_date: Date.now(),
+        user_id: request.session.userId
+      })
+      .then(song => {
+        song.save().then(() => {
+          response.send(
+            "Upload of " +
             song.song_name +
             " (" +
             request.file.originalname +
             ") success !!"
-        );
+          );
+        });
       });
-    });
+  } else {
+    response.send("Please log in first!")
+  }
 });
 
 admin.get("/logout", (request, response) => {

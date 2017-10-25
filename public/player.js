@@ -11,10 +11,17 @@ let songArtist = document.querySelector(".song-artist");
 let songRelease = document.querySelector(".song-release-date");
 let buttons = document.querySelectorAll(".button");
 
+// Hook the player if there are
+// already buttons on the page.
+
 if (buttons) buttons.forEach(e => {
   if (e.onclick) e.onlick = null;
   e.onclick = buttonClicked(event);
 });
+
+
+// Connect the player audio element to the browser's AudioContext.
+// TODO: Use the gain node to make a volume control.
 
 let source = context.createMediaElementSource(playerAudio);
 if (!context.createGain) context.createGain = context.createGainNode();
@@ -25,10 +32,16 @@ source.connect(gainNode);
 source.connect(analyzer);
 gainNode.connect(context.destination);
 
-footerAnim = anime.timeline();
+// Initialize misc variables.
+
+// Anime imeline used for the player fade in animation.
+let footerAnim = anime.timeline();
+// The UUID of the current song. (Null when the page first loads)
 let curSongId = null;
+// Permanently debounce the player animation.
 let firstTime = true;
 
+// Icon object, to make using icons much easier.
 const icons = {
   playCircleFilled: "&#xE038;",
   playCircleOutline: "&#xE039;",
@@ -36,6 +49,8 @@ const icons = {
   pauseCircleOutline: "&#xE036;"
 };
 
+// Add the click event to the player's play/pause button.
+// Toggles playback and swaps icon.
 playbutton.addEventListener("click", (event) => {
   if (playerAudio.paused) {
     console.log("[Playing] Big button pressed");
@@ -48,6 +63,7 @@ playbutton.addEventListener("click", (event) => {
   }
 });
 
+// Seekbar events. Sets the current time of the song.
 seekbar.addEventListener("input", (event) => {
   if (!playerAudio.pause) playerAudio.pause();
   if (playerAudio.duration) playerAudio.currentTime = playerAudio.duration * event.target.value;
@@ -57,30 +73,45 @@ seekbar.addEventListener("dragend", (event) => {
   if (playerAudio.paused) playerAudio.play();
 });
 
+// Update the time display and seekbar value
 setInterval(() => {
   if (playerAudio && playerAudio.currentTime && playerAudio.duration && !playerAudio.paused) {
     seekbar.value = playerAudio.currentTime / playerAudio.duration;
     timekeeper.firstChild.innerHTML = formatMinuteSecond(playerAudio.currentTime);
     timekeeper.lastChild.innerHTML = formatMinuteSecond(playerAudio.duration);
   }
-}, 60);
+}, 16 + (2/3)); // 60 fps boiz!!!!!!!!!!!!
 
+// Fetch song buttons when the select button is inputted.
+// The selection input is a list of users, so (parent directory)/api/music/ + user
+// is the server's API route being accessed for whichever user is selected.
+// Hooks the player after buttons are loaded.
 function loadSongButtons(urlParam) {
-  fetch("../music/" + urlParam)
+  fetch("../api/music/" + urlParam)
     .then(res => {
       res.text().then(text => {
-        document.querySelector(".results").innerHTML = text;
+        let user = JSON.parse(text);
+        let htmlString = "";
+        for (let song of user.songs) {
+          htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${user.username}" data-release-date="${new Date(song.release_date).toLocaleDateString()}">
+          <i class="material-icons">&#xE038;</i>
+          <span class="songtext"> &nbsp; ${song.song_name}</span></div>`;
+        }
+        document.querySelector(".results").innerHTML = htmlString;
         buttons = document.querySelectorAll(".button");
         buttons.forEach(e => {
           if (e.onlick) e.onclick = null;
           e.onclick = buttonClicked(event);
         });
       });
-    });
+    }).catch(err => err ? console.log(err) : console.log("wut"));
 }
 
+// Load the first user's songs when the page loads.
 loadSongButtons(document.querySelector("select").value);
 
+// This function does all the dirty work with hooking.
+// Well, that came out wrong. You get the idea.
 function buttonClicked(event) {
   console.log("Hooked");
   return function (event) {
