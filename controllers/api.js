@@ -27,8 +27,8 @@ api.get("/api/music/:username", (req, res, next) => {
         ]
       })
       .then(user => {
-        if (!user) next();
-        res.send(JSON.stringify(user));
+        if (!user || !user.songs) next();
+        res.send(JSON.stringify(user.songs));
       }).catch(err => err ? next() : null);
   });
 

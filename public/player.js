@@ -90,9 +90,9 @@ function loadSongButtons(urlParam) {
   fetch("../api/music/" + urlParam)
     .then(res => {
       res.text().then(text => {
-        let user = JSON.parse(text);
+        let songs = JSON.parse(text);
         let htmlString = "";
-        for (let song of user.songs) {
+        for (let song of songs) {
           htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${user.username}" data-release-date="${new Date(song.release_date).toLocaleDateString()}">
           <i class="material-icons">&#xE038;</i>
           <span class="songtext"> &nbsp; ${song.song_name}</span></div>`;
