@@ -1,15 +1,15 @@
 AudioContext = window.webkitAudioContext || window.AudioContext;
 const context = new AudioContext();
 
-let player = document.querySelector(".player");
-let playbutton = document.getElementById("playbutton");
+let player      = document.querySelector(".player");
+let playbutton  = document.getElementById("playbutton");
 let playerAudio = document.querySelector("audio");
-let seekbar = document.querySelector("#seekbar");
-let timekeeper = document.querySelector(".timekeeper");
-let songName = document.querySelector(".song-name");
-let songArtist = document.querySelector(".song-artist");
+let seekbar     = document.querySelector("#seekbar");
+let timekeeper  = document.querySelector(".timekeeper");
+let songName    = document.querySelector(".song-name");
+let songArtist  = document.querySelector(".song-artist");
 let songRelease = document.querySelector(".song-release-date");
-let buttons = document.querySelectorAll(".button");
+let buttons     = document.querySelectorAll(".button");
 
 // Hook the player if there are
 // already buttons on the page.
@@ -93,7 +93,7 @@ function loadSongButtons(urlParam) {
         let songs = JSON.parse(text);
         let htmlString = "";
         for (let song of songs) {
-          htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${user.username}" data-release-date="${new Date(song.release_date).toLocaleDateString()}">
+          htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${song.author}" data-release-date="${new Date(song.release_date).toLocaleDateString()}">
           <i class="material-icons">&#xE038;</i>
           <span class="songtext"> &nbsp; ${song.song_name}</span></div>`;
         }
@@ -173,18 +173,6 @@ function buttonClicked(event) {
       toggle();
     }
   }
-}
-
-function animRotate(element, turns, duration = 500) {
-  return anime.timeline({
-    autoplay: false
-  }).add({
-    targets: element,
-    easing: "easeOutQuint",
-    rotate: turns + "turn",
-    duration: duration,
-    direction: "normal"
-  });
 }
 
 function toggle() {
