@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const parser = require('body-parser');
 const fs = require('fs');
 const router = require('./controllers/router');
 const admin = require('./controllers/admin');
@@ -31,10 +30,6 @@ app.use(session({
     cookie: {},
     resave: false,
     saveUninitialized: true
-}));
-// parse the request
-app.use(parser.urlencoded({
-    extended: false
 }));
 
 // routes

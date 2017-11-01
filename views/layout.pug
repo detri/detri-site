@@ -38,8 +38,8 @@ mixin player()
 doctype html
 html
     head
-        for l in styles
-            +link(l, "stylesheet")
+        for link in styles
+            +link(link, "stylesheet")
     body(style='background-color: #b6bec7;')
         nav(class="navbar navbar-expand-md bg-dark")
             .container
@@ -65,5 +65,5 @@ html
                         span  | 
                         a(href='http://steamcommunity.com/id/detriment') Steam
             +player
-        for l in scripts
-                +script(l)
+        for link in scripts
+                +script(link)

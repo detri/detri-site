@@ -1,8 +1,14 @@
 const express = require("express");
 const fs = require("fs");
+const parser = require('body-parser');
 const db = require("../models");
 
 let router = express.Router();
+
+// parse the request
+router.use(parser.urlencoded({
+  extended: false
+}));
 
 router.get("/users/:username", (request, response) => {
   db.User
