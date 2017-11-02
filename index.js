@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
+const parser = require('body-parser');
 const router = require('./controllers/router');
 const admin = require('./controllers/admin');
 const api = require('./controllers/api');
@@ -24,6 +25,11 @@ app.use('/music/:song', (request, response, next) => {
     });
 });
 
+// parse the request
+app.use(parser.urlencoded({
+    extended: false
+}));
+
 // initialize the session
 app.use(session({
     secret: 'weenie',
@@ -33,9 +39,9 @@ app.use(session({
 }));
 
 // routes
-app.use('/', api);
 app.use('/', admin);
 app.use('/', router);
+app.use('/', api);
 
 // sync db schema -> make the server listen
 db.sequelize.sync().then(() => {

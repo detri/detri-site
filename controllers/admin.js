@@ -47,7 +47,7 @@ admin.post("/admin", (request, response) => {
     });
 });
 
-admin.post("/upload", upload.single("song"), (request, response) => {
+/*admin.post("/upload", upload.single("song"), (request, response) => {
   console.log(request.session.userId);
   if (request.session.userId) {
     db.Song
@@ -74,7 +74,7 @@ admin.post("/upload", upload.single("song"), (request, response) => {
   } else {
     response.send("Please log in first!")
   }
-});
+});*/
 
 admin.get("/logout", (request, response) => {
   request.session.destroy();

@@ -27,6 +27,7 @@ const updateSummary = setInterval(() => {
 
 function uploadSong() {
     let upload = new FormData();
+    let fileReader = new FileReader();
     try {
         if (title === "" || title === "Song title" || !title) {
             throw new Error("A title must be entered.");
@@ -36,34 +37,26 @@ function uploadSong() {
         upload.append("song-title", title);
         console.log("appended song title");
 
+        if (!releaseDate) {
+            throw new Error("Release date was not specified.");
+        }
+        upload.append("releaseDate", releaseDate);
+
         if (!file) {
             throw new Error("There must be a file.");
         } else if (file.type !== "audio/mp3") {
             throw new Error("Not an mp3.");
         }
         upload.append("file", file);
-        console.log("got dat file");
-
-        if (!releaseDate) {
-            throw new Error("Release date was not specified.");
-        }
-        upload.append("releaseDate", releaseDate);
-
         fetch("/api/music/upload", {
             method: "POST",
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
             body: upload
-        }).then(res => {
-            clearInterval(updateSummary);
-            res.text().then(text => {
-                summary.innerHTML = text;
-            });
-        })
-    } catch(err) {
+        });
+
+        console.log("got dat file");
+    } catch (err) {
         clearInterval(updateSummary);
-        summary.innerHTML = "Upload failed! Here's why:\n" + err;
+        summary.innerHTML = "Upload failed! Here's why:<br>" + err;
     };
 }
 

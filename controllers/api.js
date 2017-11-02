@@ -1,7 +1,6 @@
 const express = require("express");
 const fs = require("fs");
 const multer = require("multer");
-const parser = require('body-parser');
 const db = require("../models");
 
 let api = express.Router();
@@ -51,12 +50,10 @@ api.get("/api/music/:username", (req, res, next) => {
     }).catch(err => err ? next() : null);
 });
 
-// parse the request
-api.use(parser.urlencoded({
-  extended: false
-}));
-
 api.post("/api/music/upload", upload.single("song"), (req, res, next) => {
+  const reader = new FileReader();
+  console.log(req.body);
+  console.log(req.file);
   if (req.session.userId) {
     db.Song
       .create({
@@ -73,8 +70,6 @@ api.post("/api/music/upload", upload.single("song"), (req, res, next) => {
         console.log("Saved song " + song);
         res.send("wow");
       });
-  } else {
-    res.send("Please log in first!")
   }
 });
 
