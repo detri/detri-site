@@ -8,7 +8,8 @@ let api = express.Router();
 const upload = multer({
   dest: "./songs",
   limits: {
-    fieldSize: 100 // MB
+    fieldSize: 100, // MB
+    fieldNameSize: 1000
   },
   fileFilter: (req, file, cb) => {
     file.mimetype == "audio/mp3" ? cb(null, true) : cb(null, false);
@@ -51,9 +52,8 @@ api.get("/api/music/:username", (req, res, next) => {
 });
 
 api.post("/api/music/upload", upload.single("song"), (req, res, next) => {
-  const reader = new FileReader();
   console.log(req.body);
-  console.log(req.file);
+  console.log(req.files);
   if (req.session.userId) {
     db.Song
       .create({
@@ -61,7 +61,7 @@ api.post("/api/music/upload", upload.single("song"), (req, res, next) => {
         song_name: req.body["song-title"],
         filename: req.body.file.name,
         play_count: 0,
-        release_date: req,
+        release_date: req.body.releaseDate,
         user_id: req.session.userId,
         author: req.session.username
       })

@@ -27,7 +27,7 @@ const updateSummary = setInterval(() => {
 
 function uploadSong() {
     let upload = new FormData();
-    let fileReader = new FileReader();
+    const reader = new FileReader();
     try {
         if (title === "" || title === "Song title" || !title) {
             throw new Error("A title must be entered.");
@@ -47,11 +47,14 @@ function uploadSong() {
         } else if (file.type !== "audio/mp3") {
             throw new Error("Not an mp3.");
         }
-        upload.append("file", file);
-        fetch("/api/music/upload", {
-            method: "POST",
-            body: upload
+        reader.addEventListener("load", event => {
+            upload.append("file", reader.result);
+            fetch("/api/music/upload", {
+                method: "POST",
+                body: upload
+            });
         });
+        reader.readAsArrayBuffer(file);
 
         console.log("got dat file");
     } catch (err) {
