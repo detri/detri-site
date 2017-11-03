@@ -1,7 +1,6 @@
 const express = require("express");
 const multer = require("multer");
 const db = require("../models");
-const uuidv4 = require("uuid/v4");
 
 let admin = express.Router();
 

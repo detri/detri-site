@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const multer = require("multer");
 const db = require("../models");
+const uuidv4 = require("uuid/v4");
 
 let api = express.Router();
 
@@ -51,25 +52,27 @@ api.get("/api/music/:username", (req, res, next) => {
     }).catch(err => err ? next() : null);
 });
 
-api.post("/api/music/upload", upload.single("song"), (req, res, next) => {
+api.post("/api/music/upload", upload.single("file"), (req, res, next) => {
   console.log(req.body);
-  console.log(req.files);
+  console.log(req.file);
   if (req.session.userId) {
     db.Song
       .create({
         id: uuidv4(),
         song_name: req.body["song-title"],
-        filename: req.body.file.name,
+        filename: req.file.originalname,
         play_count: 0,
         release_date: req.body.releaseDate,
         user_id: req.session.userId,
         author: req.session.username
       })
       .then(song => {
-        song.save();
-        console.log("Saved song " + song);
-        res.send("wow");
+        song.save().then(() => {
+          res.send("Upload complete!!");
+        });
       });
+  } else {
+    res.send("Please log in first!");
   }
 });
 

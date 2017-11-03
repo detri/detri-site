@@ -47,14 +47,12 @@ function uploadSong() {
         } else if (file.type !== "audio/mp3") {
             throw new Error("Not an mp3.");
         }
-        reader.addEventListener("load", event => {
-            upload.append("file", reader.result);
-            fetch("/api/music/upload", {
-                method: "POST",
-                body: upload
-            });
+        upload.append("file", file);
+        fetch("/api/music/upload", {
+            method: "POST",
+            credentials: "include",
+            body: upload
         });
-        reader.readAsArrayBuffer(file);
 
         console.log("got dat file");
     } catch (err) {

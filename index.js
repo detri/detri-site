@@ -39,9 +39,9 @@ app.use(session({
 }));
 
 // routes
+app.use('/', api);
 app.use('/', admin);
 app.use('/', router);
-app.use('/', api);
 
 // sync db schema -> make the server listen
 db.sequelize.sync().then(() => {
