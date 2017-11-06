@@ -52,9 +52,12 @@ function uploadSong() {
             method: "POST",
             credentials: "include",
             body: upload
+        }).then(result => {
+            result.json().then(json => {
+                clearInterval(updateSummary);
+                summary.innerHTML = json.message;
+            });
         });
-
-        console.log("got dat file");
     } catch (err) {
         clearInterval(updateSummary);
         summary.innerHTML = "Upload failed! Here's why:<br>" + err;

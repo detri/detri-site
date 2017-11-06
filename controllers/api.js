@@ -68,7 +68,9 @@ api.post("/api/music/upload", upload.single("file"), (req, res, next) => {
       })
       .then(song => {
         song.save().then(() => {
-          res.send("Upload complete!!");
+          res.redirect('/music');
+        }).catch(err => {
+          res.send(err);
         });
       });
   } else {

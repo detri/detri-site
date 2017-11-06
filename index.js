@@ -2,9 +2,10 @@ const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
 const parser = require('body-parser');
+const songs = require('./controllers/api/songs');
+const users = require('./controllers/api/users');
 const router = require('./controllers/router');
 const admin = require('./controllers/admin');
-const api = require('./controllers/api');
 const db = require('./models');
 
 const app = express();
@@ -26,9 +27,7 @@ app.use('/music/:song', (request, response, next) => {
 });
 
 // parse the request
-app.use(parser.urlencoded({
-    extended: false
-}));
+app.use(parser.urlencoded({ extended: false }));
 
 // initialize the session
 app.use(session({
@@ -38,8 +37,11 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// CRUD controllers (I just really wanted to type that tbh)
+app.use('/api/songs', songs);
+app.use('/api/users', users);
+
 // routes
-app.use('/', api);
 app.use('/', admin);
 app.use('/', router);
 
