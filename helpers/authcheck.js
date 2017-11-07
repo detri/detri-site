@@ -1,9 +1,7 @@
 module.exports = (req, res, next) => {
-    if (req.loggedIn) {
+    if (req.session.loggedIn) {
         next();
     } else {
-        res.send(
-            new Error("You must be logged in to perform this action.")
-        );
+        res.send("You must be logged in to perform this action.");
     }
 }

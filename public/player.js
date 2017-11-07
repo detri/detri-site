@@ -87,10 +87,10 @@ setInterval(() => {
 // is the server's API route being accessed for whichever user is selected.
 // Hooks the player after buttons are loaded.
 function loadSongButtons(urlParam) {
-  fetch("../api/music/" + urlParam)
+  fetch("../api/songs/" + urlParam)
     .then(res => {
-      res.text().then(text => {
-        let songs = JSON.parse(text);
+      res.json().then(songs => {
+        console.log(songs);
         let htmlString = "";
         for (let song of songs) {
           htmlString += `<div class="button" id="${song.id}" data-url="${"/music/" + song.filename.split('.')[0]}" data-title="${song.song_name}" data-artist-name="${song.author}" data-release-date="${new Date(song.release_date).toLocaleDateString()}">

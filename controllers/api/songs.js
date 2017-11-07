@@ -26,6 +26,31 @@ const upload = multer({
     })
 });
 
+songs.post("/",
+    isLoggedIn,
+    upload.single("file"),
+    (req, res) => {
+        console.log("Attempting upload");
+        const releaseDate = req.body.releaseDate || Date.now();
+        db.Song
+            .create({
+                id: uuidv4(),
+                song_name: req.body["song-title"],
+                filename: req.file.originalname,
+                play_count: 0,
+                release_date: releaseDate,
+                user_id: req.session.userId,
+                author: req.session.username
+            }).then(song => {
+                song.save().then(() => {
+                    res.json({
+                        status: "success",
+                        message: song.song_name + " was uploaded successfully!"
+                    });
+                });
+            });
+    });
+
 songs.get("/", (req, res) => {
     db.Song
         .findAll()
@@ -47,28 +72,4 @@ songs.get("/:id",
             });
     });
 
-songs.post("/",
-    isLoggedIn,
-    upload.single("file"),
-    (req, res) => {
-        const releaseDate = req.body.releaseDate || Date.now();
-        db.Song
-            .create({
-                id: uuidv4(),
-                song_name: req.body["song-title"],
-                filename: req.file.originalname,
-                play_count: 0,
-                release_date: releaseDate,
-                user_id: req.session.userId,
-                author: req.session.username
-            }).then(song => {
-                song.save().then(() => {
-                    res.send({
-                        status: "success",
-                        message: song.song_name + " was uploaded successfully!"
-                    });
-                });
-            });
-    });
-
-    module.exports = songs;
+module.exports = songs;

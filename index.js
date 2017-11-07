@@ -28,6 +28,7 @@ app.use('/music/:song', (request, response, next) => {
 
 // parse the request
 app.use(parser.urlencoded({ extended: false }));
+app.use(parser.json());
 
 // initialize the session
 app.use(session({

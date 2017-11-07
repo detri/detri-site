@@ -7,25 +7,6 @@ const isLoggedIn = require("../../helpers/authcheck");
 
 const users = express.Router();
 
-const upload = multer({
-    dest: "./songs",
-    limits: {
-        fieldSize: 100, // MB
-        fieldNameSize: 1000
-    },
-    fileFilter: (req, file, cb) => {
-        file.mimetype == "audio/mp3" ? cb(null, true) : cb(null, false);
-    },
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, "./songs");
-        },
-        filename: (req, file, cb) => {
-            cb(null, file.originalname);
-        }
-    })
-});
-
 users.get("/", (req, res) => {
     db.User
         .findAll({
@@ -49,8 +30,24 @@ users.get("/:id", (req, res) => {
             }
         })
         .then(user => {
-            res.send(user)
+            res.json(user);
         });
 });
+
+users.post("/",
+    isLoggedIn,
+    (req, res) => {
+        db.User
+            .create({
+                id: uuidv4(),
+                username: req.body.username,
+                password: req.body.password
+            })
+            .then(user => {
+                user.save.then(() => {
+                    res.json(user);
+                });
+            });
+    });
 
 module.exports = users;

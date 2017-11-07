@@ -48,7 +48,7 @@ function uploadSong() {
             throw new Error("Not an mp3.");
         }
         upload.append("file", file);
-        fetch("/api/music/upload", {
+        fetch("../api/songs", {
             method: "POST",
             credentials: "include",
             body: upload
