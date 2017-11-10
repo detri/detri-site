@@ -26,6 +26,28 @@ const upload = multer({
     })
 });
 
+songs.get("/", (req, res) => {
+    db.Song
+        .findAll()
+        .then(songList => {
+            res.json(songList);
+        });
+});
+
+songs.get("/:id",
+    (req, res) => {
+        db.Song
+            .findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(song => {
+                res.json(song);
+            });
+    }
+);
+
 songs.post("/",
     isLoggedIn,
     upload.single("file"),
@@ -49,27 +71,7 @@ songs.post("/",
                     });
                 });
             });
-    });
-
-songs.get("/", (req, res) => {
-    db.Song
-        .findAll()
-        .then(songList => {
-            res.json(songList);
-        });
-});
-
-songs.get("/:id",
-    (req, res) => {
-        db.Song
-            .findOne({
-                where: {
-                    id: req.params.id
-                }
-            })
-            .then(song => {
-                res.json(song);
-            });
-    });
+    }
+);
 
 module.exports = songs;

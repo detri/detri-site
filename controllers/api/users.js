@@ -44,10 +44,47 @@ users.post("/",
                 password: req.body.password
             })
             .then(user => {
-                user.save.then(() => {
-                    res.json(user);
+                user.save().then(() => {
+                    res.json({
+                        status: "success",
+                        message: user.username + " has been created!"
+                    });
                 });
             });
-    });
+    }
+);
+
+users.put("/:id",
+    isLoggedIn,
+    (req, res) => {
+        const content = {
+            id: req.params.id,
+            username: req.body.username,
+            password: req.body.password
+        };
+        db.User
+            .upsert(content)
+            .then(created => {
+                if (created) {
+                    res.json({
+                        status: "success",
+                        message: content.username + " has been created!",
+                        body: content
+                    });
+                } else if (!created) {
+                    res.json({
+                        status: "success",
+                        message: content.username + " has been updated!",
+                        body: content
+                    });
+                } else {
+                    res.json({
+                        status: "error",
+                        message: "Query error."
+                    });
+                }
+            });
+    }
+);
 
 module.exports = users;

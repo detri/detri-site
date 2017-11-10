@@ -59,4 +59,4 @@ typings/
 
 /config
 /songs
-/models/detribase.sqlite
+/models/testdb.sqlite
