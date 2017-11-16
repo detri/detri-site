@@ -30,7 +30,10 @@ songs.get("/", (req, res) => {
     db.Song
         .findAll()
         .then(songList => {
-            res.json(songList);
+            res.json({
+                status: "success",
+                body: songList
+            });
         });
 });
 
@@ -43,7 +46,10 @@ songs.get("/:id",
                 }
             })
             .then(song => {
-                res.json(song);
+                res.json({
+                    status: "success",
+                    body: song
+                });
             });
     }
 );
@@ -66,11 +72,10 @@ songs.post("/",
                 author: req.session.username
             })
             .then(song => {
-                song.save().then(() => {
-                    res.json({
-                        status: "success",
-                        message: song.song_name + " was uploaded successfully!"
-                    });
+                res.json({
+                    status: "success",
+                    message: song.song_name + " was uploaded successfully!",
+                    body: song
                 });
             });
     }
@@ -129,7 +134,8 @@ songs.delete("/:id",
             .then(song => {
                 res.json({
                     status: "success",
-                    message: song.song_name + " has been deleted!"
+                    message: song.song_name + " has been deleted!",
+                    body: song
                 });
             })
             .catch(err => {

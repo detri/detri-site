@@ -13,7 +13,10 @@ users.get("/", (req, res) => {
             }
         })
         .then(userList => {
-            res.json(userList);
+            res.json({
+                status: "success",
+                body: userList
+            });
         });
 });
 
@@ -28,7 +31,10 @@ users.get("/:id", (req, res) => {
             }
         })
         .then(user => {
-            res.json(user);
+            res.json({
+                status: "success",
+                body: user
+            });
         });
 });
 
@@ -42,12 +48,10 @@ users.post("/",
                 password: req.body.password
             })
             .then(user => {
-                user.save().then(() => {
-                    res.json({
-                        status: "success",
-                        message: user.username + " has been created!",
-                        body: user
-                    });
+                res.json({
+                    status: "success",
+                    message: user.username + " has been created!",
+                    body: user
                 });
             });
     }
