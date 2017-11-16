@@ -27,7 +27,6 @@ const updateSummary = setInterval(() => {
 
 function uploadSong() {
     let upload = new FormData();
-    const reader = new FileReader();
     try {
         if (title === "" || title === "Song title" || !title) {
             throw new Error("A title must be entered.");

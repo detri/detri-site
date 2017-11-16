@@ -104,7 +104,7 @@ function loadSongButtons(urlParam) {
           e.onclick = buttonClicked(event);
         });
       });
-    }).catch(err => err ? console.log(err) : console.log("wut"));
+    }).catch(err => console.log(err));
 }
 
 // Load the first user's songs when the page loads.

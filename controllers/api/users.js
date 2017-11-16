@@ -1,6 +1,4 @@
 const express = require("express");
-const fs = require("fs");
-const multer = require("multer");
 const db = require("../../models");
 const uuidv4 = require("uuid/v4");
 const isLoggedIn = require("../../helpers/authcheck");
@@ -47,7 +45,8 @@ users.post("/",
                 user.save().then(() => {
                     res.json({
                         status: "success",
-                        message: user.username + " has been created!"
+                        message: user.username + " has been created!",
+                        body: user
                     });
                 });
             });
@@ -83,6 +82,33 @@ users.put("/:id",
                         message: "Query error."
                     });
                 }
+            });
+    }
+);
+
+users.delete("/:id",
+    isLoggedIn,
+    (req, res) => {
+        db.User
+            .findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(user => {
+                user.destroy().then(() => {
+                    res.json({
+                        status: "success",
+                        message: user.username + " has been deleted.",
+                        body: user
+                    });
+                });
+            })
+            .catch(err => {
+                res.json({
+                    status: "error",
+                    message: err
+                });
             });
     }
 );

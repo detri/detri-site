@@ -47,7 +47,6 @@ admin.post("/admin", (request, response) => {
 });
 
 /*admin.post("/upload", upload.single("song"), (request, response) => {
-  console.log(request.session.userId);
   if (request.session.userId) {
     db.Song
       .create({
