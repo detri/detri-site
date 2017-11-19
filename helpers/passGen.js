@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-const iterations = 1700000,
+const iterations = 500000,
       hashAlgo = "sha256",
       size = 32;
 
