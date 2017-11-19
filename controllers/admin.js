@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const db = require("../models");
+const passport = require("passport");
 
 let admin = express.Router();
 
@@ -24,55 +25,15 @@ const upload = multer({
 
 admin.get("/admin", (request, response) => {
   response.render("admin", {
-    session: request.session
+    request: request
   });
 });
 
-admin.post("/admin", (request, response) => {
-  db.User
-    .findOne({
-      where: {
-        username: request.body.username,
-        password: request.body.password
-      }
-    })
-    .then(user => {
-      if (user) {
-        request.session.userId = user.id;
-        request.session.username = user.username;
-        request.session.loggedIn = true;
-      }
-      response.redirect("/admin");
-    });
-});
-
-/*admin.post("/upload", upload.single("song"), (request, response) => {
-  if (request.session.userId) {
-    db.Song
-      .create({
-        id: uuidv4(),
-        song_name: request.body["song-title"],
-        filename: request.file.originalname,
-        play_count: 0,
-        release_date: Date.now(),
-        user_id: request.session.userId,
-        author: request.session.username
-      })
-      .then(song => {
-        song.save().then(() => {
-          response.send(
-            "Upload of " +
-            song.song_name +
-            " (" +
-            request.file.originalname +
-            ") success !!"
-          );
-        });
-      });
-  } else {
-    response.send("Please log in first!")
-  }
-});*/
+admin.post("/admin",
+  passport.authenticate("local"),
+  (req, res) => {
+    res.redirect("/admin")
+  });
 
 admin.get("/logout", (request, response) => {
   request.session.destroy();

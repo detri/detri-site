@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const multer = require("multer");
 const db = require("../../models");
 const uuidv4 = require("uuid/v4");
@@ -119,27 +120,41 @@ songs.put("/:id",
 );
 
 songs.delete("/:id",
-    isLoggedIn,
+    //isLoggedIn,
     (req, res) => {
         const songToDel = {
             id: req.params.id
         }
         db.Song
             .findOne({
-                id: songToDel
+                where: {
+                    id: songToDel
+                }
             })
             .then(song => {
                 return song.destroy();
             })
             .then(song => {
-                res.json({
-                    status: "success",
-                    message: song.song_name + " has been deleted!",
-                    body: song
-                });
-            })
-            .catch(err => {
-                throw new Error(err);
+                fs
+                    .unlink("./songs/" + song.filename, (err) => {
+                        try {
+                            if (err) {
+                                throw new Error(err);
+                            } else {
+                                res.json({
+                                    status: "success",
+                                    message: song.song_name + " has been deleted!",
+                                    body: song
+                                });
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            res.json({
+                                status: "error",
+                                message: err
+                            });
+                        }
+                    });
             });
     }
 );

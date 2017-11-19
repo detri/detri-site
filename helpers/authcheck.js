@@ -1,7 +1,10 @@
 module.exports = (req, res, next) => {
-    if (req.session.loggedIn) {
-        next();
+    if (req.isAuthenticated()) {
+        return next();
     } else {
-        res.send("You must be logged in to perform this action.");
+        return res.json({
+            status: "error",
+            message: "You must be logged in to perform this action."
+        });
     }
 }
