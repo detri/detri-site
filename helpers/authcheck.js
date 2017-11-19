@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (req.session.passport.user) {
         return next();
     } else {
         return res.json({
