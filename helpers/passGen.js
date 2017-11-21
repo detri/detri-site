@@ -43,11 +43,7 @@ passwordModule.verifyPass = (pass, saltedHash) => {
             if (err) {
                 reject(err);
             }
-            if (derivedKey.toString("hex") === passHash) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+            resolve(crypto.timingSafeEqual(Buffer.from(passHash, "hex"), derivedKey));
         });
     });
 }

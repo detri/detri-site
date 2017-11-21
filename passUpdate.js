@@ -7,21 +7,15 @@ db.sequelize.sync().then(() => {
         .then(users => {
             let passPromises = [];
             for (let user of users) {
-                passPromises.push(passHelper.generatePassword(user.password));
-            }
-            Promise
-                .all(passPromises)
-                .then(values => {
-                    let savePromises = [];
-                    for (let i in users) {
-                        users[i].password = values[i];
-                        savePromises.push(users[i].save());
-                    }
-                    Promise
-                        .all(savePromises)
-                        .then(values => {
-                            console.log(JSON.stringify(values));
-                        });
+                const promise = passHelper.generatePassword(user.password).then(password => {
+                    user.password = password;
+                    user.save();
+                    return user;
                 });
+                passPromises.push(promise);
+            }
+            Promise.all(passPromises).then(() => {
+                console.log("Sh*ite is updated !!");
+            });
         })
 });
