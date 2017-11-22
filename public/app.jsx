@@ -49,7 +49,7 @@ class LatestSong extends React.Component {
             result.json().then(res => {
                 console.log(res);
                 this.setState({
-                    songpath: "/songs/" + res.body.filename
+                    songpath: "/music/" + res.body.filename
                 });
             });
         });

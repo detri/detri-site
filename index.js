@@ -74,7 +74,7 @@ app.use("/public", express.static("public"));
 
 // song serving middleware
 app.use("/music/:song", (request, response, next) => {
-    let path = __dirname + "/songs/" + request.params.song + ".mp3";
+    let path = __dirname + "/songs/" + request.params.song;
     path = unescape(path);
     fs.access(path, (err) => {
         if (err) {
