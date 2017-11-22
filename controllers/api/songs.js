@@ -27,15 +27,30 @@ const upload = multer({
     })
 });
 
-songs.get("/", (req, res) => {
-    db.Song
-        .findAll()
-        .then(songList => {
-            res.json({
-                status: "success",
-                body: songList
+songs.get("/:type?", (req, res) => {
+    if (req.params.type === "latest") {
+        db.Song
+            .findOne({
+                order: [
+                    ["release_date", "DESC"]
+                ]
+            })
+            .then(song => {
+                res.json({
+                    status: "success",
+                    body: song
+                })
             });
-        });
+    } else {
+        db.Song
+            .findAll()
+            .then(songList => {
+                res.json({
+                    status: "success",
+                    body: songList
+                });
+            });
+    }
 });
 
 songs.get("/:id",

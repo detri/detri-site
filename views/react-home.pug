@@ -1,0 +1,22 @@
+- let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css","/public/style.css","https://fonts.googleapis.com/icon?family=Material+Icons"];
+
+mixin script(src, type)
+    if type
+        script(type=type, src=src)
+    else
+        script(type="text/javascript", src=src)
+
+mixin link(src, type)
+    link(href=src, rel=type)
+
+doctype html
+html
+    head
+        for link in styles
+            +link(link, "stylesheet")
+    body
+        div(id="root")
+        +script("https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js")
+        +script("https://unpkg.com/react@16.1.1/umd/react.development.js")
+        +script("https://unpkg.com/react-dom@16.1.1/umd/react-dom.development.js")
+        +script("/public/app.jsx", "text/babel")

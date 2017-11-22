@@ -10,6 +10,7 @@ html {
 body {
   font-family: "Roboto", sans-serif;
   margin-bottom: 60px;
+  background-color: #b6bec7;
 }
 
 a {
@@ -33,6 +34,12 @@ span {
   cursor: default;
 }
 
+/* other stuff */
+
+#main-content {
+  padding: 10px;
+  background-color: #b6bec7;
+}
 
 /* custom classes and whatnot */
 
