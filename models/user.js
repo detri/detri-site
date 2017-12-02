@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 module.exports = function (sequelize, DataTypes) {
   let User = sequelize.define(
-    "User", {
+    'User', {
       id: {
         type: DataTypes.UUID,
         primaryKey: true
       },
       username: DataTypes.STRING,
-      password: DataTypes.STRING,
+      password: DataTypes.STRING
     }, {
       underscored: true
     }
