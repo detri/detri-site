@@ -7,7 +7,7 @@ const users = require('./controllers/api/users');
 const router = require('./controllers/new-router');
 const db = require('./models');
 const passHelper = require('./helpers/passGen');
-const passport = require('passport')
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 // configure passport
