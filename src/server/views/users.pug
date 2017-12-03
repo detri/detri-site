@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+    if user
+        h1 #{user.username}'s songs:
+        center
+            for thing in user.songs
+                +button(thing, user.username)
+    else if users
+        center
+            h1 Welcome to the music page!
+            p Please pick a user to view their songs.
+            for user in users
+                p
+                    a(href='/users/'+user.username) #{user.username}
+        
+    else
+        center <h1>You dun goofed.</h1>

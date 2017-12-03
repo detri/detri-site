@@ -1,0 +1,40 @@
+extends layout.pug
+
+block content
+    if !request.isAuthenticated()
+        .row
+            .col-md-4
+            .col-md-4
+                form(method='post', enctype='application/x-www-form-urlencoded', action='/admin')
+                    .form-group
+                        label(for='username') Username
+                        input(type='text', class='form-control', name='username', placeholder='Username')
+                    .form-group
+                        label(for='password') Password
+                        input(type='password', class='form-control', name='password', placeholder='Password')
+                    center
+                        button(type='submit', class='btn btn-dark') Submit
+            .col-md-4
+    else
+        .row
+            .col-md-6
+                center
+                    h1 Send a file!
+                form(method='post', enctype='multipart/form-data', action='/api/music/upload')
+                    .form-group
+                        label(for='song-title')
+                        input(type='text', class='form-control', name='song-title', placeholder='Song title' class='form-title')
+                    .form-group
+                        label(for='song') Song file (MP3 PLZ)
+                        input(type='file', class='form-control', name='song', placeholder='Song file' class='form-file')
+                    .form-group
+                        label(for='releaseDate') Release Date
+                        input(type='date', class='form-control', name='releaseDate' class='form-date')
+                    button(type="button", class='btn btn-dark', onclick='uploadSong()') Submit
+                h5
+                    p Hello, <b class="username-greeting">#{request.session.passport.user.username}</b>!
+                    a(href='/logout') Logout
+            .col-md-6
+                p(class="summary", align="left")
+                button(class='btn btn-dark', onclick='reset()') Reset
+        +script("/public/upload.js")

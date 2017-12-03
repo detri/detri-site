@@ -3,7 +3,7 @@
     "username": "admin",
     "password": "un1c0rn5",
     "database": "testdb",
-    "host": "models/testdb.sqlite",
+    "host": "src/server/models/testdb.sqlite",
     "dialect": "sqlite"
   }
 }

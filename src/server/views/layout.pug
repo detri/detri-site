@@ -1,0 +1,69 @@
+- let styles = ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css","/public/style.css","https://fonts.googleapis.com/icon?family=Material+Icons"];
+- let scripts = ["https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js","/public/player.js"];
+
+mixin link(src, type)
+    link(href=src, rel=type)
+
+mixin script(src)
+    script(type="text/javascript", src=src)
+
+mixin button(song, artist)
+    .button(id=song.id, data-url="/music/" + song.filename.split('.')[0], data-title=song.song_name, data-artist-name=artist, data-release-date=song.release_date.toLocaleDateString())
+        i.material-icons &#xE038;
+        span(class="songtext") &nbsp; #{song.song_name}
+
+mixin altbutton(song)
+    .button(id=song.id, data-url="/music/" + song.filename.split('.')[0], data-title = song.song_name, data-release-date=song.release_date.toLocaleDateString())
+        i.material-icons &#xE038;
+        span(class="songtext") &nbsp; #{song.song_name}
+
+mixin player()
+    .player
+        audio(preload="none")
+        center
+            .song-details
+                b.song-name Name
+                .song-artist Artist
+                .song-release-date Release date
+            i(class="material-icons", id="playbutton") &#xE039;
+            span &nbsp;
+            input(id="seekbar", type="range", min="0", max="1", step="any")
+            span &nbsp;
+            span &nbsp;
+            span(class="timekeeper")
+                span(id="curtime") 00:00
+                span(id="timeseparator") &nbsp;/&nbsp;
+                span(id="timeleft") 00:00
+
+doctype html
+html
+    head
+        for link in styles
+            +link(link, "stylesheet")
+    body(style='background-color: #b6bec7;')
+        nav(class="navbar navbar-expand-md bg-dark")
+            .container
+                a(class='navbar-brand text-light' href='/') Woofy World
+                ul(class="navbar-nav")
+                    li(class="nav-item")
+                        a(class="nav-link" href="/") Home
+                    li(class="nav-item")
+                        a(class="nav-link" href="/music") Music
+                    li(class="nav-item")
+                        a(class="nav-link" href="/users") Users
+                    li(class="nav-item")
+                        a(class="nav-link" href="/about") About
+        div(class="container-fluid", style="padding: 10px; background-color: #b6bec7;")
+            .container
+                block content
+        footer(class='footer text-light bg-dark')
+            div(class='container' id='footercontainer')
+                center
+                    .text-muted
+                        span Woofy World 2017 | 
+                        a(href='http://facebook.com/detrimentalist') Facebook
+                        span  | 
+                        a(href='http://steamcommunity.com/id/detriment') Steam
+            +player
+        for link in scripts
+                +script(link)
