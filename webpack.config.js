@@ -1,9 +1,10 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: './src/app/index.jsx',
+  entry: './src/app/Layout.jsx',
   output: {
-    path: __dirname + '/src/server/public',
+    path: path.join(__dirname, '/src/server/public'),
     filename: 'bundle.js'
   },
   module: {

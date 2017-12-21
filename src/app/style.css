@@ -1,219 +1,144 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Poppins");
 
-/* General page styling and nav */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
 html {
-  position: relative;
-  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-family: "Poppins";
 }
-
 body {
-  font-family: "Roboto", sans-serif;
-  margin-bottom: 60px;
-  background-color: #b6bec7;
-}
-
-a {
-  color: #000000;
-  font-style: "bold";
-}
-
-nav a {
-  color: #ffffff;
-}
-
-nav a:hover {
-  color: #ffffff;
-}
-
-nav ul {
-  font-variant: small-caps;
-}
-
-span {
-  cursor: default;
-}
-
-/* other stuff */
-
-#main-content {
-  padding: 10px;
-  background-color: #b6bec7;
-}
-
-/* custom classes and whatnot */
-
-.footer,
-.player {
-  display: block;
+  margin: 0;
+  padding: 0;
   position: absolute;
-  bottom: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 62px;
-  line-height: 60px;
-  /* Vertically center the text there */
+  color: #fff;
 }
-
-.player {
-  opacity: 0.001;
+nav {
+  position: relative;
+  width: 100%;
+  max-height: 2.25rem;
+  height: 100%;
+  background: #252525;
+  box-sizing: border-box;
+  z-index: 3;
 }
-
-.player center {
+nav ul {
+  padding-left: 22.5%;
+  padding-right: 22.5%;
+}
+nav li {
+  display: inline-block;
+}
+nav li:hover {
+  background-color: #373737;
+  border-bottom:4px solid white;
+}
+nav li a {
+  line-height: 2rem;
   display: block;
+  text-decoration: none;
+  color: white;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+nav li a:hover {
+  text-shadow: 0px 0px 5px white;
+}
+.logo {
+  float: right;
+}
+.container-fluid {
+  position: absolute;
+  z-index: 1;
   width: 100%;
   height: 100%;
+  background: #303030;
 }
-
-.spacer {
-  flex-grow: 1;
-}
-
-.footer a {
-  color: #ffffff;
-}
-
-
-/* button and song styling */
-
-.button {
-  cursor: default;
-}
-
-.songtext {
-  vertical-align: top;
-}
-
-
-/* big play button styling */
-
-#playbutton {
-  cursor: default;
-  font-size: 36px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-
-/* seek bar styling */
-
-#seekbar {
-  width: 33%;
-  -webkit-appearance: none;
-  background: transparent;
-  padding-bottom: 1.6px;
-  display: inline-block;
-}
-
-#seekbar:focus {
-  outline: none;
-}
-
-#seekbar::-webkit-slider-runnable-track {
+section {
+  position: relative;
   width: 100%;
-  height: 5px;
-  animation: 0.2s;
-  box-shadow: 0.4px 0.4px 0px #000000, 0px 0px 0.4px #0d0d0d;
-  background: #e1e1e1;
-  border-radius: 0.5px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
+  height: calc(100% - 4.5rem);
+  z-index: -1;
+  overflow: hidden;
 }
-
-#seekbar::-webkit-slider-thumb {
-  box-shadow: 0.4px 0.4px 0.4px #000000, 0px 0px 0.4px #0d0d0d;
-  border: 0px solid rgba(0, 0, 0, 0);
-  height: 16px;
-  width: 6px;
-  animation: 0.2s;
-  border-radius: 0.5px;
-  background: #969696;
-  -webkit-appearance: none;
-  margin-top: -5.8px;
+#content {
+  margin: 0 22.5% 0 22.5%;
+  padding: 1rem 1rem 0 1rem;
+  background: #404040;
+  height: 100%;
+  overflow: auto;
 }
-
-#seekbar:focus::-webkit-slider-runnable-track {
-  background: #f0f0f0;
+#content::-webkit-scrollbar {
+  width: 0;
 }
-
-#seekbar::-moz-range-track {
+footer {
+  bottom: 0;
   width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 0.4px 0.4px 0px #000000, 0px 0px 0.4px #0d0d0d;
-  background: #e1e1e1;
-  border-radius: 1.3px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
+  line-height: 2.25rem;
+  height: 2.25rem;
+  text-align: center;
+  position: relative;
+  background: #252525;
 }
-
-#seekbar::-moz-range-thumb {
-  box-shadow: 0.4px 0.4px 0.4px #000000, 0px 0px 0.4px #0d0d0d;
-  border: 0px solid rgba(0, 0, 0, 0);
-  height: 24px;
-  width: 10px;
-  border-radius: 1px;
-  background: #969696;
-  cursor: pointer;
+strong {
+  font-weight: bold;
 }
-
-#seekbar::-ms-track {
+#root {
+  position: absolute;
+  height: 100%;
   width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-#seekbar::-ms-fill-lower {
-  background: #d2d2d2;
-  border: 0.2px solid rgba(1, 1, 1, 0);
-  border-radius: 2.6px;
-  box-shadow: 0.4px 0.4px 0px #000000, 0px 0px 0.4px #0d0d0d;
-}
-
-#seekbar::-ms-fill-upper {
-  background: #e1e1e1;
-  border: 0.2px solid rgba(1, 1, 1, 0);
-  border-radius: 2.6px;
-  box-shadow: 0.4px 0.4px 0px #000000, 0px 0px 0.4px #0d0d0d;
-}
-
-#seekbar::-ms-thumb {
-  box-shadow: 0.4px 0.4px 0.4px #000000, 0px 0px 0.4px #0d0d0d;
-  border: 0px solid rgba(0, 0, 0, 0);
-  height: 24px;
-  width: 10px;
-  border-radius: 1px;
-  background: #969696;
-  cursor: pointer;
-  height: 8.4px;
-}
-
-#seekbar:focus::-ms-fill-lower {
-  background: #e1e1e1;
-}
-
-#seekbar:focus::-ms-fill-upper {
-  background: #f0f0f0;
-}
-
-
-/* time display bar */
-
-.timekeeper {
-  font-size: 10px;
-  line-height: 10px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-
-/* song info */
-
-.song-details {
-  display: inline-block;
-  line-height: 10px;
-  text-align: right;
-  font-size: 10px;
-  vertical-align: middle;
+  top: 0;
+  left: 0;
 }

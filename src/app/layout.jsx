@@ -1,16 +1,23 @@
 import React from 'react';
-import Nav from './nav.jsx';
-import Home from './home.jsx';
-import Footer from './footer.jsx';
+import { createStore } from 'redux';
+import * as mp from './redux/musicPage';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import Header from './Header.jsx';
+// import Home from './home.jsx';
+//import MusicPage from './MusicPage.jsx';
+import Footer from './Footer.jsx';
+import './style.css';
+
+export const store = createStore(mp.default);
 
 class Layout extends React.Component {
-  render() {
+  render () {
     return (
-      <div id="body">
-        <Nav />
-        <div className="container-fluid" id="main-content">
-          <div className="container">
-            <Home />
+      <div id='body'>
+        <Header />
+        <div className='container-fluid' id='main-content'>
+          <div className='container'>
           </div>
         </div>
         <Footer />
@@ -19,4 +26,9 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+ReactDOM.render(
+  <Provider store={store}>
+    <Layout />
+  </Provider>,
+  document.getElementById('root')
+);
