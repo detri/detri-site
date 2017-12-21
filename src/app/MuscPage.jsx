@@ -15,9 +15,24 @@ const mapDispatchToProps = dispatch => {
 
 class MusicPage extends React.Component {
   render () {
+    for (let author of {songs}) {
+      for (let song of author) {
+
+      }
+    }
     return (
+      <div class='row'>
       
+      </div>
     );
+  }
+}
+
+class AuthorBox extends React.Component {
+  render () {
+    <div class="col-md-4">
+      
+    </div>  
   }
 }
 
