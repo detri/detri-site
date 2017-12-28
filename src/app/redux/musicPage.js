@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { groupBy } from 'lodash/groupBy';
+import * as _ from 'lodash';
 
 // ACTIONS
 const FETCH_SONGS_START = 'FETCH_SONGS_START';
@@ -20,7 +20,7 @@ export const fetchSongs = dispatch => {
       return response.json();
     })
     .then(json => {
-      dispatch({ type: FETCH_SONGS_SUCCESS, songs: json });
+      dispatch({ type: FETCH_SONGS_SUCCESS, songs: json.body });
     })
     .catch(err => {
       dispatch({ type: FETCH_SONGS_ERR, error: err });
@@ -53,5 +53,5 @@ export const getSongs = state => state.songs;
 
 export const getSongsByUser = createSelector(
   getSongs,
-  songs => groupBy(songs, 'author')
+  songs => _.groupBy(songs, 'author')
 );

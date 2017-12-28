@@ -5,7 +5,7 @@ class Header extends React.Component {
     return (
       <nav>
         <ul>
-          <li class="logo">
+          <li className="logo">
             <a href="/">
               <strong>ded</strong>.zone
             </a>
