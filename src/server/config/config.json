@@ -1,9 +1,0 @@
-{
-  "development": {
-    "username": "admin",
-    "password": "un1c0rn5",
-    "database": "testdb",
-    "host": "src/server/models/testdb.sqlite",
-    "dialect": "sqlite"
-  }
-}
