@@ -1,1 +1,3 @@
 node_modules/
+src/server/config.js
+.vscode/
