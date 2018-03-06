@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./models');
 const path = require('path');
 const api = require('./routes/api');
 
@@ -16,4 +17,7 @@ app.get('/', (req, res) => {
   res.render('layout');
 });
 
-app.listen(3000);
+db.sequelize.sync({force: true}).then(() => {
+  app.listen(8080);
+});
+

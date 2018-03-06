@@ -1,3 +1,6 @@
+# internal
 node_modules/
-src/server/config.js
 .vscode/
+
+# config
+src/server/config.json
