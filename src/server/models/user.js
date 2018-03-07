@@ -12,14 +12,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING(24),
-        unique: true
+        unique: true,
+        allowNull: false
       },
       email: {
         type: DataTypes.STRING,
-        unique: true
+        unique: true,
+        allowNull: false
       },
-      pass_hash: DataTypes.BLOB,
-      pass_salt: DataTypes.BLOB,
+      pass_hash: {
+        type: DataTypes.BLOB,
+        allowNull: false
+      },
+      pass_salt: {
+        type: DataTypes.BLOB,
+        allowNull: false
+      },
       is_active: {
         type: DataTypes.BOOLEAN,
         defaultValue: false

@@ -17,7 +17,13 @@ app.get('/', (req, res) => {
   res.render('layout');
 });
 
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    ok: false,
+    error: err.name
+  });
+});
+
 db.sequelize.sync({force: true}).then(() => {
   app.listen(8080);
 });
-

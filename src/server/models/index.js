@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config.json'))[env].database;
-let db = {};
+const db = {};
 
 let sequelize;
 if (config.dialect === 'postgres') {
@@ -33,6 +33,8 @@ fs
   });
 
 // model relationships
+db.User.hasMany(db.Song);
+db.Song.belongsTo(db.User);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
