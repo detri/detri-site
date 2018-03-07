@@ -18,10 +18,25 @@ app.get('/', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({
+  console.log(err);
+  const response = {
     ok: false,
-    error: err.name
-  });
+    message: ''
+  };
+  switch (err.name) {
+    case 'SequelizeUniqueConstraintError':
+      if (err.fields.username) {
+        response.message = 'Username is taken.';
+      }
+      if (err.fields.email) {
+        response.message = 'Email is taken.';
+      }
+      break;
+    default:
+      response.message += 'Unspecified error.';
+      break;
+  }
+  res.status(500).json(response);
 });
 
 db.sequelize.sync({force: true}).then(() => {
