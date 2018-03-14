@@ -3,10 +3,11 @@ const db = require('../../models');
 const asyncHandler = require('express-async-handler');
 const mp3Duration = require('mp3-duration');
 const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const uuidv4 = require('uuid').v4;
+const promisify = require('util').promisify;
 const upload = multer({
-  storage: multer.diskStorage({
-    
-  }),
   dest: '../../public/',
   limits: {
     fieldSize: 20000000,
@@ -21,20 +22,89 @@ const upload = multer({
   }
 });
 
-song.post('/',
-  upload.single('song'),
+const writeFile = promisify(fs.writeFile);
+const unlink = promisify(fs.unlink);
+
+song.get('/:id',
   asyncHandler(async (req, res) => {
-    console.log(req.file);
-    console.log(req.files);
-    const duration = await mp3Duration(req.file.buffer);
-    const song = await db.Song.create({
-      length: duration,
-      name: req.body.name,
-      url: req.file.path
+    const song = await db.Song.findOne({
+      where: {
+        id: req.params.id
+      }
     });
     res.status(200).json({
       ok: true,
       data: song
+    });
+  }));
+
+song.get('/',
+  asyncHandler(async (req, res) => {
+    const songs = await db.Song.findAll();
+    res.status(200).json({
+      ok: true,
+      data: songs
+    });
+  }));
+
+song.post('/',
+  upload.single('song'),
+  asyncHandler(async (req, res, next) => {
+    const duration = await mp3Duration(req.file.buffer);
+    const fileName = uuidv4() + '.mp3';
+    const savePath = path.join(__dirname, '..', '..', 'public', 'songs', fileName);
+    try {
+      await writeFile(savePath, req.file.data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+    const song = await db.Song.create({
+      length: duration,
+      name: req.body.name,
+      filename: fileName
+    });
+    res.status(200).json({
+      ok: true,
+      data: song
+    });
+  }));
+
+song.put('/:id',
+  asyncHandler(async (req, res) => {
+    const song = await db.Song.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    song.name = req.body.name;
+    await song.save();
+    res.status(200).json({
+      ok: true,
+      data: song,
+      message: 'Song successfully updated!'
+    });
+  }));
+
+song.delete('/:id',
+  asyncHandler(async (req, res, next) => {
+    const song = await db.Song.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    const destroyPath = path.join(__dirname, '..', '..', 'public', 'songs', song.url);
+    try {
+      await unlink(destroyPath, req.file.data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+    await song.destroy();
+    res.status(200).json({
+      ok: true,
+      data: song,
+      message: 'Song successfully deleted!'
     });
   }));
 
