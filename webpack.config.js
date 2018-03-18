@@ -1,9 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/app/Root.jsx',
+  entry: ['./src/app/Root.jsx', 'webpack-hot-middleware/client'],
   output: {
     path: path.join(__dirname, 'src', 'server', 'public', 'assets'),
     filename: 'bundle.js',
@@ -18,12 +19,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'react']
+            presets: ['env', 'react'],
+            plugins: ['react-hot-loader/babel']
           }
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.(s*)(a|c)ss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
@@ -31,6 +33,7 @@ module.exports = {
   plugins: [
     new UglifyJsPlugin({
       test: /\.jsx?$/
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

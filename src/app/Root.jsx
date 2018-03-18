@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+import Bulma from 'bulma';
 
 import Layout from './Layout.jsx';
 

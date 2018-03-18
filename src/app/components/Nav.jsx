@@ -12,7 +12,7 @@ import {
 
 const Nav = () => {
   return (
-    <Navbar className='is-dark'>
+    <Navbar className='is-dark is-mobile'>
       <NavbarBrand>
         <NavbarItem>
           ded.zone
