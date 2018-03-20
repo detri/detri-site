@@ -8,17 +8,12 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config.json'))[env].database;
 const db = {};
 
-let sequelize;
-if (config.dialect === 'postgres') {
-  sequelize = new Sequelize(`postgresql://${config.user}:${config.pass}@${config.host}:${config.port}/${config.db}`);
-} else {
-  sequelize = new Sequelize(
-    config.db,
-    config.user,
-    config.pass,
-    config
-  );
-}
+let sequelize = new Sequelize(
+  config.db,
+  config.user,
+  config.pass,
+  config
+);
 
 fs
   .readdirSync(__dirname)
