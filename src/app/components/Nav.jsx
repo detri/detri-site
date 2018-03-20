@@ -3,8 +3,7 @@ import {
   Navbar,
   NavbarStart,
   NavbarEnd,
-  NavbarMenu,
-  Icon
+  NavbarMenu
 } from 'bloomer';
 import NavLink from './NavLink.jsx';
 import Branding from './Branding.jsx';

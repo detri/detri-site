@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Bulma from 'bulma';
 
-import DedzoneRouter from './DedzoneRouter.jsx';
+import Layout from './Layout.jsx';
 
 ReactDOM.render(
-  <DedzoneRouter />,
+  <Router>
+    <Layout />
+  </Router>,
   document.getElementById('root'));

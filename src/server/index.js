@@ -23,7 +23,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 
 app.use('/api', api);
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.render('layout');
 });
 
