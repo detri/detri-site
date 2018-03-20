@@ -1,22 +1,16 @@
 import React from 'react';
-import {
-  Hero,
-  HeroBody,
-  Container,
-  Title,
-  Subtitle
-} from 'bloomer';
+import { Subtitle } from 'bloomer';
+import HeroBanner from './HeroBanner.jsx';
 
 const Home = () => {
   return (
-    <Hero isColor='success' isBold isSize='small'>
-      <HeroBody>
-        <Container hasTextAlign='centered'>
-          <Title>Welcome to ded.zone!</Title>
-          <Subtitle><em>Music sharing done the right way</em></Subtitle>
-        </Container>
-      </HeroBody>
-    </Hero>
+    <div>
+      <HeroBanner
+        title='Welcome to ded.zone!'
+        isColor='success'
+        subtitle='Music sharing done the right way.'
+      />
+    </div>
   );
 };
 

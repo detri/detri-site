@@ -1,19 +1,16 @@
 import React from 'react';
-import {
-  Hero,
-  HeroBody,
-  Container,
-  Title
-} from 'bloomer';
+import HeroBanner from './HeroBanner.jsx';
 
 const Users = () => {
-  return (<Hero isColor='dark' isBold isSize='small'>
-    <HeroBody>
-      <Container hasTextAlign='centered'>
-        <Title>Users</Title>
-      </Container>
-    </HeroBody>
-  </Hero>);
+  return (
+    <div>
+      <HeroBanner
+        title='Users'
+        isColor='dark'
+        subtitle='A collection of fools.'
+      />
+    </div>
+  );
 };
 
 export default Users;

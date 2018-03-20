@@ -3,9 +3,21 @@ import {
   Hero,
   HeroBody,
   Container,
-  Title
+  Title,
+  Subtitle
 } from 'bloomer';
 
-const HeroBanner = ({ isColor, title }) => {
-  
-}
+const HeroBanner = ({ isColor, title, subtitle }) => {
+  return (
+    <Hero isColor={isColor} isBold>
+      <HeroBody>
+        <Container>
+          <Title>{title}</Title>
+          <Subtitle><em>{subtitle}</em></Subtitle>
+        </Container>
+      </HeroBody>
+    </Hero>
+  );
+};
+
+export default HeroBanner;
