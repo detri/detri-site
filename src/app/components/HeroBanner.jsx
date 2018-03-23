@@ -9,7 +9,7 @@ import {
 
 const HeroBanner = ({ isColor, title, subtitle }) => {
   return (
-    <Hero isColor={isColor} isBold>
+    <Hero isColor={isColor}>
       <HeroBody>
         <Container>
           <Title>{title}</Title>

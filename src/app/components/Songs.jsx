@@ -1,16 +1,14 @@
 import React from 'react';
 import HeroBanner from './HeroBanner.jsx';
-import { Hero } from 'bloomer/lib/layout/Hero/Hero';
+import { Section } from 'bloomer';
 
 const Songs = () => {
   return (
-    <div>
-      <HeroBanner
-        title='Songs'
-        isColor='info'
-        subtitle='Pick your poison.'
-      />
-    </div>
+    <HeroBanner
+      title='Songs'
+      isColor='danger'
+      subtitle='Pick your poison.'
+    />
   );
 };
 
