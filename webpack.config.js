@@ -11,24 +11,30 @@ module.exports = {
     publicPath: '/assets/'
   },
   module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        include: path.join(__dirname, 'src', 'app'),
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env', 'react'],
-            plugins: ['react-hot-loader/babel']
-          }
+    rules: [{
+      test: /\.jsx?$/,
+      include: path.join(__dirname, 'src', 'app'),
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['env', 'react'],
+          plugins: ['react-hot-loader/babel']
         }
-      },
-      {
-        test: /\.(s*)(a|c)ss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
       }
-    ]
+    },
+    {
+      test: /\.(s*)(a|c)ss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader']
+    },
+    {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'url-loader?limit=10000&mimetype=application/font-woff'
+    },
+    {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'file-loader'
+    }]
   },
   plugins: [
     new UglifyJsPlugin({

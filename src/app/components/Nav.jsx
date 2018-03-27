@@ -18,6 +18,7 @@ const Nav = () => {
         <NavLink to='/songs' name='Songs' />
       </NavbarStart>
       <NavbarEnd>
+        <NavLink to='/upload' name='Upload' />
       </NavbarEnd>
     </NavbarMenu>
   </Navbar>);

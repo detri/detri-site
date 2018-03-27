@@ -1,5 +1,4 @@
 import React from 'react';
-import { Subtitle } from 'bloomer';
 import HeroBanner from './HeroBanner.jsx';
 
 const Home = () => {
