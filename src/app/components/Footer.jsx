@@ -5,13 +5,9 @@ import {
   Columns,
   Column,
   Box,
-  Title,
-  Icon,
-  Level,
-  LevelItem,
-  LevelLeft,
-  LevelRight
+  Title
 } from 'bloomer';
+import MadeBy from './MadeBy.jsx';
 
 const Footer = () => {
   return (
@@ -25,19 +21,7 @@ const Footer = () => {
             <Box style={{
               height: '100%'
             }}>
-              <Title isSize={6}><em>Made by</em></Title>
-              <p>Aaron Dosser</p>
-              <p>adosser＠ded.zone</p>
-              <Level>
-                <LevelLeft>
-                  <LevelItem>
-                    <Icon icon='fab fa-github-square fa-2x' isDisplay='inline' />
-                  </LevelItem>
-                  <LevelItem>
-                    github.com/detri
-                  </LevelItem>
-                </LevelLeft>
-              </Level>
+              <MadeBy />
             </Box>
           </Column>
           <Column>
