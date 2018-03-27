@@ -6,7 +6,7 @@ const Users = () => {
     <div>
       <HeroBanner
         title='Users'
-        isColor='dark'
+        isColor='primary'
         subtitle='A collection of fools.'
       />
     </div>

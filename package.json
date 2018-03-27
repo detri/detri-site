@@ -22,6 +22,7 @@
     "bloomer": "^0.6.3",
     "body-parser": "^1.18.2",
     "bulma": "^0.6.2",
+    "bulmaswatch": "^0.6.2",
     "express": "^4.16.2",
     "express-async-handler": "^1.0.4",
     "file-loader": "^1.1.11",

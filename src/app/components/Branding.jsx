@@ -7,7 +7,7 @@ import {
 const Branding = ({ name }) => {
   return (<NavbarBrand>
     <NavbarItem>
-      {name}
+      <strong className='has-text-link'>music</strong>.{name}
     </NavbarItem>
   </NavbarBrand>);
 };
