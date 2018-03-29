@@ -1,27 +1,10 @@
-import React from 'react';
-import {
-  Navbar,
-  NavbarStart,
-  NavbarEnd,
-  NavbarMenu
-} from 'bloomer';
+import Navbar from './Navbar.jsx';
 import NavLink from './NavLink.jsx';
-import Branding from './Branding.jsx';
 
 const Nav = () => {
-  return (<Navbar className='is-dark is-mobile'>
-    <Branding name='ded.zone' />
-    <NavbarMenu>
-      <NavbarStart>
-        <NavLink to='/' name='Home' />
-        <NavLink to='/users' name='Users' />
-        <NavLink to='/songs' name='Songs' />
-      </NavbarStart>
-      <NavbarEnd>
-        <NavLink to='/upload' name='Upload' />
-      </NavbarEnd>
-    </NavbarMenu>
-  </Navbar>);
+  return (
+    <Navbar>
+      <NavLink to='/songs' />
+    </Navbar>
+  );
 };
-
-export default Nav;

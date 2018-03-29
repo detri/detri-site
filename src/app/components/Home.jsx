@@ -1,13 +1,15 @@
 import React from 'react';
-import HeroBanner from './HeroBanner.jsx';
+import styled from 'styled-components';
+
+const StyledTitle = styled.h1`
+  text-align: center;
+`;
 
 const Home = () => {
   return (
-      <HeroBanner
-        title='Welcome to ded.zone!'
-        isColor='success'
-        subtitle='Music sharing done the right way.'
-      />
+    <StyledTitle>
+      What's up, nerd?
+    </StyledTitle>
   );
 };
 
