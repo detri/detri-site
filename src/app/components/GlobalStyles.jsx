@@ -41,8 +41,12 @@ injectGlobal`
     font-family: 'Josefin Sans';
     font-weight: normal;
     font-style: normal;
+    font-size: 20px;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
     color: #ee7272;
-    height: calc(100vh - 4.5rem);
+    height: calc(100vh - 4.5em);
   }
   #root {
     height: 100%;
