@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link as RRLink } from 'react-router-dom';
 
 const Link = styled(RRLink)`
-  display: block;
+  display: inline-block;
+  box-sizing: border-box;
   line-height: 2.25em;
   height: 100%;
-  width: 5em;
+  width: 6.5em;
   text-align: center;
   padding: 0 0.5em 0 0.5em;
   text-decoration: none;
