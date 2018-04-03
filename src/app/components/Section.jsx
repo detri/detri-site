@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Section = styled.section`
-  background: #a31818;
+  background: ${props => props.theme.primary};;
   padding-top: 2.25em;
   width: 100%;
   height: calc(100% - 2.25em);

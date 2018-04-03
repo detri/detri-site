@@ -5,7 +5,7 @@ const MusicBar = styled.footer`
   padding: 0.5em;
   height: 4.5em;
   width: 100%;
-  background: #ffb9b9;
+  background: ${props => props.theme.secondary};
   position: fixed;
   left: 0;
   bottom: 0;

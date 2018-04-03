@@ -5,8 +5,9 @@ const Content = styled.article`
   @media (max-width: 768px) {
     margin: 0;
   }
-  background: #6d0202;
+  background: ${props => props.theme.tertiary};
   height: 100%;
+  color: ${props => props.theme.light};
 `;
 
 export default Content;

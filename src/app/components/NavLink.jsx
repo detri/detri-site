@@ -17,13 +17,12 @@ const Link = styled(RRLink)`
   transition: color 0.1s, background 0.3s;
 
   &:hover {
-    background: #ee7272;
-    color: #360000;
+    background: ${props => props.theme.primary};
   }
 `;
 
 const NavLink = ({ to, children }) => {
-  return (<Link to={to} className='navbar-item'>
+  return (<Link to={to}>
     {children}
   </Link>);
 };

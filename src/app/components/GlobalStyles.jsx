@@ -1,6 +1,7 @@
 import { normalize } from 'styled-normalize';
 import { injectGlobal } from 'styled-components';
 import JosefinSansSemiBold from '../assets/fonts/JosefinSans-SemiBold.ttf';
+import JosefinSansBold from '../assets/fonts/JosefinSans-Bold.ttf';
 import JosefinSansRegular from '../assets/fonts/JosefinSans-Regular.ttf';
 import JosefinSansItalic from '../assets/fonts/JosefinSans-Italic.ttf';
 import JosefinSansLight from '../assets/fonts/JosefinSans-Light.ttf';
@@ -15,7 +16,7 @@ injectGlobal`
   }
   @font-face {
     font-family: 'Josefin Sans';
-    src: url(${JosefinSansSemiBold}) format('truetype');
+    src: url(${JosefinSansBold}) format('truetype');
     font-weight: bold;
     font-style: normal;
   }
@@ -45,7 +46,6 @@ injectGlobal`
     @media (max-width: 768px) {
       font-size: 16px;
     }
-    color: #ee7272;
     height: calc(100vh - 4.5em);
   }
   #root {
