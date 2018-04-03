@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link as RRLink } from 'react-router-dom';
+import { NavLink as RRLink } from 'react-router-dom';
 
 const Link = styled(RRLink)`
   display: inline-block;
@@ -14,15 +14,16 @@ const Link = styled(RRLink)`
   font-weight: bold;
   color: inherit;
   letter-spacing: 0.25em;
-  transition: color 0.1s, background 0.3s;
+  transition: color 0.1s, background 0.3s, box-shadow 0.5s;
 
-  &:hover {
+  .active, &:hover {
     background: ${props => props.theme.primary};
+    box-shadow: 0 5px 2px -2px ${props => props.theme.light};
   }
 `;
 
 const NavLink = ({ to, children }) => {
-  return (<Link to={to}>
+  return (<Link to={to} activeClassName='active'>
     {children}
   </Link>);
 };
