@@ -5,9 +5,10 @@ import NavLink from './NavLink.jsx';
 const Nav = () => {
   return (
     <Navbar>
-      <NavLink to='/'>MUSIC</NavLink>
+      <NavLink exact to='/'>MUSIC</NavLink>
       <NavLink to='/songs'>SONGS</NavLink>
       <NavLink to='/users'>USERS</NavLink>
+      <NavLink right to='/register'>REGISTER</NavLink>
     </Navbar>
   );
 };
