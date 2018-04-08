@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
       }
       break;
     default:
-      response.message += 'Unspecified error.';
+      response.message += 'Unspecified error. ' + err.toString();
       break;
   }
   res.status(500).json(response);

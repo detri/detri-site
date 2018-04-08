@@ -20,13 +20,16 @@ const defaultState = {
 export function tryRegister (username, password, email) {
   return dispatch => {
     dispatch({ type: TRY });
-    return fetch('/user', {
+    return fetch('/api/user', {
       method: 'POST',
       credentials: 'same-origin',
-      body: {
-        username,
-        password,
-        email
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        email: email
+      }),
+      headers: {
+        'content-type': 'application/json'
       }
     })
       .then(res => {
@@ -91,7 +94,7 @@ export function updateConfirmEmail(confirmEmail) {
   return {
     type: UPDATE_CONFIRM_EMAIL,
     confirmEmail
-  }
+  };
 }
 
 export default function reducer (state = defaultState, action = {}) {
@@ -111,6 +114,7 @@ export default function reducer (state = defaultState, action = {}) {
       return {
         ...state,
         inProgress: false,
+        success: false,
         error: action.error
       };
     case UPDATE_USERNAME:
@@ -126,7 +130,7 @@ export default function reducer (state = defaultState, action = {}) {
     case UPDATE_CONFIRM_PASSWORD:
       return {
         ...state,
-        confirm_password: action.confirmPassword
+        confirmPassword: action.confirmPassword
       };
     case UPDATE_EMAIL:
       return {
@@ -136,7 +140,7 @@ export default function reducer (state = defaultState, action = {}) {
     case UPDATE_CONFIRM_EMAIL:
       return {
         ...state,
-        confirm_email: action.confirmEmail
+        confirmEmail: action.confirmEmail
       };
     default:
       return state;

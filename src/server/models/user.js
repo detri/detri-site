@@ -1,3 +1,6 @@
+const pbkdf2 = require('util').promisify(require('crypto').pbkdf2);
+const timingSafeEqual = require('crypto').timingSafeEqual;
+
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'User', {
@@ -37,7 +40,13 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false
       }
     }, {
-      underscored: true
+      underscored: true,
+      getterMethods: {
+        async validatePassword (password) {
+          const buf = await pbkdf2(String(password), this.pass_salt, 250000, 64, 'sha512');
+          return timingSafeEqual(buf, this.pass_hash);
+        }
+      }
     }
   );
 };

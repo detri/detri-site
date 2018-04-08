@@ -43,20 +43,13 @@ injectGlobal`
     font-weight: normal;
     font-style: normal;
     font-size: 20px;
-    @media (max-width: 768px) {
+    @media (max-width: 1279px) {
       font-size: 16px;
     }
     height: calc(100vh - 4.5em);
   }
   #root {
     height: 100%;
-  }
-  .router-enter {
-    opacity: 0;
-  }
-  .router-enter-active {
-    opacity: 1;
-    transition: opacity 0.5s ease-in;
   }
   ${normalize}
 `;
