@@ -51,51 +51,12 @@ injectGlobal`
   #root {
     height: 100%;
   }
-  :not(#modal).router-enter {
+  .router-enter {
     opacity: 0;
   }
-  :not(#modal).router-enter.router-enter-active {
+  .router-enter-active {
     opacity: 1;
-    transition: opacity 1s ease-in;
-  }
-  :not(#modal).router-exit {
-    opacity: 1;
-  }
-  :not(#modal).router-exit.router-exit-active {
-    opacity: 0;
-    transition: opacity 1s ease-out;
-  }
-  #modal {
-    opacity: 0;
-    visibility: hidden;
-  }
-  #modal.router-enter {
-    opacity: 0;
-    visibility: visible;
-  }
-  #modal.router-enter.router-enter-active {
-    background-color: #000;
-    opacity: 0.7;
-    transition: opacity 1s ease-in, background-color 1s ease-in;
-  }
-  #modal.router-enter.router-enter-done {
-    background-color: #000;
-    opacity: 0.7;
-    display: none;
-  }
-  #modal.router-exit {
-    background-color: #000;
-    opacity: 0.7;
-  }
-  #modal.router-exit.router-exit-active {
-    opacity: 0;
-    background-color: transparent;
-    transition: opacity 1s ease-out, background-color 1s ease-out;
-  }
-  #modal.router-exit.router-exit-done {
-    opacity: 0;
-    background-color: transparent;
-    display: none;
+    transition: opacity 0.5s ease-in;
   }
   ${normalize}
 `;

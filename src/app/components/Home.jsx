@@ -1,20 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import Title from './Title.jsx';
 import Container from './Container.jsx';
 import ScrollBox from './ScrollBox.jsx';
-
-const StyledTitle = styled.h1`
-  margin: 0;
-  font-weight: bold;
-`;
 
 const Home = () => {
   return (
     <Container>
       <ScrollBox>
-        <StyledTitle>
+        <Title>
           ded.zone music
-        </StyledTitle>
+        </Title>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse cursus nulla nulla, at dapibus tellus aliquet vitae. Suspendisse in aliquet felis. Ut luctus convallis ex at hendrerit. Integer ullamcorper ligula a magna hendrerit, fermentum commodo est tincidunt. Aliquam dapibus mi dolor, condimentum rhoncus eros tincidunt molestie. Nullam nec tortor lobortis, laoreet mauris ac, maximus ante. Donec condimentum velit sed turpis dapibus, id facilisis turpis posuere. Curabitur eu neque et elit mattis faucibus. Morbi porta, tellus non iaculis consequat, lorem massa euismod ipsum, at pulvinar lectus erat commodo augue. Nam nisl magna, varius eu tempor euismod, vestibulum id metus. Proin tempor nisi nec vestibulum convallis.</p>
 
         <p>In convallis turpis vitae nulla elementum viverra. Quisque enim magna, ultricies a leo quis, scelerisque dapibus sapien. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce id posuere ante, sit amet bibendum lorem. Morbi velit odio, malesuada sit amet interdum faucibus, gravida sit amet diam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras sem augue, pellentesque in volutpat quis, hendrerit ac ligula. Vestibulum porta imperdiet quam porttitor viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
