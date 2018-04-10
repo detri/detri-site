@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+  devtool: "source-map",
   mode: 'development',
   entry: ['./src/app/Root.jsx', 'webpack-hot-middleware/client'],
   output: {

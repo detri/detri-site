@@ -1,6 +1,3 @@
-const pbkdf2 = require('util').promisify(require('crypto').pbkdf2);
-const timingSafeEqual = require('crypto').timingSafeEqual;
-
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'User', {
@@ -24,11 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       pass_hash: {
-        type: DataTypes.BLOB,
-        allowNull: false
-      },
-      pass_salt: {
-        type: DataTypes.BLOB,
+        type: DataTypes.STRING,
         allowNull: false
       },
       is_active: {
@@ -40,21 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false
       }
     }, {
-      underscored: true,
-      getterMethods: {
-        async validatePassword (password) {
-          const salt = this.getDataValue('pass_salt');
-          const hash = this.getDataValue('pass_hash');
-          console.log(salt, hash);
-          console.log('Generating hash');
-          const buf = await pbkdf2(password, salt, 250000, 64, 'sha512');
-          console.log(buf, hash);
-          console.log('Comparing hash');
-          const equals = timingSafeEqual(buf, hash);
-          console.log('Hash comparison result = ' + equals);
-          return equals;
-        }
-      }
+      underscored: true
     }
   );
 };

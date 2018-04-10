@@ -1,10 +1,7 @@
 const user = require('express').Router();
 const asyncHandler = require('express-async-handler');
-const crypto = require('crypto');
-const promisify = require('util').promisify;
+const bcrypt = require('bcrypt');
 const db = require('../../models');
-const randomBytes = promisify(crypto.randomBytes);
-const pbkdf2 = promisify(crypto.pbkdf2);
 
 user.get('/:id', asyncHandler(async (req, res) => {
   const user = await db.User.findOne({
@@ -12,7 +9,7 @@ user.get('/:id', asyncHandler(async (req, res) => {
       id: req.params.id
     },
     attributes: {
-      exclude: ['pass_hash', 'pass_salt', 'email']
+      exclude: ['pass_hash', 'email']
     }
   });
   res.status(200).json({
@@ -24,7 +21,7 @@ user.get('/:id', asyncHandler(async (req, res) => {
 user.get('/', asyncHandler(async (req, res) => {
   const users = await db.User.findAll({
     attributes: {
-      exclude: ['pass_hash', 'pass_salt', 'email']
+      exclude: ['pass_hash', 'email']
     },
     include: [db.Song]
   });
@@ -36,19 +33,15 @@ user.get('/', asyncHandler(async (req, res) => {
 
 user.post('/',
   asyncHandler(async (req, res) => {
-    console.log(req.body);
-    const salt = await randomBytes(64);
-    const hash = await pbkdf2(req.body.password, salt, 250000, 64, 'sha512');
-    console.log(req.body.password);
+    const hash = await bcrypt.hash(req.body.password, 12);
+    console.log(hash);
     let user = await db.User.create({
       username: req.body.username,
       email: req.body.email,
-      pass_hash: hash,
-      pass_salt: salt
+      pass_hash: hash
     });
     user.email = undefined;
     user.pass_hash = undefined;
-    user.pass_salt = undefined;
     res.status(200).json({
       ok: true,
       data: user
