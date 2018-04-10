@@ -43,8 +43,16 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       getterMethods: {
         async validatePassword (password) {
-          const buf = await pbkdf2(String(password), this.pass_salt, 250000, 64, 'sha512');
-          return timingSafeEqual(buf, this.pass_hash);
+          const salt = this.getDataValue('pass_salt');
+          const hash = this.getDataValue('pass_hash');
+          console.log(salt, hash);
+          console.log('Generating hash');
+          const buf = await pbkdf2(password, salt, 250000, 64, 'sha512');
+          console.log(buf, hash);
+          console.log('Comparing hash');
+          const equals = timingSafeEqual(buf, hash);
+          console.log('Hash comparison result = ' + equals);
+          return equals;
         }
       }
     }

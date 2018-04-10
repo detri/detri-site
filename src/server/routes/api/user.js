@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler');
 const crypto = require('crypto');
 const promisify = require('util').promisify;
 const db = require('../../models');
-const parseRequest = require('body-parser').json();
-
 const randomBytes = promisify(crypto.randomBytes);
 const pbkdf2 = promisify(crypto.pbkdf2);
 
@@ -37,11 +35,11 @@ user.get('/', asyncHandler(async (req, res) => {
 }));
 
 user.post('/',
-  parseRequest,
   asyncHandler(async (req, res) => {
     console.log(req.body);
     const salt = await randomBytes(64);
-    const hash = await pbkdf2(String(req.body.password), salt, 250000, 64, 'sha512');
+    const hash = await pbkdf2(req.body.password, salt, 250000, 64, 'sha512');
+    console.log(req.body.password);
     let user = await db.User.create({
       username: req.body.username,
       email: req.body.email,

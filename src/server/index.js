@@ -1,9 +1,15 @@
 const express = require('express');
+const session = require('express-session');
+const jsonParser = require('body-parser').json();
+const passport = require('passport');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
 const path = require('path');
+const routes = require('./routes');
 const api = require('./routes/api');
 const webpack = require('webpack');
 const webpackConfig = require('../../webpack.config');
+const JsonStrategy = require('passport-json').Strategy;
 const compiler = webpack(webpackConfig);
 
 const app = express();
@@ -12,14 +18,68 @@ app
   .set('view engine', 'pug')
   .set('views', path.join(__dirname, '/views'));
 
+// passport
+
+passport.use(new JsonStrategy(
+  async (username, password, done) => {
+    console.log(password);
+    db.User.findOne({
+      where: {
+        username: username
+      }
+    })
+      .then(async user => {
+        console.log('hi');
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!(await user.validatePassword(password))) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      }, err => {
+        return done(err);
+      });
+  }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  db.User.findOne({
+    where: {
+      id: id
+    }
+  })
+    .then(user => {
+      return done(null, user);
+    }, err => {
+      return done(err);
+    });
+});
+
 // initalize hot reloading
 app
   .use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath
   }))
-  .use(require('webpack-hot-middleware')(compiler));
+  .use(require('webpack-hot-middleware')(compiler))
+  .use(jsonParser)
+  .use(session({
+    secret: 'dedzoneseekrit',
+    saveUninitialized: false,
+    store: new SequelizeStore({
+      db: db.sequelize
+    }),
+    resave: false
+  }))
+  .use(passport.initialize())
+  .use(passport.session());
 
 app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', routes);
 
 app.use('/api', api);
 
@@ -49,6 +109,6 @@ app.use((err, req, res, next) => {
   res.status(500).json(response);
 });
 
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync().then(() => {
   app.listen(8080);
 });
