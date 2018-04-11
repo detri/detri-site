@@ -3,9 +3,8 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  devtool: "source-map",
   mode: 'development',
-  entry: ['babel-polyfill', './src/app/Root.jsx', 'webpack-hot-middleware/client'],
+  entry: ['./src/app/Root.jsx', 'webpack-hot-middleware/client'],
   output: {
     path: path.join(__dirname, 'src', 'server', 'public', 'assets'),
     filename: 'bundle.js',

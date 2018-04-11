@@ -43,7 +43,7 @@ injectGlobal`
     font-weight: normal;
     font-style: normal;
     font-size: 20px;
-    @media (max-width: 1279px) {
+    @media (max-width: 1365px) {
       font-size: 16px;
     }
     height: calc(100vh - 4.5em);
