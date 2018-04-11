@@ -1,6 +1,7 @@
 // this is code from sequelize-cli, but it has been modified
 
 const fs = require('fs');
+const bcrypt = require('bcrypt');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(module.filename);
@@ -26,6 +27,16 @@ fs
     let model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
+
+// instance functions
+db.User.prototype.validatePassword = function (password) {
+  const hash = this.pass_hash;
+  console.log(hash);
+  console.log('Comparing hash');
+  const equals = bcrypt.compareSync(password, hash);
+  console.log('Hash comparison result = ' + equals);
+  return equals;
+};
 
 // model relationships
 db.User.hasMany(db.Song);

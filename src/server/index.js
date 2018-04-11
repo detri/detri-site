@@ -28,12 +28,14 @@ passport.use(new JsonStrategy(
         username: username
       }
     })
-      .then(async user => {
-        console.log('hi');
+      .then(user => {
+        console.log(password);
         if (!user) {
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if (!(await user.validatePassword(password))) {
+        const validPass = user.validatePassword(password);
+        console.log(validPass);
+        if (!validPass) {
           return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);
@@ -109,6 +111,6 @@ app.use((err, req, res, next) => {
   res.status(500).json(response);
 });
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   app.listen(8080);
 });
