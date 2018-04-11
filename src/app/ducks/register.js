@@ -1,3 +1,5 @@
+import { login } from './userSession';
+
 const TRY = 'detri-site/register/TRY';
 const SUCCESS = 'detri-site/register/SUCCESS';
 const FAIL = 'detri-site/register/FAIL';
@@ -39,6 +41,7 @@ export function tryRegister (username, password, email) {
       })
       .then(json => {
         if (json.ok) {
+          dispatch(login(json.data));
           dispatch(registerSuccess());
         } else {
           dispatch(registerFail('Could not create user.'));
@@ -106,8 +109,7 @@ export default function reducer (state = defaultState, action = {}) {
       };
     case SUCCESS:
       return {
-        ...state,
-        inProgress: false,
+        ...defaultState,
         success: true
       };
     case FAIL:

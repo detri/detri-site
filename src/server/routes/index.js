@@ -6,20 +6,15 @@ routes.post('/login',
   passport.authenticate('json'),
   asyncHandler(async (req, res, next) => {
     const user = req.user;
+    console.log(user);
     if (!user) {
       return res.status(400).json({
         ok: false
       });
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      user.pass_hash = undefined;
-      return res.status(200).json({
-        ok: true,
-        user
-      });
+    return res.status(200).json({
+      ok: true,
+      user
     });
   }));
 

@@ -26,6 +26,9 @@ passport.use(new JsonStrategy(
     db.User.findOne({
       where: {
         username: username
+      },
+      attributes: {
+        include: ['username', 'is_active', 'is_admin']
       }
     })
       .then(user => {

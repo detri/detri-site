@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import register from './register.js';
+import userSession from './userSession.js';
 
 const rootReducer = combineReducers({
-  register
+  register,
+  userSession
 });
 
 export default rootReducer;
