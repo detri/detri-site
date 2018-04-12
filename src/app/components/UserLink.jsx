@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { NavLink as RRLink } from 'react-router-dom';
 
@@ -13,19 +14,25 @@ const Link = styled(RRLink)`
   text-decoration: none;
   font-weight: bold;
   color: inherit;
-  letter-spacing: ${props => props.right ? '0.1em' : '0.25em'};
   transition: color 0.1s, background 0.3s, box-shadow 0.5s;
 
   &.active, &:hover {
     background: ${props => props.theme.primary};
     box-shadow: 0 0.225em 0px 0px ${props => props.theme.light};
   }
+
+  float: right;
 `;
 
-const NavLink = ({ to, exact, children }) => {
-  return (<Link exact={exact} to={to} activeClassName='active'>
+const UserLink = ({ to, children, username, id }) => {
+  if (username) {
+    return (<Link to={'/users/' + id} activeClassName='active'>
+      {username}
+    </Link>);
+  }
+  return (<Link to='/register' activeClassName='active'>
     {children}
   </Link>);
 };
 
-export default NavLink;
+export default connect(state => ({ ...state.userSession }))(UserLink);
