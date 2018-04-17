@@ -1,5 +1,5 @@
-const LOGIN = 'detri-site/user/LOGIN';
-const LOGOUT = 'detri-site/user/LOGOUT';
+const LOGIN = 'detri-site/currentUser/LOGIN';
+const LOGOUT = 'detri-site/currentUser/LOGOUT';
 
 export function login(user) {
   return {
@@ -10,8 +10,7 @@ export function login(user) {
 
 export function logout() {
   return {
-    type: LOGOUT,
-    user
+    type: LOGOUT
   };
 }
 

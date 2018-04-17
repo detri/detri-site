@@ -1,4 +1,4 @@
-import { login } from './userSession';
+import { login } from './currentUser.js';
 
 const TRY = 'detri-site/register/TRY';
 const SUCCESS = 'detri-site/register/SUCCESS';

@@ -20,10 +20,12 @@ const Link = styled(RRLink)`
     background: ${props => props.theme.primary};
     box-shadow: 0 0.225em 0px 0px ${props => props.theme.light};
   }
+
+  ${props => props.right ? 'float: right;' : ''}
 `;
 
-const NavLink = ({ to, exact, children }) => {
-  return (<Link exact={exact} to={to} activeClassName='active'>
+const NavLink = ({ to, exact, children, right }) => {
+  return (<Link exact={exact} to={to} activeClassName='active' right={right}>
     {children}
   </Link>);
 };

@@ -1,17 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Navbar from './Navbar.jsx';
 import NavLink from './NavLink.jsx';
-import UserLink from './UserLink.jsx';
 
-const Nav = () => {
+const Nav = ({ id, username }) => {
   return (
     <Navbar>
       <NavLink exact to='/'>MUSIC</NavLink>
       <NavLink to='/songs'>SONGS</NavLink>
       <NavLink to='/users'>USERS</NavLink>
-      <UserLink>REGISTER</UserLink>
+      <NavLink right to={id ? '/users/' + id : '/register'}>{username || 'REGISTER'}</NavLink>
     </Navbar>
   );
 };
 
-export default Nav;
+export default connect(state => ({ ...state.currentUser }))(Nav);
