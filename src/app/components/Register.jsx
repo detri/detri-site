@@ -3,7 +3,7 @@ import Container from './Container.jsx';
 import Title from './Title.jsx';
 import RegisterForm from './RegisterForm.jsx';
 
-const Register = ({ location }) => {
+const Register = () => {
   return (
     <Container>
       <Title>create an account</Title>
