@@ -45,13 +45,11 @@ class RegisterForm extends React.PureComponent {
   }
 
   handleSubmit() {
-    if (!this.props.inProgress) {
-      const validationCheck = this.validate();
-      if (validationCheck === true) {
-        this.props.tryRegister(this.props.username, this.props.password, this.props.email);
-      } else {
-        this.props.registerFail(validationCheck);
-      }
+    const validationCheck = this.validate();
+    if (validationCheck === true) {
+      this.props.tryRegister(this.props.username, this.props.password, this.props.email);
+    } else {
+      this.props.registerFail(validationCheck);
     }
   }
 

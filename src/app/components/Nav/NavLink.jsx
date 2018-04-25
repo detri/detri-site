@@ -6,6 +6,7 @@ const Link = styled(RRLink)`
   display: inline-block;
   box-sizing: border-box;
   line-height: 2.25em;
+  vertical-align: text-bottom;
   height: 100%;
   width: 6.5em;
   text-align: center;

@@ -9,7 +9,7 @@ const Nav = ({ id, username }) => {
       <NavLink exact to='/'>MUSIC</NavLink>
       <NavLink to='/songs'>SONGS</NavLink>
       <NavLink to='/users'>USERS</NavLink>
-      <NavLink right to={id ? '/users/' + id : '/register'}>{username || 'REGISTER'}</NavLink>
+      <NavLink right to={id ? '/users/' + id : '/register'}>{username || 'LOGIN'}</NavLink>
     </Navbar>
   );
 };
