@@ -60,23 +60,21 @@ class RegisterForm extends React.PureComponent {
       return <Redirect to='/' />;
     } else {
       return (
-        <ScrollBox>
-          <div className={this.props.className}>
-            <FieldLabel>username</FieldLabel>
-            <Input type='text' value={this.props.username} onChange={event => this.props.updateUsername(event.target.value)} />
-            <FieldLabel>password</FieldLabel>
-            <Input type='password' value={this.props.password} onChange={event => this.props.updatePassword(event.target.value)} />
-            <FieldLabel>confirm password</FieldLabel>
-            <Input type='password' value={this.props.confirmPassword} onChange={event => this.props.updateConfirmPassword(event.target.value)} />
-            <FieldLabel>email</FieldLabel>
-            <Input type='email' value={this.props.email} onChange={event => this.props.updateEmail(event.target.value)} />
-            <FieldLabel>confirm email</FieldLabel>
-            <Input type='email' value={this.props.confirmEmail} onChange={event => this.props.updateConfirmEmail(event.target.value)} />
-            <SubmitButton href='#' onClick={this.handleSubmit}>SUBMIT</SubmitButton>
-            <br />
-            {this.props.error}
-          </div>
-        </ScrollBox>
+        <div className={this.props.className}>
+          <FieldLabel>username</FieldLabel>
+          <Input type='text' value={this.props.username} onChange={event => this.props.updateUsername(event.target.value)} />
+          <FieldLabel>password</FieldLabel>
+          <Input type='password' value={this.props.password} onChange={event => this.props.updatePassword(event.target.value)} />
+          <FieldLabel>confirm password</FieldLabel>
+          <Input type='password' value={this.props.confirmPassword} onChange={event => this.props.updateConfirmPassword(event.target.value)} />
+          <FieldLabel>email</FieldLabel>
+          <Input type='email' value={this.props.email} onChange={event => this.props.updateEmail(event.target.value)} />
+          <FieldLabel>confirm email</FieldLabel>
+          <Input type='email' value={this.props.confirmEmail} onChange={event => this.props.updateConfirmEmail(event.target.value)} />
+          <SubmitButton href='#' onClick={this.handleSubmit}>SUBMIT</SubmitButton>
+          <br />
+          {this.props.error}
+        </div>
       );
     }
   }
@@ -84,10 +82,8 @@ class RegisterForm extends React.PureComponent {
 
 const registerForm = styled(RegisterForm) `
   position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-125%, -66%);
   width: 33%;
+  float: left;
 `;
 
 export default connect(state => ({

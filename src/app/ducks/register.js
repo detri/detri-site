@@ -116,7 +116,6 @@ export default function reducer (state = defaultState, action = {}) {
       return {
         ...state,
         inProgress: false,
-        success: false,
         error: action.error
       };
     case UPDATE_USERNAME:

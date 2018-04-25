@@ -1,3 +1,5 @@
+import { login } from './currentUser';
+
 const TRY = 'detri-site/login/TRY';
 const SUCCESS = 'detri-site/login/SUCCESS';
 const FAIL = 'detri-site/login/FAIL';
@@ -10,6 +12,38 @@ const defaultState = {
   username: '',
   password: ''
 };
+
+export function tryLogin(username, password) {
+  return dispatch => {
+    dispatch({ type: TRY });
+    return fetch('/login', {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        username: username,
+        password: password
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        if (json.ok) {
+          dispatch(login(json.user));
+          dispatch(loginSuccess());
+        } else {
+          console.log(JSON.stringify(json, null, 4));
+          dispatch(loginFail(`Something went wrong.`));
+        }
+      })
+      .catch(err => {
+        dispatch(loginFail(`Something went wrong. ${err}`));
+      })
+  };
+}
 
 export function loginSuccess() {
   return {
@@ -49,7 +83,23 @@ export default function reducer(state = defaultState, action = {}) {
       return {
         ...state,
         success: true
-      }
+      };
+    case FAIL:
+      return {
+        ...state,
+        error: action.error,
+        inProgress: false
+      };
+    case UPDATE_USERNAME:
+      return {
+        ...state,
+        username: action.username
+      };
+    case UPDATE_PASSWORD:
+      return {
+        ...state,
+        password: action.password
+      };
     default:
       return defaultState;
   }
