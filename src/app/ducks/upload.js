@@ -9,6 +9,13 @@ const defaultState = {
   title: ''
 };
 
+export function tryUpload(title, file) {
+  return dispatch => {
+    dispatch({ type: TRY });
+    
+  };
+}
+
 export function uploadSuccess() {
   return {
     type: SUCCESS

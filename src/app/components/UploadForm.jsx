@@ -45,4 +45,3 @@ export default connect(state => ({
     tryUpload,
     updateTitle
   })(UploadForm);
-  
