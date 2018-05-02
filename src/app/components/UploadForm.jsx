@@ -2,24 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  tryLogin,
-  updatePassword,
-  updateUsername
-} from '../ducks/login.js';
 import Input from './Input.jsx';
 import FieldLabel from './FieldLabel.jsx';
 import SubmitButton from './SubmitButton.jsx';
 
-class LoginForm extends React.PureComponent {
+class UploadForm extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.validate = this.validate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.render = this.render.bind(this);
   }
 
-  handleSubmit() {
-    this.props.tryLogin(this.props.username, this.props.password);
+  validate() {
+    const titleRegex = /^\w{1,80}$/;
+    if (!titleRegex.test(this.props.title)) {
+      return 'Title must be alphanumeric and 1-80 characters.';
+    }
+    return true;
   }
 
   render() {
@@ -28,10 +28,8 @@ class LoginForm extends React.PureComponent {
     } else {
       return (
         <div className={this.props.className}>
-          <FieldLabel>username</FieldLabel>
-          <Input type='text' value={this.props.username} onChange={event => this.props.updateUsername(event.target.value)} />
-          <FieldLabel>password</FieldLabel>
-          <Input type='password' value={this.props.password} onChange={event => this.props.updatePassword(event.target.value)} />
+          <FieldLabel>song name</FieldLabel>
+          <Input type='text' value={this.props.title} onChange={event => this.props.updateTitle(event.target.value)} />
           <SubmitButton href='#' onClick={this.handleSubmit}>SUBMIT</SubmitButton>
           <br />
           {this.props.error}
@@ -41,16 +39,10 @@ class LoginForm extends React.PureComponent {
   }
 }
 
-const loginForm = styled(LoginForm) `
-  position: relative;
-  width: 33%;
-  float: right;
-`;
-
 export default connect(state => ({
-  ...state.login
+  ...state.upload
 }), {
-    tryLogin,
-    updatePassword,
-    updateUsername
-  })(loginForm);
+    tryUpload,
+    updateTitle
+  })(UploadForm);
+  

@@ -41,7 +41,7 @@ export function tryLogin(username, password) {
       })
       .catch(err => {
         dispatch(loginFail(`Something went wrong. ${err}`));
-      })
+      });
   };
 }
 

@@ -14,7 +14,6 @@ import {
 import Input from './Input.jsx';
 import FieldLabel from './FieldLabel.jsx';
 import SubmitButton from './SubmitButton.jsx';
-import ScrollBox from './ScrollBox.jsx';
 
 class RegisterForm extends React.PureComponent {
   constructor(props) {

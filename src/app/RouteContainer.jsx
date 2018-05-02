@@ -4,6 +4,7 @@ import Content from './components/Content.jsx';
 import Section from './components/Section.jsx';
 import Home from './components/Home.jsx';
 import Register from './components/Register.jsx';
+import Upload from './components/Upload.jsx';
 
 const RouteContainer = () => {
   return (
@@ -12,6 +13,7 @@ const RouteContainer = () => {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/register' component={Register} />
+          <Route path='/upload' component={Upload} />
           <Route render={() => { return <div>Not found.</div>; }} />
         </Switch>
       </Content>

@@ -114,6 +114,6 @@ app.use((err, req, res, next) => {
   res.status(500).json(response);
 });
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
   app.listen(8080);
 });

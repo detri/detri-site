@@ -31,10 +31,7 @@ fs
 // instance functions
 db.User.prototype.validatePassword = function (password) {
   const hash = this.pass_hash;
-  console.log(hash);
-  console.log('Comparing hash');
   const equals = bcrypt.compareSync(password, hash);
-  console.log('Hash comparison result = ' + equals);
   return equals;
 };
 

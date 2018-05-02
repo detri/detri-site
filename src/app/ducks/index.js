@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import register from './register.js';
 import currentUser from './currentUser.js';
 import login from './login.js';
+import upload from './upload.js';
 
 const rootReducer = combineReducers({
   register,
   login,
-  currentUser
+  currentUser,
+  upload
 });
 
 export default rootReducer;
