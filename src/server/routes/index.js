@@ -11,6 +11,7 @@ routes.post('/login',
         ok: false
       });
     }
+    user.pass_hash = undefined;
     return res.status(200).json({
       ok: true,
       user

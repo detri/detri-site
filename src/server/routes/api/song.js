@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const uuidv4 = require('uuid').v4;
 const promisify = require('util').promisify;
+const passport = require('passport');
 
 const upload = multer({
   dest: '../../public/',
@@ -15,7 +16,7 @@ const upload = multer({
     fieldNameSize: 500
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'audio/mp3') {
+    if (file.mimetype.contains('audio/mp3')) {
       cb(null, true);
     } else {
       cb(null, false);
@@ -51,23 +52,29 @@ song.get('/',
 song.post('/',
   upload.single('song'),
   asyncHandler(async (req, res, next) => {
-    const duration = await mp3Duration(req.file.buffer);
+    if (!req.user) {
+      next('Unauthorized!');
+    }
+    let duration;
     const fileName = uuidv4() + '.mp3';
     const savePath = path.join(__dirname, '..', '..', 'public', 'songs', fileName);
     try {
-      await writeFile(savePath, req.file.data);
+      await writeFile(savePath, req.file.buffer);
+      duration = await mp3Duration(req.file.buffer);
     } catch (err) {
       console.log(err);
       next(err);
     }
     const song = await db.Song.create({
       length: duration,
-      name: req.body.name,
-      filename: fileName
+      name: req.body.title,
+      user_id: req.user.id,
+      filename: fileName,
+      url: `/songs/${fileName}`
     });
     res.status(200).json({
       ok: true,
-      data: song
+      message: `Your song ${song.name} was successfully uploaded!`
     });
   }));
 

@@ -12,7 +12,26 @@ const defaultState = {
 export function tryUpload(title, file) {
   return dispatch => {
     dispatch({ type: TRY });
-    
+    const body = new FormData();
+    body.append('title', title);
+    body.append('song', file);
+    fetch('/api/song', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Accept': 'audio/mp3, multipart/form-data'
+      },
+      body: body
+    })
+      .then(res => res.json(),
+            err => dispatch(uploadFail(err)))
+      .then(json => {
+        if (json.ok) {
+          dispatch(uploadSuccess());
+        } else {
+          dispatch(uploadFail('Unknown error'));
+        }
+      }, err => dispatch(uploadFail(err)));
   };
 }
 
