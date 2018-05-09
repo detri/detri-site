@@ -106,7 +106,7 @@ app.use((err, req, res, next) => {
       }
       break;
     default:
-      response.message += 'Unspecified error. ' + err.toString();
+      response.message += err.toString();
       break;
   }
   res.status(500).json(response);

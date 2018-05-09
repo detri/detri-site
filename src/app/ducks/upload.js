@@ -26,7 +26,7 @@ export function tryUpload(title, file) {
         if (json.ok) {
           dispatch(uploadSuccess());
         } else {
-          dispatch(uploadFail('Unknown error'));
+          dispatch(uploadFail(json.message));
         }
       }, err => dispatch(uploadFail(err)));
   };
