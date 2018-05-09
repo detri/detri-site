@@ -34,7 +34,6 @@ user.get('/', asyncHandler(async (req, res) => {
 user.post('/',
   asyncHandler(async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, 12);
-    console.log(hash);
     let user = await db.User.create({
       username: req.body.username,
       email: req.body.email,

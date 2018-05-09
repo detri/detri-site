@@ -35,7 +35,6 @@ export function tryLogin(username, password) {
           dispatch(login(json.user));
           dispatch(loginSuccess());
         } else {
-          console.log(JSON.stringify(json, null, 4));
           dispatch(loginFail(`Something went wrong.`));
         }
       })

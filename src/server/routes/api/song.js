@@ -1,26 +1,24 @@
 const song = require('express').Router();
 const db = require('../../models');
 const asyncHandler = require('express-async-handler');
-const mp3Duration = require('mp3-duration');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const uuidv4 = require('uuid').v4;
 const promisify = require('util').promisify;
+const mp3Duration = promisify(require('mp3-duration'));
+const isMp3 = require('is-mp3');
+const readChunk = require('read-chunk');
 const passport = require('passport');
 
 const upload = multer({
-  dest: '../../public/',
+  storage: multer.diskStorage({
+    destination: path.join(__dirname, '../../public/songs'),
+    filename: (req, file, cb) => cb(null, uuidv4() + '.mp3')
+  }),
   limits: {
     fieldSize: 20000000,
     fieldNameSize: 500
-  },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.contains('audio/mp3')) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-    }
   }
 });
 
@@ -52,20 +50,21 @@ song.get('/',
 song.post('/',
   upload.single('song'),
   asyncHandler(async (req, res, next) => {
+    if (!req.file) {
+      return next('Problem with multer. req.file is undefined');
+    }
     if (!req.user) {
-      next('Unauthorized!');
+      return next('Unauthorized!');
     }
-    let duration;
-    const fileName = uuidv4() + '.mp3';
-    const savePath = path.join(__dirname, '..', '..', 'public', 'songs', fileName);
-    try {
-      await writeFile(savePath, req.file.buffer);
-      duration = await mp3Duration(req.file.buffer);
-    } catch (err) {
-      console.log(err);
-      next(err);
+    const mime = req.file.mimetype.toLowerCase();
+    const chunk = await readChunk(req.file.path, 0, 3);
+    if (!(isMp3(chunk) && (mime.includes('audio/mp3') || mime.includes('audio/mpeg')))) {
+      return next('File is not an mp3');
     }
+    const duration = await mp3Duration(req.file.path);
+    const fileName = req.file.filename;
     const song = await db.Song.create({
+      id: uuidv4(),
       length: duration,
       name: req.body.title,
       user_id: req.user.id,

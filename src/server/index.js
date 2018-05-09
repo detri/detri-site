@@ -32,12 +32,10 @@ passport.use(new JsonStrategy(
       }
     })
       .then(user => {
-        console.log(password);
         if (!user) {
           return done(null, false, { message: 'Incorrect username.' });
         }
         const validPass = user.validatePassword(password);
-        console.log(validPass);
         if (!validPass) {
           return done(null, false, { message: 'Incorrect password.' });
         }

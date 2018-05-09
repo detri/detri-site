@@ -18,9 +18,6 @@ export function tryUpload(title, file) {
     fetch('/api/song', {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Accept': 'audio/mp3, multipart/form-data'
-      },
       body: body
     })
       .then(res => res.json(),
