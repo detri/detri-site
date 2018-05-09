@@ -74,9 +74,11 @@ app
     secret: 'dedzoneseekrit',
     saveUninitialized: false,
     store: new SequelizeStore({
-      db: db.sequelize
+      db: db.sequelize,
+      disableTouch: true
     }),
-    resave: false
+    resave: false,
+    rolling: false
   }))
   .use(passport.initialize())
   .use(passport.session());

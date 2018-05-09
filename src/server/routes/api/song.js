@@ -53,12 +53,10 @@ song.post('/',
     if (!req.file) {
       return next('Problem with multer. req.file is undefined');
     }
-    if (!req.user) {
-      return next('Unauthorized!');
-    }
     const mime = req.file.mimetype.toLowerCase();
     const chunk = await readChunk(req.file.path, 0, 3);
     if (!(isMp3(chunk) && (mime.includes('audio/mp3') || mime.includes('audio/mpeg')))) {
+      await unlink(req.file.path);
       return next('File is not an mp3');
     }
     const duration = await mp3Duration(req.file.path);
@@ -100,9 +98,9 @@ song.delete('/:id',
         id: req.params.id
       }
     });
-    const destroyPath = path.join(__dirname, '..', '..', 'public', 'songs', song.url);
+    const destroyPath = path.join(__dirname, '..', '..', 'public', song.url);
     try {
-      await unlink(destroyPath, req.file.data);
+      await unlink(destroyPath);
     } catch (err) {
       console.log(err);
       next(err);

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import {
   tryUpload,
   updateTitle,
-  uploadFail
+  uploadFail,
+  resetUpload
 } from '../ducks/upload.js';
 import Input from './Input.jsx';
 import FieldLabel from './FieldLabel.jsx';
@@ -42,6 +43,7 @@ class UploadForm extends React.PureComponent {
 
   render() {
     if (this.props.success) {
+      this.props.resetUpload();
       return <Redirect to='/' />;
     } else {
       return (
@@ -64,5 +66,6 @@ export default connect(state => ({
 }), {
     tryUpload,
     updateTitle,
-    uploadFail
+    uploadFail,
+    resetUpload
   })(UploadForm);

@@ -2,6 +2,7 @@ const TRY = 'detri-site/upload/TRY';
 const SUCCESS = 'detri-site/upload/SUCCESS';
 const FAIL = 'detri-site/upload/FAIL';
 const UPDATE_TITLE = 'detri-site/upload/UPDATE_TITLE';
+const RESET_UPLOAD = 'detri-site/upload/RESET_UPLOAD';
 
 const defaultState = {
   inProgress: false,
@@ -52,6 +53,12 @@ export function updateTitle(title) {
   };
 }
 
+export function resetUpload() {
+  return {
+    type: RESET_UPLOAD
+  };
+}
+
 export default function reducer(state = defaultState, action = {}) {
   switch(action.type) {
     case TRY:
@@ -75,6 +82,7 @@ export default function reducer(state = defaultState, action = {}) {
         ...state,
         title: action.title
       };
+    case RESET_UPLOAD:
     default:
       return defaultState;
   }
