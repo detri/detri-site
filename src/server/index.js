@@ -78,7 +78,6 @@ app
       disableTouch: true
     }),
     resave: false,
-    rolling: false
   }))
   .use(passport.initialize())
   .use(passport.session());

@@ -21,7 +21,9 @@ export function configureStore () {
     composeEnhancers(applyMiddleware(thunk))
   );
   // initial auth check
-  fetch('/authcheck')
+  fetch('/authcheck', {
+    credentials: 'include'
+  })
     .then(res => res.json())
     .then(json => {
       if (json.ok) {
