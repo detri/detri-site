@@ -9,6 +9,10 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config.json'))[env].database;
 const db = {};
 
+if (config.dialect === 'sqlite') {
+  config.storage = path.join(__dirname, 'testdb.sqlite');
+}
+
 let sequelize = new Sequelize(
   config.db,
   config.user,

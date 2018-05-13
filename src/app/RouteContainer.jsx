@@ -5,6 +5,7 @@ import Section from './components/Section.jsx';
 import Home from './components/Home.jsx';
 import Register from './components/Register.jsx';
 import Upload from './components/Upload.jsx';
+import Songs from './components/Songs.jsx';
 
 const RouteContainer = () => {
   return (
@@ -14,6 +15,7 @@ const RouteContainer = () => {
           <Route exact path='/' component={Home} />
           <Route path='/register' component={Register} />
           <Route path='/upload' component={Upload} />
+          <Route path='/songs' component={Songs} />
           <Route render={() => { return <div>Not found.</div>; }} />
         </Switch>
       </Content>

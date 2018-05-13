@@ -7,3 +7,6 @@ src/server/config.json
 
 # songs folder
 src/server/public/songs/
+
+# testing
+src/server/models/testdb.sqlite
