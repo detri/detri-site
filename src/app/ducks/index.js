@@ -4,12 +4,14 @@ import register from './register.js';
 import currentUser, { login as loginUser } from './currentUser.js';
 import login from './login.js';
 import upload from './upload.js';
+import songs from './songs.js';
 
 const rootReducer = combineReducers({
   register,
   login,
   currentUser,
-  upload
+  upload,
+  songs
 });
 
 export default rootReducer;

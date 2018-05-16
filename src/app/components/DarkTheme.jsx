@@ -4,10 +4,10 @@ import { ThemeProvider } from 'styled-components';
 const DarkTheme = ({ children }) => {
   return (
     <ThemeProvider theme={{
-      primary: '#500090',
-      secondary: '#100015',
+      primary: '#44a9ff',
+      secondary: '#151515',
       light: '#ffffff',
-      tertiary: '#300050'
+      tertiary: '#19354d'
     }}>
       {children}
     </ThemeProvider>

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 const Section = styled.section`
+  position: absolute;
   background: ${props => props.theme.primary};;
-  padding-top: 2.25em;
-  width: 100%;
-  height: calc(100% - 2.25em);
+  width: calc(100% - 9em);
+  left: 9em;
+  height: calc(100% - 4.5em);
   color: inherit;
   overflow: hidden;
 `;

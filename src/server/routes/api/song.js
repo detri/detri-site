@@ -25,6 +25,26 @@ const upload = multer({
 const writeFile = promisify(fs.writeFile);
 const unlink = promisify(fs.unlink);
 
+song.get('/new',
+  asyncHandler(async (req, res) => {
+    const songs = await db.Song.findAll({
+      order: [
+        ['created_at', 'ASC']
+      ],
+      limit: 10
+    });
+    if (!songs) {
+      res.status(400).json({
+        ok: false,
+        error: 'No songs found.'
+      });
+    }
+    res.status(200).json({
+      ok: true,
+      data: songs
+    });
+  }));
+
 song.get('/:id',
   asyncHandler(async (req, res) => {
     const song = await db.Song.findOne({

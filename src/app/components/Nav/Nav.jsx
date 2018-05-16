@@ -7,11 +7,11 @@ const Nav = ({ id, username }) => {
   let isLoggedIn = id && username;
   return (
     <Navbar>
-      <NavLink exact to='/'>MUSIC</NavLink>
+      <NavLink exact to='/'>HOME</NavLink>
       <NavLink to='/songs'>SONGS</NavLink>
       <NavLink to='/users'>USERS</NavLink>
-      <NavLink right to={isLoggedIn ? '/users/' + id : '/register'}>{isLoggedIn ? username.toUpperCase() : 'LOGIN'}</NavLink>
-      {isLoggedIn ? <NavLink right to='/upload'>UPLOAD</NavLink> : ''}
+      <NavLink to={isLoggedIn ? '/users/' + id : '/register'}>{isLoggedIn ? username.toUpperCase() : 'LOGIN'}</NavLink>
+      {isLoggedIn ? <NavLink to='/upload'>UPLOAD</NavLink> : ''}
     </Navbar>
   );
 };
