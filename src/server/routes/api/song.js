@@ -31,7 +31,11 @@ song.get('/new',
       order: [
         ['created_at', 'ASC']
       ],
-      limit: 10
+      limit: 10,
+      include: [{
+        model: db.User,
+        attributes: ['username']
+      }]
     });
     if (!songs) {
       res.status(400).json({

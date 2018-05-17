@@ -5,7 +5,12 @@ import ReactDOM from 'react-dom';
 import DarkTheme from './components/DarkTheme.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './components/GlobalStyles.jsx';
-import 'font-awesome-webpack!./assets/fonts/font-awesome.config.js';
+
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faPlayCircle from '@fortawesome/fontawesome-free-solid/faPlayCircle';
+
+fontawesome.library.add(faPlayCircle);
 
 import Layout from './Layout.jsx';
 
