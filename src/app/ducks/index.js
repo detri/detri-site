@@ -5,13 +5,15 @@ import currentUser, { login as loginUser } from './currentUser.js';
 import login from './login.js';
 import upload from './upload.js';
 import songs from './songs.js';
+import musicPlayer from './musicPlayer.js';
 
 const rootReducer = combineReducers({
   register,
   login,
   currentUser,
   upload,
-  songs
+  songs,
+  musicPlayer
 });
 
 export default rootReducer;

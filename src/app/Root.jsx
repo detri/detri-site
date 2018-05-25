@@ -9,8 +9,10 @@ import './components/GlobalStyles.jsx';
 import fontawesome from '@fortawesome/fontawesome';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlayCircle from '@fortawesome/fontawesome-free-solid/faPlayCircle';
+import faPauseCircle from '@fortawesome/fontawesome-free-solid/faPauseCircle';
 
 fontawesome.library.add(faPlayCircle);
+fontawesome.library.add(faPauseCircle);
 
 import Layout from './Layout.jsx';
 
