@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   play,
-  pause
+  pause,
+  updateProgress
 } from '../ducks/musicPlayer';
 import styled from 'styled-components';
 import PlayButton from './PlayButton.jsx';
+import ProgressBar from './ProgressBar.jsx';
 
 const Controls = styled.div`
   width: 100%;
@@ -14,18 +16,20 @@ const Controls = styled.div`
   padding: 0 9em 0 9em;
 `;
 
-class MusicBar extends React.PureComponent {
+class MusicBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { progress: 0 };
 
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.togglePlay = this.togglePlay.bind(this);
+    this.updateProgressIfSong = this.updateProgressIfSong.bind(this);
     this.audioInit = false;
   }
 
   togglePlay() {
     const audioEl = this.audioElement || false;
-    if (audioEl) {
+    if (audioEl && this.props.curSong) {
       if (this.props.playing && !audioEl.paused) {
         this.props.pause();
         audioEl.pause();
@@ -33,6 +37,13 @@ class MusicBar extends React.PureComponent {
         this.props.play();
         audioEl.play();
       }
+    }
+  }
+
+  updateProgressIfSong() {
+    const audioEl = this.audioElement || false;
+    if (audioEl && audioEl.duration && audioEl.currentTime) {
+      this.setState({ progress: audioEl.currentTime / audioEl.duration * 100 });
     }
   }
 
@@ -48,12 +59,16 @@ class MusicBar extends React.PureComponent {
             this.source.connect(this.analyser);
             this.analyser.connect(this.gainNode);
             this.gainNode.connect(this.audioCtx.destination);
+            setInterval(this.updateProgressIfSong.bind(this), 100);
             this.audioInit = true;
           }
-        }} src='/songs/31964b14-ceb1-4581-b6a1-1823c2a3b1bf.mp3'/>
+        }} src={this.props.curSong && this.props.curSong.url} />
         <Controls>
-          <a onClick={this.togglePlay}><PlayButton playing={this.props.playing || false} /></a>
+          <a onClick={this.togglePlay}>
+            <PlayButton playing={this.props.playing || false} />
+          </a>
         </Controls>
+        <ProgressBar width={this.state.progress} />
       </div>
     );
   }
@@ -62,9 +77,10 @@ class MusicBar extends React.PureComponent {
 export default connect(state => ({
   ...state.musicPlayer
 }), {
-  play,
-  pause
-})(styled(MusicBar)`
+    play,
+    pause,
+    updateProgress
+  })(styled(MusicBar) `
   box-sizing: border-box;
   height: 4.5em;
   width: 100%;

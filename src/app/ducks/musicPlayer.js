@@ -1,13 +1,12 @@
 const PLAY = 'detri-site/musicPlayer/PLAY';
 const PAUSE = 'detri-site/musicPlayer/PAUSE';
 const CHANGE_SONG = 'detri-site/musicPlayer/CHANGE_SONG';
+const UPDATE_PROGRESS = 'detri-site/musicPlayer/UPDATE_PROGRESS';
 
 const defaultState = {
   playing: false,
-  curSong: {
-    id: '',
-    url: ''
-  }
+  curSong: null,
+  progressPct: 0
 };
 
 export function play() {
@@ -32,6 +31,13 @@ export function changeSong(song) {
   };
 }
 
+export function updateProgress(pct) {
+  return {
+    type: UPDATE_PROGRESS,
+    progressPct: pct
+  };
+}
+
 export default function reducer(state = defaultState, action = {}) {
   switch(action.type) {
     case PLAY:
@@ -48,6 +54,11 @@ export default function reducer(state = defaultState, action = {}) {
       return {
         ...state,
         curSong: action.song
+      };
+    case UPDATE_PROGRESS:
+      return {
+        ...state,
+        progressPct: action.progressPct
       };
     default:
       return state;

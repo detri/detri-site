@@ -4,6 +4,7 @@ import Title from './Title.jsx';
 import ScrollBox from './ScrollBox.jsx';
 import { connect } from 'react-redux';
 import { tryNewSongs } from '../ducks/songs';
+import { changeSong, pause } from '../ducks/musicPlayer';
 
 class NewSongs extends React.PureComponent {
   constructor(props) {
@@ -22,10 +23,19 @@ class NewSongs extends React.PureComponent {
         <Title>new songs</Title>
         <ScrollBox width={"45%"} height={"calc(100% - 3.32em)"} margin={"2.5%"}>
           {!this.props.newSongs ?
-          <p>Loading newest 10 songs...</p>
-          : this.props.newSongs.map(song => {
-            return <SongBox key={song.id} song={song} />
-          })}
+            <p>Loading newest 10 songs...</p>
+            : this.props.newSongs.map(song => {
+              return <a key={song.id} onClick={() => {
+                if (!this.props.curSong) {
+                  this.props.changeSong(song);
+                } else if (song.id !== this.props.curSong.id) {
+                  if (this.props.playing) {
+                    this.props.pause();
+                  }
+                  this.props.changeSong(song);
+                }
+              }}><SongBox key={song.id} song={song} /></a>;
+            })}
         </ScrollBox>
       </React.Fragment>
     );
@@ -33,7 +43,11 @@ class NewSongs extends React.PureComponent {
 }
 
 export default connect(state => ({
-  ...state.songs
+  ...state.songs,
+  playing: state.musicPlayer.playing,
+  curSong: state.musicPlayer.curSong
 }), {
-  tryNewSongs
-})(NewSongs);
+    tryNewSongs,
+    changeSong,
+    pause
+  })(NewSongs);

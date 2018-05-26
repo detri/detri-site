@@ -7,6 +7,8 @@ const PlayButton = ({ playing, className }) => {
 };
 
 export default styled(PlayButton)`
+  position: relative;
   color: ${props => props.theme.light};
   padding: 5px;
+  z-index: 3;
 `;
