@@ -23,7 +23,7 @@ class MusicBar extends React.Component {
 
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.togglePlay = this.togglePlay.bind(this);
-    this.updateProgressIfSong = this.updateProgressIfSong.bind(this);
+    this.update = this.update.bind(this);
     this.audioInit = false;
   }
 
@@ -40,7 +40,7 @@ class MusicBar extends React.Component {
     }
   }
 
-  updateProgressIfSong() {
+  update() {
     const audioEl = this.audioElement || false;
     if (audioEl && audioEl.duration && audioEl.currentTime) {
       this.setState({ progress: audioEl.currentTime / audioEl.duration * 100 });
@@ -59,16 +59,16 @@ class MusicBar extends React.Component {
             this.source.connect(this.analyser);
             this.analyser.connect(this.gainNode);
             this.gainNode.connect(this.audioCtx.destination);
-            setInterval(this.updateProgressIfSong.bind(this), 100);
+            setInterval(this.update.bind(this), 100);
             this.audioInit = true;
           }
-        }} src={this.props.curSong && this.props.curSong.url} />
+        }} src={this.props.curSong && this.props.curSong.url} onEnded={this.props.pause} />
         <Controls>
           <a onClick={this.togglePlay}>
             <PlayButton playing={this.props.playing || false} />
           </a>
+          <ProgressBar width={this.state.progress} audioEl={this.audioElement} />
         </Controls>
-        <ProgressBar width={this.state.progress} />
       </div>
     );
   }
