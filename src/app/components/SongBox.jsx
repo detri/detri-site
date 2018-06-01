@@ -19,12 +19,23 @@ const PlayIcon = styled(FontAwesomeIcon)`
 `;
 
 const SongBox = ({ song, className, playing }) => {
+  const min = Math.floor(song.length / 60);
+  const sec = song.length % 60;
+  const date = new Date(song.created_at);
+  let dateHour = date.getHours();
+  let dd = 'AM';
+  if (dateHour >= 12) {
+    dateHour -= 12;
+    dd = 'PM';
+  }
+  const dateMin = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
   return (
     <div className={className}>
       <PlayIcon icon={playing ? 'pause-circle' : 'play-circle'} size="3x" />
       <SongInfo>
         <SongInfoText><strong>{song.name}</strong></SongInfoText>
-        <SongInfoText>Duration: {`${Math.floor(song.length / 60)}:${song.length % 60}`}</SongInfoText>
+        <SongInfoText>Duration: {`${min}:${sec < 10 ? '0' + sec : sec}`}</SongInfoText>
+        <SongInfoText>Uploaded: {`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${dateHour}:${dateMin} ${dd}`}</SongInfoText>
         <SongInfoText>Author: {song.User.username}</SongInfoText>
       </SongInfo>
     </div>
