@@ -18,10 +18,10 @@ const PlayIcon = styled(FontAwesomeIcon)`
   display: inline-block;
 `;
 
-const SongBox = ({ song, className }) => {
+const SongBox = ({ song, className, playing }) => {
   return (
     <div className={className}>
-      <PlayIcon icon="play-circle" size="3x" />
+      <PlayIcon icon={playing ? 'pause-circle' : 'play-circle'} size="3x" />
       <SongInfo>
         <SongInfoText><strong>{song.name}</strong></SongInfoText>
         <SongInfoText>Duration: {`${Math.floor(song.length / 60)}:${song.length % 60}`}</SongInfoText>

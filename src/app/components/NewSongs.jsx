@@ -34,7 +34,7 @@ class NewSongs extends React.PureComponent {
                   }
                   this.props.changeSong(song);
                 }
-              }}><SongBox key={song.id} song={song} /></a>;
+              }}><SongBox key={song.id} song={song} playing={this.props.curSong && this.props.playing && this.props.curSong.id === song.id} /></a>;
             })}
         </ScrollBox>
       </React.Fragment>
