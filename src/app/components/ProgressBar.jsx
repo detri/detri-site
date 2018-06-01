@@ -44,33 +44,13 @@ const ProgressButton = styled.div`
 class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
-    this.registerButton = this.registerButton.bind(this);
-    this.seek = this.seek.bind(this);
   }
-
-  registerButton(el) {
-    this.button = el;
-  }
-
-  seek(e) {
-    if (this.props.audioEl && this.props.audioEl.duration) {
-      console.log(e.target.offsetWidth, this.props.audioEl.duration);
-      this.props.audioEl.currentTime = (e.offsetX / e.target.offsetWidth) * this.props.audioEl.duration;
-    }
-  }
-
+  
   render() {
     return (
       <React.Fragment>
-        <style>
-          {
-            `
-            
-            `
-          }
-        </style>
         <ProgressOverlay id="progress" style={{ width: `${this.props.width}%` }} />
-        <ProgressButton ref={this.registerButton}  />
+        <ProgressButton style={{ left: `calc(6em + calc(${(this.props.width / 100) * 932}px)` }} />
         <ProgressUnderlay />
       </React.Fragment>
     );
