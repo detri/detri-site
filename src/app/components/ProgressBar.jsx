@@ -45,17 +45,21 @@ class ProgressBar extends React.Component {
 
     this.setProgressRef = this.setProgressRef.bind(this);
     this.setButtonRef = this.setButtonRef.bind(this);
+    this.setContainerRef = this.setContainerRef.bind(this);
+    this.seek = this.seek.bind(this);
     setInterval(this.setCurrent.bind(this), 100);
+  }
+
+  setContainerRef(e) {
+    this.container = e;
   }
 
   setProgressRef(e) {
     this.progress = e;
-    console.log(this.progress.clientWidth);
   }
 
   setButtonRef(e) {
     this.button = e;
-    console.log(this.button.clientWidth);
   }
 
   setCurrent() {
@@ -65,13 +69,26 @@ class ProgressBar extends React.Component {
     if (this.button) {
       this.setState.bind(this)({ ...this.state, buttonWidth: this.button.clientWidth });
     }
+    if (this.container) {
+      this.setState.bind(this)({ ...this.state, containerWidth: this.container.clientWidth });
+    }
+  }
+
+  seek(e) {
+    console.log(e);
+    const { x } = e.target.getBoundingClientRect();
+    const { clientWidth } = e.target;
+    const { clientX } = e;
+    const relPct = (clientX - x) / this.state.containerWidth;
+
+    this.props.audioEl.currentTime = relPct * this.props.audioEl.duration;
   }
 
   render() {
     return (
       <React.Fragment>
-        <ProgressContainer>
-          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} />
+        <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
+          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => {return;}} />
           <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
         </ProgressContainer>
       </React.Fragment>
