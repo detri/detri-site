@@ -22,7 +22,7 @@ class UploadForm extends React.PureComponent {
   }
 
   validate() {
-    const titleRegex = /^\w{1,80}$/;
+    const titleRegex = /^([\w\s]){1,80}$/;
     if (!titleRegex.test(this.props.title)) {
       return 'Title must be alphanumeric and 1-80 characters.';
     }

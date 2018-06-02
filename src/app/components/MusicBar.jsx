@@ -68,7 +68,7 @@ class MusicBar extends React.Component {
           <a onClick={this.togglePlay}>
             <PlayButton playing={this.props.playing || false} />
           </a>
-          <ProgressBar width={this.state.progress} audioEl={this.audioElement} />
+          <ProgressBar width={this.state.progress} audioEl={this.audioElement} curSong={this.props.curSong} />
           <SongTime currentTime={this.audioElement ? this.audioElement.currentTime : 0} duration={this.audioElement ? this.audioElement.duration : 0} />
         </Controls>
       </div>

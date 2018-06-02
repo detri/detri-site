@@ -25,7 +25,7 @@ class RegisterForm extends React.PureComponent {
 
   validate() {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passRegex = /^(?=.*[\w])(?=.*\d)[\w\d\W]{8,}$/;
     const userRegex = /^\w{4,}$/;
     const confirmPassword = this.props.password === this.props.confirmPassword;
     const confirmEmail = this.props.email === this.props.confirmEmail;

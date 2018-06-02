@@ -25,7 +25,8 @@ const ProgressContainer = styled.div`
   background-color: #1A1A1A;
   z-index: 1;
   border-radius: 1em;
-  vertical-align: 1.25em;
+  vertical-align: 0.5em;
+  line-height: 0;
 `;
 
 const ProgressButton = styled.div`
@@ -36,6 +37,16 @@ const ProgressButton = styled.div`
   border-radius: 50%;
   background-color: ${props => props.theme.primary};
   z-index: 4;
+`;
+
+const CurSongText = styled.span`
+  position: relative;
+  font-size: 0.75em;
+  color: ${props => props.theme.light};
+  text-shadow: 1px 1px 2px ${props => props.theme.primary};
+  z-index: 2;
+  line-height: 0;
+  vertical-align: top;
 `;
 
 class ProgressBar extends React.Component {
@@ -86,11 +97,17 @@ class ProgressBar extends React.Component {
   }
 
   render() {
+    console.log(this.props.curSong);
     return (
-      <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
-        <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => {return;}} />
-        <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
-      </ProgressContainer>
+      <React.Fragment>
+        <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
+          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => { return; }} />
+          <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
+          {this.props.curSong ?
+            <CurSongText><strong>{this.props.curSong.User.username}</strong> - {this.props.curSong.name}</CurSongText>
+          : <CurSongText>No song.</CurSongText>}
+        </ProgressContainer>
+      </React.Fragment>
     );
   }
 }

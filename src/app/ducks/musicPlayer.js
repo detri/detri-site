@@ -24,10 +24,7 @@ export function pause() {
 export function changeSong(song) {
   return {
     type: CHANGE_SONG,
-    song: {
-      id: song.id,
-      url: song.url
-    }
+    song: song
   };
 }
 

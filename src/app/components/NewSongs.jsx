@@ -28,6 +28,9 @@ class NewSongs extends React.PureComponent {
               return <a key={song.id} onClick={() => {
                 if (!this.props.curSong) {
                   this.props.changeSong(song);
+                  if (!this.props.playing) {
+                    this.props.play();
+                  }
                 } else if (song.id !== this.props.curSong.id) {
                   if (this.props.playing) {
                     this.props.pause();

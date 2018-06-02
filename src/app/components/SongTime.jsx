@@ -9,7 +9,7 @@ const SongTimeWrapper = styled.span`
   color: ${props => props.theme.light};
   z-index: 2;
   margin-left: 1em;
-  vertical-align: 2em;
+  vertical-align: 2.75em;
 `;
 
 function secondsToMMSS(secs) {
