@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const jsonParser = require('body-parser').json();
+const jsonParser = require('body-parser').json;
 const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
@@ -14,6 +14,8 @@ const compiler = webpack(webpackConfig);
 
 const app = express();
 
+app.use(jsonParser());
+
 app
   .set('view engine', 'pug')
   .set('views', path.join(__dirname, '/views'));
@@ -25,7 +27,9 @@ passport.use(new JsonStrategy(
     console.log(password);
     db.User.findOne({
       where: {
-        username: username
+        username: {
+          [db.Sequelize.Op.iLike]: username
+        }
       },
       attributes: {
         include: ['username', 'is_active', 'is_admin']
@@ -69,7 +73,6 @@ app
     noInfo: true, publicPath: webpackConfig.output.publicPath
   }))
   .use(require('webpack-hot-middleware')(compiler))
-  .use(jsonParser)
   .use(session({
     secret: 'dedzoneseekrit',
     saveUninitialized: false,

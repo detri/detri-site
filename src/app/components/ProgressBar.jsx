@@ -17,14 +17,15 @@ const ProgressInner = styled.div`
 `;
 
 const ProgressContainer = styled.div`
-  position: relative;
+  display: inline-block;
   top: -2.75em;
-  left: 6em;
+  margin-left: 1em;
   height: 1em;
-  width: 75%;
+  width: 66%;
   background-color: #1A1A1A;
   z-index: 1;
   border-radius: 1em;
+  vertical-align: 1.25em;
 `;
 
 const ProgressButton = styled.div`
@@ -86,12 +87,10 @@ class ProgressBar extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
-          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => {return;}} />
-          <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
-        </ProgressContainer>
-      </React.Fragment>
+      <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
+        <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => {return;}} />
+        <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
+      </ProgressContainer>
     );
   }
 }

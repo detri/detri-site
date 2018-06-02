@@ -8,12 +8,13 @@ import {
 import styled from 'styled-components';
 import PlayButton from './PlayButton.jsx';
 import ProgressBar from './ProgressBar.jsx';
+import SongTime from './SongTime.jsx';
 
 const Controls = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 0 9em 0 9em;
+  padding: 0 3em 0 3em;
 `;
 
 class MusicBar extends React.Component {
@@ -68,6 +69,7 @@ class MusicBar extends React.Component {
             <PlayButton playing={this.props.playing || false} />
           </a>
           <ProgressBar width={this.state.progress} audioEl={this.audioElement} />
+          <SongTime currentTime={this.audioElement ? this.audioElement.currentTime : 0} duration={this.audioElement ? this.audioElement.duration : 0} />
         </Controls>
       </div>
     );

@@ -17,19 +17,24 @@ routes.get('/authcheck',
   }));
 
 routes.post('/login',
-  passport.authenticate('json'),
   asyncHandler(async (req, res, next) => {
-    const user = req.user;
-    if (!user) {
-      return res.status(400).json({
-        ok: false
+    passport.authenticate('json', (err, user, info) => {
+      if (err) return next(err);
+      if (!user) {
+        return res.status(400).json({
+          ok: false,
+          error: info.message
+        });
+      }
+      user.pass_hash = undefined;
+      req.logIn(user, err => {
+        if (err) return next(err);
+        return res.status(200).json({
+          ok: true,
+          user
+        });
       });
-    }
-    user.pass_hash = undefined;
-    return res.status(200).json({
-      ok: true,
-      user
-    });
+    })(req, res, next);
   }));
 
 module.exports = routes;

@@ -35,7 +35,7 @@ export function tryLogin(username, password) {
           dispatch(login(json.user));
           dispatch(loginSuccess());
         } else {
-          dispatch(loginFail(`Something went wrong.`));
+          dispatch(loginFail(json.error));
         }
       })
       .catch(err => {
