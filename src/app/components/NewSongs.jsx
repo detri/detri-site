@@ -4,7 +4,7 @@ import Title from './Title.jsx';
 import ScrollBox from './ScrollBox.jsx';
 import { connect } from 'react-redux';
 import { tryNewSongs } from '../ducks/songs';
-import { changeSong, pause } from '../ducks/musicPlayer';
+import { changeSong, pause, play } from '../ducks/musicPlayer';
 
 class NewSongs extends React.PureComponent {
   constructor(props) {
@@ -28,14 +28,19 @@ class NewSongs extends React.PureComponent {
               return <a key={song.id} onClick={() => {
                 if (!this.props.curSong) {
                   this.props.changeSong(song);
-                  if (!this.props.playing) {
-                    this.props.play();
-                  }
+                  this.props.play();
                 } else if (song.id !== this.props.curSong.id) {
                   if (this.props.playing) {
                     this.props.pause();
                   }
                   this.props.changeSong(song);
+                  this.props.play();
+                } else if (song.id === this.props.curSong.id) {
+                  if (this.props.playing) {
+                    this.props.pause();
+                  } else {
+                    this.props.play();
+                  }
                 }
               }}><SongBox key={song.id} song={song} playing={this.props.curSong && this.props.playing && this.props.curSong.id === song.id} /></a>;
             })}
@@ -52,5 +57,6 @@ export default connect(state => ({
 }), {
     tryNewSongs,
     changeSong,
-    pause
+    pause,
+    play
   })(NewSongs);

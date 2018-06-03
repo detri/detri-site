@@ -87,7 +87,6 @@ class ProgressBar extends React.Component {
   }
 
   seek(e) {
-    console.log(e);
     const { x } = e.target.getBoundingClientRect();
     const { clientWidth } = e.target;
     const { clientX } = e;
@@ -97,7 +96,6 @@ class ProgressBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.curSong);
     return (
       <React.Fragment>
         <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>

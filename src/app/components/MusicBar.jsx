@@ -43,8 +43,15 @@ class MusicBar extends React.Component {
 
   update() {
     const audioEl = this.audioElement || false;
-    if (audioEl && audioEl.duration && audioEl.currentTime) {
-      this.setState({ progress: audioEl.currentTime / audioEl.duration * 100 });
+    if (audioEl) {
+      if (audioEl.duration && audioEl.currentTime && !audioEl.paused) {
+        this.setState({ progress: audioEl.currentTime / audioEl.duration * 100 });
+      }
+      if (this.props.playing && audioEl.paused) {
+        audioEl.play();
+      } else if (!this.props.playing && !audioEl.paused) {
+        audioEl.pause();
+      }
     }
   }
 
