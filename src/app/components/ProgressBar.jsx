@@ -99,7 +99,7 @@ class ProgressBar extends React.Component {
     return (
       <React.Fragment>
         <ProgressContainer onClick={this.seek} innerRef={this.setContainerRef}>
-          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} onClick={() => { return; }} />
+          <ProgressInner style={{ width: `${this.props.width}%` }} innerRef={this.setProgressRef} />
           <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
           {this.props.curSong ?
             <CurSongText><strong>{this.props.curSong.User.username}</strong> - {this.props.curSong.name}</CurSongText>

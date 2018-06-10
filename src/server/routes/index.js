@@ -1,6 +1,22 @@
 const routes = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const passport = require('passport');
+const path = require('path');
+const fs = require('fs');
+const promisify = require('util').promisify;
+
+const readdir = promisify(fs.readdir);
+
+routes.get('/resume', asyncHandler(async (req, res, next) => {
+  const rootPath = path.join(__dirname, '..', 'public');
+  const fileList = await readdir(rootPath);
+  const fileName = fileList.find(v => /^Aaron Dosser Resume/g.test(v));
+  if (!fileName) {
+    res.status(404).send('Resume not found!');
+  } else {
+    res.status(200).download(path.join(rootPath, fileName), 'resume.docx');
+  }
+}));
 
 routes.get('/authcheck',
   asyncHandler(async (req, res, next) => {
