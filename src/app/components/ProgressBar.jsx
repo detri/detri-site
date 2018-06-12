@@ -62,6 +62,15 @@ class ProgressBar extends React.Component {
     setInterval(this.setCurrent.bind(this), 100);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.audioEl && this.props.curSong) {
+      if (this.props.width !== nextProps.width || this.props.curSong !== nextProps.curSong) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   setContainerRef(e) {
     this.container = e;
   }
@@ -88,7 +97,6 @@ class ProgressBar extends React.Component {
 
   seek(e) {
     const { x } = e.target.getBoundingClientRect();
-    const { clientWidth } = e.target;
     const { clientX } = e;
     const relPct = (clientX - x) / this.state.containerWidth;
 
@@ -103,7 +111,7 @@ class ProgressBar extends React.Component {
           <ProgressButton style={{ left: `${this.state.currentButton < this.state.buttonWidth ? '0' : this.state.currentButton - this.state.buttonWidth}px` }} innerRef={this.setButtonRef} />
           {this.props.curSong ?
             <CurSongText><strong>{this.props.curSong.User.username}</strong> - {this.props.curSong.name}</CurSongText>
-          : <CurSongText>No song.</CurSongText>}
+            : <CurSongText>No song.</CurSongText>}
         </ProgressContainer>
       </React.Fragment>
     );

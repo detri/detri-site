@@ -19,7 +19,7 @@ function secondsToMMSS(secs) {
   const min = Math.floor(secs / 60);
   const sec = (secs % 60).toFixed(0);
   return `${min < 10 ? '0' + min : min}:${sec < 10 ? '0' + sec : sec}`;
-};
+}
 
 const SongTime = ({ currentTime, duration }) => {
   return (

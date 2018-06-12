@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import PlayButton from './PlayButton.jsx';
 import ProgressBar from './ProgressBar.jsx';
 import SongTime from './SongTime.jsx';
+import anime from 'animejs';
 
 const Controls = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ class MusicBar extends React.Component {
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.togglePlay = this.togglePlay.bind(this);
     this.update = this.update.bind(this);
+    this.animate = this.animate.bind(this);
     this.audioInit = false;
   }
 
@@ -41,11 +43,20 @@ class MusicBar extends React.Component {
     }
   }
 
+  animate() {
+
+  }
+
   update() {
     const audioEl = this.audioElement || false;
     if (audioEl) {
       if (audioEl.duration && audioEl.currentTime && !audioEl.paused) {
-        this.setState({ progress: audioEl.currentTime / audioEl.duration * 100 });
+        this.analyser.getByteFrequencyData(this.fftData);
+        this.setState.bind(this)({
+          ...this.state,
+          progress: audioEl.currentTime / audioEl.duration * 100,
+          freqData: this.fftData
+        }, this.animate);
       }
       if (this.props.playing && audioEl.paused) {
         audioEl.play();
@@ -60,10 +71,12 @@ class MusicBar extends React.Component {
       <div className={this.props.className}>
         <audio ref={e => {
           if (!this.audioInit) {
-            this.audioElement = e
+            this.audioElement = e;
             this.source = this.audioCtx.createMediaElementSource(this.audioElement);
             this.gainNode = this.audioCtx.createGain();
             this.analyser = this.audioCtx.createAnalyser();
+            this.analyser.fftSize = 256;
+            this.fftData = new Uint8Array(this.analyser.frequencyBinCount);
             this.source.connect(this.analyser);
             this.analyser.connect(this.gainNode);
             this.gainNode.connect(this.audioCtx.destination);
@@ -89,7 +102,7 @@ export default connect(state => ({
     play,
     pause,
     updateProgress
-  })(styled(MusicBar) `
+  })(styled(MusicBar)`
   box-sizing: border-box;
   height: 4.5em;
   width: 100%;
