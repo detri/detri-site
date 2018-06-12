@@ -13,13 +13,6 @@ class Visualizer extends React.Component {
     this.draw = this.draw.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.arraysEqual(this.props.fftData, nextProps.fftData)) {
-      return true;
-    }
-    return false;
-  }
-
   calcScale(fftData) {
     let total = 0;
     let max = fftData.length * 255;
@@ -34,12 +27,11 @@ class Visualizer extends React.Component {
     if (!this.props.fftData || !this.ctx) return;
 
     let scale = this.calcScale(this.props.fftData);
-    console.log(scale);
-    let size = 70;
+    let size = 72;
     size /= 2;
     let scaledSize = scale * size;
 
-    this.ctx.clearRect(0, 0, 70, 70);
+    this.ctx.clearRect(0, 0, 72, 72);
     this.ctx.beginPath();
     this.ctx.arc(size, size, scaledSize - 1, 0, 2*Math.PI);
     this.ctx.stroke();
@@ -64,7 +56,7 @@ class Visualizer extends React.Component {
   }
 
   render() {
-    return <canvas className={this.props.className} ref={this.registerCanvas} width={70} height={70} />;
+    return <canvas className={this.props.className} ref={this.registerCanvas} width={72} height={72} />;
   }
 }
 
