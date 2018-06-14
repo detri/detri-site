@@ -72,8 +72,12 @@ song.get('/',
   }));
 
 song.post('/',
+  passport.authenticate('json'),
   upload.single('song'),
   asyncHandler(async (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/');
+    }
     if (!req.file) {
       return next('Problem with multer. req.file is undefined');
     }
