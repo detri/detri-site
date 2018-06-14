@@ -1,41 +1,56 @@
 import styled from 'styled-components';
 import React from 'react';
-import anime from 'animejs';
-import { request } from 'http';
+import chunk from 'lodash/chunk';
+
+const calcDataSet = (fftData) => {
+  let fftChunks = chunk(fftData, 8);
+  // we don't want the last quarter of frequencies, they
+  // tend not to do much
+  // convert 0-255 values into scalar values
+  fftChunks = fftChunks.map(v => v.reduce((a, b) => a + b) / v.length / 255);
+  fftChunks = fftChunks.slice(0, fftChunks.length / 4 * 3);
+  return fftChunks;
+};
+
+const drawCircle = (ctx, x, y, radius) => {
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, 2*Math.PI);
+  ctx.stroke();
+  ctx.fill();
+};
+
+const drawCircles = (ctx, fftData, width, height) => {
+  const circleHeights = calcDataSet(fftData);
+  let numCircles = circleHeights.length;
+  const radius = width / numCircles / 2;
+  const maxHeight = height - radius;
+  const minHeight = radius;
+  let curX = radius;
+  for (let i = 0; i < numCircles; i++) {
+    let curY = Math.max(minHeight, circleHeights[i] * maxHeight);
+    drawCircle(ctx, curX, -curY + height, radius);
+    curX += radius * 2;
+  }
+};
 
 class Visualizer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.size = 0;
+    this.circleSize = 5;
+    this.numCircles = 16;
+
 
     this.registerCanvas = this.registerCanvas.bind(this);
     this.draw = this.draw.bind(this);
-  }
-
-  calcScale(fftData) {
-    let total = 0;
-    let max = fftData.length * 255;
-    for (let i = 0; i < fftData.length; i++) {
-      total += fftData[i];
-    }
-    return total / max;
   }
   
   draw() {
     requestAnimationFrame(this.draw);
     if (!this.props.fftData || !this.ctx) return;
 
-    let scale = this.calcScale(this.props.fftData);
-    let size = 72;
-    size /= 2;
-    let scaledSize = scale * size;
-
-    this.ctx.clearRect(0, 0, 72, 72);
-    this.ctx.beginPath();
-    this.ctx.arc(size, size, scaledSize - 1, 0, 2*Math.PI);
-    this.ctx.stroke();
-    this.ctx.fill();
+    this.ctx.clearRect(0, 0, 125, 72);
+    drawCircles(this.ctx, this.props.fftData, 125, 72);
   }
 
   arraysEqual(a, b) {
@@ -56,10 +71,11 @@ class Visualizer extends React.Component {
   }
 
   render() {
-    return <canvas className={this.props.className} ref={this.registerCanvas} width={72} height={72} />;
+    return <canvas className={this.props.className} ref={this.registerCanvas} width={125} height={72} />;
   }
 }
 
 export default styled(Visualizer)`
   display: inline-block;
+  margin-left: 1.5em;
 `;

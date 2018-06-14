@@ -26,7 +26,6 @@ class MusicBar extends React.Component {
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.togglePlay = this.togglePlay.bind(this);
     this.update = this.update.bind(this);
-    this.animate = this.animate.bind(this);
     this.audioInit = false;
   }
 
@@ -43,10 +42,6 @@ class MusicBar extends React.Component {
     }
   }
 
-  animate() {
-
-  }
-
   update() {
     const audioEl = this.audioElement || false;
     if (audioEl) {
@@ -56,7 +51,7 @@ class MusicBar extends React.Component {
           ...this.state,
           progress: audioEl.currentTime / audioEl.duration * 100,
           freqData: this.fftData
-        }, this.animate);
+        });
       }
       if (this.props.playing && audioEl.paused) {
         audioEl.play();

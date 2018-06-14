@@ -63,7 +63,7 @@ class ProgressBar extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.audioEl && this.props.curSong) {
+    if (this.props.curSong) {
       if (this.props.width !== nextProps.width || this.props.curSong !== nextProps.curSong) {
         return true;
       }
@@ -101,6 +101,7 @@ class ProgressBar extends React.Component {
     const relPct = (clientX - x) / this.state.containerWidth;
 
     this.props.audioEl.currentTime = relPct * this.props.audioEl.duration;
+    this.forceUpdate();
   }
 
   render() {
