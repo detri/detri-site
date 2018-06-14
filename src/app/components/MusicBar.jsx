@@ -75,7 +75,7 @@ class MusicBar extends React.Component {
             this.source.connect(this.analyser);
             this.analyser.connect(this.gainNode);
             this.gainNode.connect(this.audioCtx.destination);
-            setInterval(this.update.bind(this), 100);
+            setInterval(this.update.bind(this), 25);
             this.audioInit = true;
           }
         }} src={this.props.curSong && this.props.curSong.url} onEnded={this.props.pause} />
