@@ -10,7 +10,7 @@ const readdir = promisify(fs.readdir);
 routes.get('/resume', asyncHandler(async (req, res, next) => {
   const rootPath = path.join(__dirname, '..', 'public');
   const fileList = await readdir(rootPath);
-  const fileName = fileList.find(v => /^Aaron Dosser Resume/g.test(v));
+  const fileName = fileList.find(v => /^Aaron Resume/g.test(v));
   if (!fileName) {
     res.status(404).send('Resume not found!');
   } else {
