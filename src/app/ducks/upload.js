@@ -14,7 +14,6 @@ export function tryUpload(title, file) {
   return dispatch => {
     dispatch({ type: TRY });
     const body = new FormData();
-    file.type = 'audio/mpeg';
     body.append('title', title);
     body.append('song', file);
     fetch('/api/song', {

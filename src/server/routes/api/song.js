@@ -75,7 +75,6 @@ song.post('/',
   passport.authenticate('json'),
   upload.single('song'),
   asyncHandler(async (req, res, next) => {
-    console.log('test');
     if (!req.user) {
       res.redirect('/');
     }
