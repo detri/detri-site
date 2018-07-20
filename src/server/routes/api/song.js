@@ -19,9 +19,6 @@ const upload = multer({
   limits: {
     fieldSize: 20000000,
     fieldNameSize: 500
-  },
-  fileFilter: (req, file, cb) => {
-    cb(null, true);
   }
 });
 
