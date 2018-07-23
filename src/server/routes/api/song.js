@@ -17,8 +17,8 @@ const upload = multer({
     filename: (req, file, cb) => cb(null, uuidv4() + '.mp3')
   }),
   limits: {
-    fieldSize: 20000000,
-    fieldNameSize: 500
+    fieldSize: 200000000,
+    fieldNameSize: 1024,
   }
 });
 
@@ -72,7 +72,6 @@ song.get('/',
   }));
 
 song.post('/',
-  passport.authenticate('json'),
   upload.single('song'),
   asyncHandler(async (req, res, next) => {
     if (!req.user) {

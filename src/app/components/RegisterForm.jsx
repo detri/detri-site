@@ -24,20 +24,33 @@ class RegisterForm extends React.PureComponent {
   }
 
   validate() {
+    const pass = this.props.password;
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const passRegex = /^(?=.*[\w])(?=.*\d)[\w\d\W]{8,}$/;
+    const passNumRegex = /(?=.*\d)/;
+    const passAlphaRegex = /(?=.*[\w])/;
+    const passRegex = /^[\w\d\W]{8,}$/;
     const userRegex = /^\w{4,}$/;
     const confirmPassword = this.props.password === this.props.confirmPassword;
     const confirmEmail = this.props.email === this.props.confirmEmail;
     if (!userRegex.test(String(this.props.username))) {
       return 'Username is not valid.';
-    } else if (!passRegex.test(String(this.props.password))) {
-      return 'Password is not valid.';
-    } else if (!emailRegex.test(String(this.props.email))) {
+    }
+    if (!passRegex.test(pass)) {
+      return 'Password must be alphanumeric and contain at least 8 characters.';
+    }
+    if (!passNumRegex.test(pass)) {
+      return 'Password must contain at least one number.';
+    }
+    if (!passAlphaRegex.test(pass)) {
+      return 'Password must contain at least one letter.';
+    }
+    if (!emailRegex.test(String(this.props.email))) {
       return 'Email is not valid.';
-    } else if (!confirmPassword) {
+    }
+    if (!confirmPassword) {
       return 'Passwords don\'t match.';
-    } else if (!confirmEmail) {
+    }
+    if (!confirmEmail) {
       return 'Emails don\'t match.';
     }
     return true;
@@ -66,6 +79,7 @@ class RegisterForm extends React.PureComponent {
           <Input type='password' value={this.props.password} onChange={event => this.props.updatePassword(event.target.value)} />
           <FieldLabel>confirm password</FieldLabel>
           <Input type='password' value={this.props.confirmPassword} onChange={event => this.props.updateConfirmPassword(event.target.value)} />
+          <h5>Password must be alphanumeric, contain more than 8 characters, and contain at least 1 number</h5>
           <FieldLabel>email</FieldLabel>
           <Input type='email' value={this.props.email} onChange={event => this.props.updateEmail(event.target.value)} />
           <FieldLabel>confirm email</FieldLabel>

@@ -14,8 +14,6 @@ const compiler = webpack(webpackConfig);
 
 const app = express();
 
-app.use(jsonParser());
-
 app
   .set('view engine', 'pug')
   .set('views', path.join(__dirname, '/views'));

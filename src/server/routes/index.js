@@ -1,4 +1,5 @@
 const routes = require('express').Router();
+const jsonParser = require('body-parser').json;
 const asyncHandler = require('express-async-handler');
 const passport = require('passport');
 const path = require('path');
@@ -6,6 +7,8 @@ const fs = require('fs');
 const promisify = require('util').promisify;
 
 const readdir = promisify(fs.readdir);
+
+routes.use(jsonParser());
 
 routes.get('/resume', asyncHandler(async (req, res, next) => {
   const rootPath = path.join(__dirname, '..', 'public');

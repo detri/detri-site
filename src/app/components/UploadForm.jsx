@@ -54,7 +54,7 @@ class UploadForm extends React.PureComponent {
           <Input type='file' onChange={event => { this.fileInput = event.target.files[0]; }} />
           <SubmitButton href='#' onClick={this.handleSubmit}>SUBMIT</SubmitButton>
           <br />
-          {this.props.error}
+          {this.props.error ? this.props.error.toString() : ''}
         </div>
       );
     }
