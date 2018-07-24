@@ -10,7 +10,8 @@ user.get('/:id', asyncHandler(async (req, res) => {
     },
     attributes: {
       exclude: ['pass_hash', 'email']
-    }
+    },
+    include: [db.Song]
   });
   res.status(200).json({
     ok: true,
@@ -22,8 +23,7 @@ user.get('/', asyncHandler(async (req, res) => {
   const users = await db.User.findAll({
     attributes: {
       exclude: ['pass_hash', 'email']
-    },
-    include: [db.Song]
+    }
   });
   res.status(200).json({
     ok: true,

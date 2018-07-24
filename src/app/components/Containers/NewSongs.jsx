@@ -11,7 +11,7 @@ class NewSongs extends React.PureComponent {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.newSongs.length) {
       this.props.tryNewSongs();
     }
