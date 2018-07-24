@@ -7,10 +7,10 @@ import {
   updateTitle,
   uploadFail,
   resetUpload
-} from '../ducks/upload.js';
-import Input from './Input.jsx';
-import FieldLabel from './FieldLabel.jsx';
-import SubmitButton from './SubmitButton.jsx';
+} from '../../ducks/upload.js';
+import Input from './Util/Input.jsx';
+import FieldLabel from './Util/FieldLabel.jsx';
+import SubmitButton from './Util/SubmitButton.jsx';
 
 class UploadForm extends React.PureComponent {
   constructor(props) {

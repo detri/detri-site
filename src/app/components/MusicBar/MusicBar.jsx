@@ -4,7 +4,7 @@ import {
   play,
   pause,
   updateProgress
-} from '../ducks/musicPlayer';
+} from '../../ducks/musicPlayer.js';
 import styled from 'styled-components';
 import PlayButton from './PlayButton.jsx';
 import ProgressBar from './ProgressBar.jsx';

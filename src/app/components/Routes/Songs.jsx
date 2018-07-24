@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from './Container.jsx';
-import NewSongs from './NewSongs.jsx';
+import Container from '../Styling/Container.jsx';
+import NewSongs from '../Containers/NewSongs.jsx';
 
 const Songs = () => {
   return (

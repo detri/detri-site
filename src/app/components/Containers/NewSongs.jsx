@@ -1,10 +1,10 @@
 import React from 'react';
-import SongBox from './SongBox.jsx';
-import Title from './Title.jsx';
-import ScrollBox from './ScrollBox.jsx';
+import SongBox from '../Styling/SongBox.jsx';
+import Title from '../Styling/Title.jsx';
+import ScrollBox from '../Styling/ScrollBox.jsx';
 import { connect } from 'react-redux';
-import { tryNewSongs } from '../ducks/songs';
-import { changeSong, pause, play } from '../ducks/musicPlayer';
+import { tryNewSongs } from '../../ducks/songs';
+import { changeSong, pause, play } from '../../ducks/musicPlayer';
 
 class NewSongs extends React.PureComponent {
   constructor(props) {

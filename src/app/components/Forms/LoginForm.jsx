@@ -6,10 +6,10 @@ import {
   tryLogin,
   updatePassword,
   updateUsername
-} from '../ducks/login.js';
-import Input from './Input.jsx';
-import FieldLabel from './FieldLabel.jsx';
-import SubmitButton from './SubmitButton.jsx';
+} from '../../ducks/login.js';
+import Input from './Util/Input.jsx';
+import FieldLabel from './Util/FieldLabel.jsx';
+import SubmitButton from './Util/SubmitButton.jsx';
 
 class LoginForm extends React.PureComponent {
   constructor(props) {

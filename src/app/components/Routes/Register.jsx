@@ -1,9 +1,9 @@
 import React from 'react';
-import Container from './Container.jsx';
-import Title from './Title.jsx';
-import RegisterForm from './RegisterForm.jsx';
-import LoginForm from './LoginForm.jsx';
-import ScrollBox from './ScrollBox.jsx';
+import Container from '../Styling/Container.jsx';
+import Title from '../Styling/Title.jsx';
+import RegisterForm from '../Forms/RegisterForm.jsx';
+import LoginForm from '../Forms/LoginForm.jsx';
+import ScrollBox from '../Styling/ScrollBox.jsx';
 
 const Register = () => {
   return (

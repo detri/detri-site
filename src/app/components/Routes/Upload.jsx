@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from './Container.jsx';
-import Title from './Title.jsx';
-import ScrollBox from './ScrollBox.jsx';
-import UploadForm from './UploadForm.jsx';
+import Container from '../Styling/Container.jsx';
+import Title from '../Styling/Title.jsx';
+import ScrollBox from '../Styling/ScrollBox.jsx';
+import UploadForm from '../Forms/UploadForm.jsx';
 
 const Upload = () => {
   return (

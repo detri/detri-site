@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Content from './components/Content.jsx';
-import Section from './components/Section.jsx';
-import Home from './components/Home.jsx';
-import Register from './components/Register.jsx';
-import Upload from './components/Upload.jsx';
-import Songs from './components/Songs.jsx';
+import Content from './components/Styling/Content.jsx';
+import Section from './components/Styling/Section.jsx';
+import Home from './components/Routes/Home.jsx';
+import Register from './components/Routes/Register.jsx';
+import Upload from './components/Routes/Upload.jsx';
+import Songs from './components/Routes/Songs.jsx';
 
 const RouteContainer = () => {
   return (

@@ -10,10 +10,10 @@ import {
   updateConfirmPassword,
   updateEmail,
   updateConfirmEmail
-} from '../ducks/register.js';
-import Input from './Input.jsx';
-import FieldLabel from './FieldLabel.jsx';
-import SubmitButton from './SubmitButton.jsx';
+} from '../../ducks/register.js';
+import Input from './Util/Input.jsx';
+import FieldLabel from './Util/FieldLabel.jsx';
+import SubmitButton from './Util/SubmitButton.jsx';
 
 class RegisterForm extends React.PureComponent {
   constructor(props) {

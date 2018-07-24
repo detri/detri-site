@@ -1,7 +1,7 @@
 import React from 'react';
-import Title from './Title.jsx';
-import Container from './Container.jsx';
-import ScrollBox from './ScrollBox.jsx';
+import Title from '../Styling/Title.jsx';
+import Container from '../Styling/Container.jsx';
+import ScrollBox from '../Styling/ScrollBox.jsx';
 
 const Home = () => {
   return (

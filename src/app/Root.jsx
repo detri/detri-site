@@ -2,9 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from './ducks/index.js';
 import ReactDOM from 'react-dom';
-import DarkTheme from './components/DarkTheme.jsx';
+import DarkTheme from './components/Styling/DarkTheme.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './components/GlobalStyles.jsx';
+import './components/Styling/GlobalStyles.jsx';
 
 import fontawesome from '@fortawesome/fontawesome';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
