@@ -14,7 +14,6 @@ export function tryAllUsers() {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          console.log(json);
           dispatch(setAllUsers(json.data));
           return;
         }

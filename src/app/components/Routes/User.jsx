@@ -1,10 +1,11 @@
 import React from 'react';
 import Container from '../Styling/Container.jsx';
+import UserPage from '../Containers/UserPage.jsx';
 
 const User = ({ match }) => {
     return (
         <Container>
-            <UserPage user={match} />
+            <UserPage match={match} />
         </Container>
     )
 };

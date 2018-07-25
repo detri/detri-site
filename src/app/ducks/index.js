@@ -7,6 +7,7 @@ import upload from './upload.js';
 import songs from './songs.js';
 import musicPlayer from './musicPlayer.js';
 import allUsers from './allUsers.js';
+import userPage from './userPage.js';
 
 const rootReducer = combineReducers({
   register,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   upload,
   songs,
   musicPlayer,
-  allUsers
+  allUsers,
+  userPage
 });
 
 export default rootReducer;

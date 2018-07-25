@@ -2,17 +2,33 @@ const user = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const db = require('../../models');
+const isUuid = require('validator/lib/isUUID');
 
+// username or user id
 user.get('/:id', asyncHandler(async (req, res) => {
-  const user = await db.User.findOne({
-    where: {
-      id: req.params.id
-    },
-    attributes: {
-      exclude: ['pass_hash', 'email']
-    },
-    include: [db.Song]
-  });
+  const id = req.params.id;
+  let user;
+  if (isUuid(id)) {
+    user = await db.User.findOne({
+      where: {
+        id: req.params.id
+      },
+      attributes: {
+        exclude: ['pass_hash', 'email']
+      },
+      include: [db.Song]
+    });
+  } else {
+    user = await db.User.findOne({
+      where: {
+        username: req.params.id
+      },
+      attributes: {
+        exclude: ['pass_hash', 'email']
+      },
+      include: [db.Song]
+    });
+  }
   res.status(200).json({
     ok: true,
     data: user

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const UserInfoText = styled.p`
   text-align: center;
@@ -18,7 +19,9 @@ const UserBox = ({ user, className }) => {
   return (
     <div className={className}>
       <UserInfo>
-        <UserInfoText><strong>{user.username}</strong></UserInfoText>
+        <Link to={'/users/' + user.username}>
+          <UserInfoText><strong>{user.username}</strong></UserInfoText>
+        </Link>
         <UserInfoText style={{paddingLeft: '10px'}}>user number: {user.number}</UserInfoText>
       </UserInfo>
     </div>
