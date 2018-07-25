@@ -7,6 +7,7 @@ import Register from './components/Routes/Register.jsx';
 import Upload from './components/Routes/Upload.jsx';
 import Songs from './components/Routes/Songs.jsx';
 import Users from './components/Routes/Users.jsx';
+import User from './components/Routes/User.jsx';
 
 const RouteContainer = () => {
   return (
@@ -17,6 +18,7 @@ const RouteContainer = () => {
           <Route path='/register' component={Register} />
           <Route path='/upload' component={Upload} />
           <Route path='/songs' component={Songs} />
+          <Route path='/users/:username' component={User} />
           <Route path='/users' component={Users} />
           <Route render={() => { return <div>Not found.</div>; }} />
         </Switch>
