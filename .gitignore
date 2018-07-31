@@ -2,9 +2,6 @@
 node_modules/
 .vscode/
 
-# config
-src/server/config.json
-
 # songs folder
 src/server/public/songs/
 

@@ -66,11 +66,15 @@ passport.deserializeUser((id, done) => {
 });
 
 // initalize hot reloading
+if (process.env.NODE_ENV === 'development') {
+  app
+    .use(require('webpack-dev-middleware')(compiler, {
+      noInfo: true, publicPath: webpackConfig.output.publicPath
+    }))
+    .use(require('webpack-hot-middleware')(compiler))
+}
+
 app
-  .use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
-  }))
-  .use(require('webpack-hot-middleware')(compiler))
   .use(session({
     secret: 'dedzoneseekrit',
     saveUninitialized: false,
