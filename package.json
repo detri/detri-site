@@ -4,7 +4,7 @@
   "description": "A redesigned version of ded.zone",
   "main": "./src/server/index.js",
   "scripts": {
-    "test": "test",
+    "test": "set NODE_ENV=test && jest",
     "start": "set NODE_ENV=production && npx webpack && node ./src/server/index.js",
     "startdev": "set NODE_ENV=development && node ./src/server/index.js"
   },

@@ -6,7 +6,8 @@ const devConfig = {
     "db": "testdb",
     "user": "postgres",
     "pass": "testpass",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "storage": ":memory:"
   },
   "email": {
     "username": "noreply",
@@ -20,12 +21,17 @@ const prodConfig = Object.assign({}, devConfig);
 prodConfig.database.db = "proddb";
 prodConfig.database.pass = "prodpass";
 
+const testConfig = Object.assign({}, prodConfig);
+testConfig.database.dialect = "sqlite";
+
 module.exports = function() {
   switch(process.env.NODE_ENV) {
     case 'development':
       return devConfig;
     case 'production':
       return prodConfig;
+    case 'test':
+      return testConfig;
     default:
       return devConfig;
   }
