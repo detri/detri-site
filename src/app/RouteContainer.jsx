@@ -19,7 +19,7 @@ const RouteContainer = () => {
           <Route path='/upload' component={Upload} />
           <Route path='/songs' component={Songs} />
           <Route path='/users/:username' component={User} />
-          <Route path='/users' component={Users} />
+          <Route exact path='/users' component={Users} />
           <Route render={() => { return <div>Not found.</div>; }} />
         </Switch>
       </Content>

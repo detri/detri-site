@@ -5,8 +5,8 @@
   "main": "./src/server/index.js",
   "scripts": {
     "test": "test",
-    "start": "node ./src/server/index.js",
-    "start:dev": "webpack-dev-server --inline --hot"
+    "start": "set NODE_ENV=production && npx webpack && node ./src/server/index.js",
+    "startdev": "set NODE_ENV=development && node ./src/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -67,13 +67,16 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.10",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "jest": "^23.4.2",
     "react-hot-loader": "^4.0.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
+    "supertest": "^3.1.0",
     "uglifyjs-webpack-plugin": "^1.2.3",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^2.1.5",
     "webpack-dev-middleware": "^3.0.1",
+    "webpack-dev-server": "^3.1.5",
     "webpack-hot-middleware": "^2.21.2"
   }
 }
