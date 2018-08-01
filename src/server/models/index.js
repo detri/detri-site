@@ -8,10 +8,6 @@ const basename = path.basename(module.filename);
 const config = require(path.join(__dirname, '..', 'config.js'))().database;
 const db = {};
 
-if (config.dialect === 'sqlite') {
-  config.storage = path.join(__dirname, 'testdb.sqlite');
-}
-
 let sequelize = new Sequelize(
   config.db,
   config.user,

@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       expires: DataTypes.DATE,
       data: DataTypes.STRING(255)
     }, {
-      underscored: false,
-      timestamps: true
+      underscored: true,
+      timestamps: false
     }
   );
 };
